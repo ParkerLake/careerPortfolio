@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parker Lake — Portfolio</title>
+  <style>
+    /* ── Design Tokens ── */
+    :root {
+      --bg:        #0d1117;
+      --surface:   #161b22;
+      --border:    #30363d;
+      --accent:    #58a6ff;
+      --accent2:   #3fb950;
+      --muted:     #8b949e;
+      --text:      #e6edf3;
+      --text-sub:  #c9d1d9;
+      --radius:    12px;
+      --font:      'Inter', system-ui, -apple-system, sans-serif;
+      --mono:      'JetBrains Mono', 'Fira Code', monospace;
+      --transition: 0.2s ease;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+
+    /* ── Layout ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 80px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.875rem;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── Hero ── */
+    #hero {
+      padding: 120px 0 80px;
+      border-top: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero-name {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .hero-title span { color: var(--accent2); font-weight: 500; }
+    .hero-desc {
+      max-width: 560px;
+      color: var(--text-sub);
+      font-size: 1rem;
+      margin-bottom: 40px;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0d1117;
+    }
+    .btn-primary:hover { background: #79b8ff; text-decoration: none; color: #0d1117; }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+    .social-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+    }
+    .social-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      transition: all var(--transition);
+    }
+    .social-chip:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+    /* ── Section Headers ── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 48px;
+    }
+
+    /* ── Skills / Tech Stack ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .skill-category {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: border-color var(--transition);
+    }
+    .skill-category:hover { border-color: var(--accent); }
+    .skill-category h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      background: rgba(88,166,255,0.08);
+      border: 1px solid rgba(88,166,255,0.2);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-family: var(--mono);
+    }
+    .tag.green {
+      background: rgba(63,185,80,0.08);
+      border-color: rgba(63,185,80,0.2);
+      color: var(--accent2);
+    }
+    .tag.gray {
+      background: rgba(139,148,158,0.08);
+      border-color: rgba(139,148,158,0.2);
+      color: var(--muted);
+    }
+
+    /* ── Projects ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 20px;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .project-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    .project-links { display: flex; gap: 10px; }
+    .icon-link {
+      color: var(--muted);
+      font-size: 0.85rem;
+      transition: color var(--transition);
+    }
+    .icon-link:hover { color: var(--accent); text-decoration: none; }
+    .project-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .project-impact {
+      background: rgba(63,185,80,0.06);
+      border: 1px solid rgba(63,185,80,0.15);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: var(--accent2);
+    }
+    .project-impact strong { font-weight: 600; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+
+    /* ── Experience ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 24px;
+      padding: 28px 0;
+      position: relative;
+    }
+    .timeline-item + .timeline-item { border-top: 1px solid var(--border); }
+    .timeline-meta { padding-top: 4px; }
+    .timeline-date {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .timeline-company {
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+    .timeline-role {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .timeline-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .timeline-bullets li {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      padding-left: 16px;
+      position: relative;
+    }
+    .timeline-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.7rem;
+      top: 3px;
+    }
+    .timeline-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .metric-chip {
+      background: rgba(88,166,255,0.06);
+      border: 1px solid rgba(88,166,255,0.15);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-family: var(--mono);
+      color: var(--accent);
+    }
+
+    /* ── Metrics / Impact Row ── */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: var(--mono);
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ── Education / Certs ── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .cert-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: border-color var(--transition);
+    }
+    .cert-card:hover { border-color: var(--accent2); }
+    .cert-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .cert-name { font-size: 0.92rem; font-weight: 600; margin-bottom: 4px; }
+    .cert-issuer { font-size: 0.78rem; color: var(--muted); }
+    .cert-year { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); margin-top: 6px; }
+
+    /* ── Contact ── */
+    #contact { text-align: center; }
+    #contact .section-subtitle { margin: 0 auto 40px; }
+    .contact-links {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    /* ── Tooltip (recommendations) ── */
+    .rec-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,193,7,0.08);
+      border: 1px dashed rgba(255,193,7,0.3);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 0.72rem;
+      color: #d29922;
+      cursor: help;
+      vertical-align: middle;
+      margin-left: 8px;
+      position: relative;
+    }
+    .rec-badge:hover .rec-tooltip {
+      display: block;
+    }
+    .rec-tooltip {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: calc(100% + 6px);
+      width: 260px;
+      background: #1c2128;
+      border: 1px solid rgba(255,193,7,0.3);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      z-index: 200;
+      line-height: 1.5;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .timeline-item { grid-template-columns: 1fr; gap: 4px; }
+      .timeline-meta { display: flex; gap: 12px; align-items: baseline; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .timeline::before, .timeline-item::before { display: none; }
+      .timeline-expansion { padding: 22px 18px 18px; margin-left: 0; }
+    }
+
+    /* ── Pioneer Diagram (Clearlink case study) ── */
+    .case-study-intro {
+      color: var(--text-sub);
+      max-width: 640px;
+      margin-bottom: 40px;
+    }
+    .pioneer-diagram {
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .pioneer-node {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 116px;
+      text-align: center;
+      padding: 6px 4px 0;
+      border-radius: 10px;
+      outline: none;
+    }
+    .pioneer-node:hover, .pioneer-node:focus-within {
+      background: rgba(88, 166, 255, 0.06);
+    }
+    .pioneer-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      margin-bottom: 10px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .pioneer-badge svg { width: 28px; height: 28px; display: block; }
+    .pioneer-git-badge {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: #F03C2E;
+      border: 2px solid var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pioneer-git-badge svg { width: 10px; height: 10px; }
+    .pioneer-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.25;
+    }
+    .pioneer-sublabel {
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+    .pioneer-arrow {
+      color: var(--border);
+      font-size: 1.3rem;
+      margin: 24px 2px 0;
+      flex-shrink: 0;
+    }
+    .pioneer-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--text-sub);
+      text-align: left;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .pioneer-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--surface);
+    }
+    .pioneer-node:hover .pioneer-tooltip,
+    .pioneer-node:focus-within .pioneer-tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+    .pioneer-tooltip strong { color: var(--accent); }
+    @media (max-width: 640px) {
+      .pioneer-diagram { flex-direction: column; align-items: stretch; gap: 0; }
+      .pioneer-node {
+        flex-direction: row;
+        width: 100%;
+        text-align: left;
+        gap: 14px;
+        padding: 10px 8px;
+      }
+      .pioneer-badge { margin-bottom: 0; }
+      .pioneer-arrow { align-self: flex-start; margin: -2px 0 -2px 27px; transform: rotate(90deg); }
+      .pioneer-tooltip { position: static; visibility: visible; opacity: 1; width: auto; box-shadow: none; border: none; background: none; padding: 4px 0 0; pointer-events: auto; }
+      .pioneer-tooltip::after { display: none; }
+    }
+
+
+    /* ── Timeline Spine & Reverse-Chronology Effects ── */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 172px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--border), rgba(48,54,61,0.3));
+      z-index: 0;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 172px;
+      top: 34px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      transform: translateX(-50%);
+      z-index: 1;
+      transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+    }
+    .timeline-item.is-visible::before {
+      border-color: var(--accent);
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(88,166,255,0.15);
+    }
+
+    .timeline-expansion {
+      position: relative;
+      z-index: 2;
+      margin: 4px 0 32px;
+      padding: 30px 30px 26px;
+      border-radius: 14px;
+      background: linear-gradient(155deg, rgba(88,166,255,0.07), rgba(63,185,80,0.03));
+      border: 1px solid rgba(88,166,255,0.2);
+    }
+    .expansion-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(88,166,255,0.12);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+    }
+    .expansion-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+    .expansion-intro { color: var(--text-sub); max-width: 640px; margin-bottom: 28px; font-size: 0.92rem; }
+    .expansion-footnote { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+    .timeline-expansion + .timeline-item { border-top: 1px solid var(--border); }
+
+    /* ── Scroll Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(.2,.7,.3,1), transform 0.7s cubic-bezier(.2,.7,.3,1);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .timeline-item::before { transition: none !important; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <div class="container">
+    <span class="nav-logo">parker.lake</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-eyebrow">👋 Hello, I'm</p>
+    <h1 class="hero-name">Parker Lake</h1>
+    <p class="hero-title">
+      <span>Analytics Leader · Marketing Data & BI</span>
+    </p>
+    <p class="hero-desc">
+      I build the measurement infrastructure that helps marketing organizations make better decisions —
+      BI platforms, data pipelines, attribution frameworks, and lately, AI-augmented reporting workflows.
+      Currently Sr. Manager, Data Analysis at Cox Automotive, leading marketing analytics for a multi-brand
+      B2B portfolio. Open to Director of Analytics opportunities.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#projects">View My Work</a>
+      <a class="btn btn-outline" href="resume.pdf" target="_blank">Download Résumé</a>
+    </div>
+    <div class="social-row">
+      <a class="social-chip" href="https://linkedin.com/in/parkerllake" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        LinkedIn
+      </a>
+      <a class="social-chip" href="mailto:parkerllake@gmail.com">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        Email
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── About / Impact Numbers ── -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">// Impact</p>
+    <h2 class="section-title">By the Numbers</h2>
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-value">10+</div>
+        <div class="metric-label">Years in Data & Analytics</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">15+</div>
+        <div class="metric-label">Data Sources Unified in One BI Platform</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">6+</div>
+        <div class="metric-label">Brands / 70+ Stakeholders Served</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">4</div>
+        <div class="metric-label">Years Leading NADA Conference Analytics</div>
+      </div>
+    </div>
+    <p style="color: var(--text-sub); max-width: 620px;">
+      I'm an analytics leader with 10+ years connecting marketing performance to business outcomes across
+      telecom, financial services, and automotive. I started my career running paid search campaigns, which
+      gave me a marketer's instinct for how channels actually work, before moving into analytics and spending
+      the last several years building the measurement infrastructure that helps marketers make better decisions.
+      At Cox Automotive, I built and lead a B2B marketing analytics function from the ground up — standing up
+      the BI platform, owning the data pipelines, and establishing KPI governance across a multi-brand
+      portfolio. I'm a hands-on technical contributor and people manager who translates complex data into
+      insights that drive action, and lately I've been integrating AI-assisted workflows into that work to
+      move faster without losing rigor.
+    </p>
+  </div>
+</section>
+
+<!-- ── Skills ── -->
+<section id="skills">
+  <div class="container">
+    <p class="section-label">// Skills</p>
+    <h2 class="section-title">Tech Stack</h2>
+    <p class="section-subtitle">
+      Tools and technologies I use regularly across BI, data engineering, and marketing analytics.
+    </p>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h4>BI & Visualization</h4>
+        <div class="skill-tags">
+          <span class="tag">Domo</span>
+          <span class="tag">Tableau</span>
+          <span class="tag">Looker</span>
+          <span class="tag">Sisense</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4>Data Warehousing & Cloud</h4>
+        <div class="skill-tags">
+          <span class="tag green">Snowflake</span>
+          <span class="tag green">Redshift</span>
+          <span class="tag green">AWS S3</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4>Languages</h4>
+        <div class="skill-tags">
+          <span class="tag">SQL</span>
+          <span class="tag">Python</span>
+          <span class="tag">R</span>
+          <span class="tag">SAS</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4>Marketing Analytics</h4>
+        <div class="skill-tags">
+          <span class="tag green">Attribution Modeling</span>
+          <span class="tag green">Predictive Modeling</span>
+          <span class="tag green">A/B Testing</span>
+          <span class="tag green">Google Analytics</span>
+          <span class="tag green">GTM</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4>Orchestration & Automation</h4>
+        <div class="skill-tags">
+          <span class="tag">Airflow</span>
+          <span class="tag">Make.com</span>
+          <span class="tag">Claude API</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4>Platforms & PM</h4>
+        <div class="skill-tags">
+          <span class="tag gray">Salesforce CRM</span>
+          <span class="tag gray">Marketing Cloud</span>
+          <span class="tag gray">Jira</span>
+          <span class="tag gray">Monday.com</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Projects ── -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label">// Projects</p>
+    <h2 class="section-title">Selected Work</h2>
+    <p class="section-subtitle">
+      A curated look at the analytics platforms, frameworks, and tools I've built — professional work
+      described at a level I can share publicly, plus a personal project or two.
+    </p>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-icon">🏗️</span>
+        </div>
+        <div class="project-name">B2B Marketing Analytics Function</div>
+        <div class="project-desc">
+          Built Cox Automotive's Retail B2B marketing analytics function from the ground up — sole owner
+          and administrator of the Domo BI platform, data ingestion pipelines, and self-service reporting
+          infrastructure used across the org.
+        </div>
+        <div class="project-impact">
+          <strong>📈 Impact:</strong> 15+ data sources integrated, serving 6+ brands and 70+ stakeholders
+        </div>
+        <div class="project-tags">
+          <span class="tag">Domo</span>
+          <span class="tag">SQL</span>
+          <span class="tag gray">Data Pipelines</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-icon">🔗</span>
+        </div>
+        <div class="project-name">UTM Governance & Attribution Framework</div>
+        <div class="project-desc">
+          Designed and rolled out a UTM governance and attribution framework across 6+ business units to
+          fix a fragmented naming problem that made cross-channel performance data impossible to trust
+          or aggregate.
+        </div>
+        <div class="project-impact">
+          <strong>📈 Impact:</strong> Unified taxonomy across 6+ business units, enabling trustworthy
+          cross-channel reporting
+        </div>
+        <div class="project-tags">
+          <span class="tag">Attribution</span>
+          <span class="tag gray">Data Governance</span>
+          <span class="tag">Domo</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-icon">📊</span>
+        </div>
+        <div class="project-name">Enterprise Analytics for NADA Conference</div>
+        <div class="project-desc">
+          Led enterprise-wide measurement strategy for Cox Automotive's presence at the NADA conference
+          for 4 consecutive years, shifting the focus from vanity metrics to account-based KPIs like
+          registrations, attendance, and list penetration.
+        </div>
+        <div class="project-impact">
+          <strong>📈 Impact:</strong> 4 consecutive years; account-based KPI framework adopted enterprise-wide
+        </div>
+        <div class="project-tags">
+          <span class="tag gray">KPI Design</span>
+          <span class="tag gray">Stakeholder Management</span>
+          <span class="tag">Event Analytics</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-icon">☁️</span>
+        </div>
+        <div class="project-name">Domo → Snowflake Migration</div>
+        <div class="project-desc">
+          Partnering on migrating the marketing analytics stack off Domo-native ingestion and onto a
+          governed Snowflake data warehouse, contributing data modeling and pipeline logic for the new
+          architecture.
+        </div>
+        <div class="project-impact">
+          <strong>📈 Impact:</strong> In progress — modernizing the data foundation for a multi-brand
+          analytics portfolio
+        </div>
+        <div class="project-tags">
+          <span class="tag green">Snowflake</span>
+          <span class="tag">Data Modeling</span>
+          <span class="tag">SQL</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-icon">🧭</span>
+        </div>
+        <div class="project-name">Full-Funnel Customer Journey Model</div>
+        <div class="project-desc">
+          At Clearlink, partnered on a data model stitching together web clickstream, CRM/lead, and call
+          center telephony data to create end-to-end visibility into how customers moved from digital
+          touchpoint to conversion.
+        </div>
+        <div class="project-impact">
+          <strong>📈 Impact:</strong> End-to-end visibility across both online and call-center conversion paths
+        </div>
+        <div class="project-tags">
+          <span class="tag green">Redshift</span>
+          <span class="tag gray">AWS</span>
+          <span class="tag">SQL</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-icon">🤖</span>
+        </div>
+        <div class="project-name">Ward Manager App <span style="color: var(--muted); font-weight: 400;">(Personal Project)</span></div>
+        <div class="project-desc">
+          Built a personal automation tool for church administrative work: a Make.com scenario that calls
+          the Claude API and delivers scheduling results via SMS/Slack, plus a Google Apps Script tool for
+          speaker tracking and callings management.
+        </div>
+        <div class="project-impact">
+          <strong>📈 Impact:</strong> Runs in production every week, automating scheduling and coordination
+        </div>
+        <div class="project-tags">
+          <span class="tag">Claude API</span>
+          <span class="tag">Make.com</span>
+          <span class="tag gray">Google Apps Script</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Experience ── -->
+<section id="experience">
+  <div class="container">
+    <p class="section-label">// Experience</p>
+    <h2 class="section-title">Work History</h2>
+    <p class="section-subtitle">Ordered most-recent first — scroll down to move back through time. The timeline pauses where there's a deeper story to tell.</p>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <div class="timeline-date">Jan 2022 – Present</div>
+          <div class="timeline-company">Cox Automotive</div>
+        </div>
+        <div>
+          <div class="timeline-role">Sr. Manager, Data Analysis</div>
+          <p style="color: var(--muted); font-size: 0.85rem; margin: -4px 0 10px;">Promoted from Manager, Data Analysis — Nov 2024</p>
+          <ul class="timeline-bullets">
+            <li>Built the Retail B2B marketing analytics function from scratch — sole owner and administrator of the Domo BI platform, including data ingestion pipelines, dashboard development, and self-service reporting infrastructure.</li>
+            <li>Designed and implemented a UTM governance and attribution framework across 6+ business units, solving a fragmented attribution problem that had made cross-channel performance data untrustworthy.</li>
+            <li>Integrated 15+ data sources into a unified Domo environment, more than doubling the performance metrics available to stakeholders.</li>
+            <li>Led enterprise-wide analytics for the NADA conference across 4 consecutive years, shifting measurement to account-based KPIs including registrations, attendance, and list penetration.</li>
+            <li>Serve as the primary analytics partner for brand, product, channel, and strategy marketing teams, owning the analytics roadmap across a multi-brand B2B portfolio.</li>
+            <li>Grew team from 0 to 2 direct reports while maintaining hands-on technical ownership, expanding coverage from 3 to 6+ brands and 70+ stakeholders in 3 years.</li>
+          </ul>
+          <div class="timeline-metrics">
+            <span class="metric-chip">15+ data sources</span>
+            <span class="metric-chip">6+ brands</span>
+            <span class="metric-chip">70+ stakeholders</span>
+            <span class="metric-chip">0→2 direct reports</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <div class="timeline-date">Mar 2019 – Nov 2021</div>
+          <div class="timeline-company">Clearlink</div>
+        </div>
+        <div>
+          <div class="timeline-role">Sr. Business Analyst</div>
+          <ul class="timeline-bullets">
+            <li>Joined a team with zero existing analytics function and built the first standard reporting from scratch in Excel — the team's first real visibility into channel performance.</li>
+            <li>Evolved that reporting into Google Data Studio (now Looker Studio) for richer visualization and a self-service experience for stakeholders.</li>
+            <li>Gained access to Redshift, the company's data warehouse, and partnered with data engineering to design and automate new data processes with Airflow — directing engineers on what data to capture and how to land it in Redshift — promoting all changes through git.</li>
+            <li>Partnered on a full-funnel customer journey model stitching together web clickstream, CRM/lead, and call center telephony data for end-to-end conversion visibility across online and call-center paths.</li>
+            <li>Outgrew that setup and joined forces with the existing reporting team to build out Sisense as a more robust, automated reporting platform.</li>
+            <li>Represented marketing and the digital sales channels team in the company's migration to Looker — the fourth analytics platform evolution in three years.</li>
+          </ul>
+          <div class="timeline-metrics">
+            <span class="metric-chip">Zero → full analytics stack</span>
+            <span class="metric-chip">Redshift + Airflow + git</span>
+            <span class="metric-chip">Directed data engineering builds</span>
+            <span class="metric-chip">Sisense & Looker migrations</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-expansion" id="case-study">
+        <span class="expansion-tag">⚡ Featured Deep-Dive</span>
+        <h3 class="expansion-title">From Zero to Enterprise BI</h3>
+        <p class="expansion-intro">
+          At Clearlink, I joined a digital sales channels team with no analytics function at all. Over
+          three years I built and rebuilt the reporting stack five times — each step trading up for more
+          scale, more automation, and more self-service — while representing the team through a
+          company-wide migration to Looker. Hover (or tap) each stage for what it delivered.
+        </p>
+
+        <div class="pioneer-diagram">
+
+          <div class="pioneer-node" tabindex="0">
+            <div class="pioneer-badge" style="background:#1D6F42;">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="20" height="20" rx="3" stroke="white" stroke-width="1.6"/>
+                <path d="M2 9h20M2 15h20M9 2v20M15 2v20" stroke="white" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <div class="pioneer-label">Excel</div>
+            <div class="pioneer-sublabel">Day one</div>
+            <div class="pioneer-tooltip">
+              <strong>Built from nothing.</strong> Built the team's first standard reporting from scratch —
+              the first real visibility into channel performance where none existed before.
+            </div>
+          </div>
+
+          <div class="pioneer-arrow">→</div>
+
+          <div class="pioneer-node" tabindex="0">
+            <div class="pioneer-badge" style="background:#161b22; border:1px solid var(--border);">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="13" width="3.4" height="7" rx="1" fill="#4285F4"/>
+                <rect x="10.3" y="8.5" width="3.4" height="11.5" rx="1" fill="#34A853"/>
+                <rect x="16.6" y="4" width="3.4" height="16" rx="1" fill="#FBBC05"/>
+              </svg>
+            </div>
+            <div class="pioneer-label">Looker Studio</div>
+            <div class="pioneer-sublabel">née Data Studio</div>
+            <div class="pioneer-tooltip">
+              <strong>Better visualization.</strong> Migrated reporting into Google Data Studio (now Looker
+              Studio) for richer visuals and a true self-service experience for stakeholders.
+            </div>
+          </div>
+
+          <div class="pioneer-arrow">→</div>
+
+          <div class="pioneer-node" tabindex="0">
+            <div class="pioneer-badge" style="background:#8C4FFF;">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="12" cy="6" rx="7" ry="2.6" stroke="white" stroke-width="1.6"/>
+                <path d="M5 6v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6" stroke="white" stroke-width="1.6"/>
+                <path d="M5 12v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6" stroke="white" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <div class="pioneer-label">Redshift</div>
+            <div class="pioneer-sublabel">Data warehouse</div>
+            <div class="pioneer-tooltip">
+              <strong>Real infrastructure.</strong> Gained direct access to the company's Redshift data
+              warehouse and began building the foundational tables new reporting would run on.
+            </div>
+          </div>
+
+          <div class="pioneer-arrow">→</div>
+
+          <div class="pioneer-node" tabindex="0">
+            <div class="pioneer-badge" style="background:#017CEE;">
+              <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M17.195 16.822l4.002-4.102C23.55 10.308 23.934 5.154 24 .43a.396.396 0 0 0-.246-.373.392.392 0 0 0-.437.09l-6.495 6.658-4.102-4.003C10.309.45 5.154.066.43 0H.423a.397.397 0 0 0-.277.683l6.658 6.494-4.003 4.103C.45 13.692.065 18.846 0 23.57a.398.398 0 0 0 .683.282l6.494-6.657 3.934 3.837.17.165c2.41 2.353 7.565 2.737 12.288 2.803h.006a.397.397 0 0 0 .277-.683l-6.657-6.495zm-.409-9.476c.04.115.05.24.031.344-.17.96-1.593 2.538-4.304 3.87a.597.597 0 0 0-.08-.079c1.432-3.155 1.828-5.61 1.175-7.322l3.058 2.984.12.203zm-.131 9.44a.73.73 0 0 1-.347.031c-.96-.171-2.537-1.594-3.87-4.307a.656.656 0 0 0 .08-.078l-.001.001c3.155 1.432 5.61 1.83 7.324 1.174l-2.969 3.043M23.568.392a.05.05 0 0 1 .052-.011c.018.006.03.024.029.043-.065 4.655-.437 9.726-2.703 12.05-1.53 1.565-4.326 1.419-8.283-.377.006-.037.021-.07.02-.108 0-.044-.017-.082-.026-.123 2.83-1.39 4.315-3.037 4.506-4.115.057-.322-.009-.542-.102-.688l6.507-6.67V.392zM.393.43A.045.045 0 0 1 .382.38C.39.36.403.343.425.35c4.655.065 9.727.438 12.05 2.703l.002.002c1.56 1.527 1.415 4.323-.379 8.28-.033-.005-.062-.02-.097-.02h-.008c-.045.001-.084.019-.126.027-1.39-2.83-3.037-4.314-4.115-4.506-.323-.057-.542.01-.688.103L.393.43zm11.94 11.563a.331.331 0 0 1-.327.335H12a.332.332 0 0 1-.004-.661c.172.016.333.144.335.326h.002zm-5.12 4.661a.722.722 0 0 1-.03-.345c.17-.96 1.595-2.54 4.309-3.873.013.016.019.035.033.05.013.012.03.017.044.028-1.434 3.158-1.83 5.613-1.177 7.326l-3.041-2.967m-.006-9.659a.735.735 0 0 1 .345-.031c.961.17 2.54 1.594 3.871 4.306a.597.597 0 0 0-.079.08c-2.167-.983-4.007-1.484-5.498-1.484-.68 0-1.289.103-1.825.308L7.128 7.35M.43 23.607c-.018.018-.038.015-.052.01-.019-.007-.028-.021-.028-.043.065-4.654.437-9.725 2.703-12.049 1.527-1.565 4.325-1.419 8.286.378-.006.035-.02.067-.02.104 0 .043.018.083.026.124-2.831 1.391-4.317 3.04-4.51 4.117-.057.322.01.542.103.688L.43 23.607zm23.144.042c-4.655-.065-9.726-.437-12.05-2.703l-.005-.006c-1.56-1.526-1.412-4.322.383-8.279.033.005.064.02.098.02h.009c.043 0 .08-.018.122-.027 1.39 2.832 3.036 4.317 4.115 4.51.083.014.16.021.23.021a.776.776 0 0 0 .45-.133l6.68 6.516c.02.02.016.04.01.052a.042.042 0 0 1-.042.029z"/></svg>
+              <span class="pioneer-git-badge">
+                <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M13.09 23.549a1.54 1.54 0 0 1-2.18 0L.451 13.089a1.54 1.54 0 0 1 0-2.179l7.191-7.19 2.733 2.733a1.85 1.85 0 0 0 .964 2.326v6.66a1.849 1.849 0 1 0 1.54 0V8.957l2.508 2.508a1.85 1.85 0 1 0 1.09-1.09l-2.634-2.634a1.85 1.85 0 0 0-2.378-2.377L8.73 2.63 10.91.451a1.54 1.54 0 0 1 2.179 0l10.459 10.46a1.54 1.54 0 0 1 0 2.179z"/></svg>
+              </span>
+            </div>
+            <div class="pioneer-label">Airflow</div>
+            <div class="pioneer-sublabel">+ git</div>
+            <div class="pioneer-tooltip">
+              <strong>Automated & versioned.</strong> Partnered with data engineering to design and automate
+              pipelines in Airflow — directing engineers on what to capture and how to land it in Redshift —
+              with every change promoted through git.
+            </div>
+          </div>
+
+          <div class="pioneer-arrow">→</div>
+
+          <div class="pioneer-node" tabindex="0">
+            <div class="pioneer-badge" style="background:#00B8A9;">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="7.5" height="8.5" rx="1.3" fill="white"/>
+                <rect x="13.5" y="3" width="7.5" height="5" rx="1.3" fill="white" fill-opacity="0.65"/>
+                <rect x="13.5" y="10" width="7.5" height="4" rx="1.3" fill="white" fill-opacity="0.65"/>
+                <rect x="3" y="14" width="7.5" height="7" rx="1.3" fill="white" fill-opacity="0.65"/>
+                <rect x="13.5" y="16.5" width="7.5" height="4.5" rx="1.3" fill="white"/>
+              </svg>
+            </div>
+            <div class="pioneer-label">Sisense</div>
+            <div class="pioneer-sublabel">Team platform</div>
+            <div class="pioneer-tooltip">
+              <strong>Joined forces.</strong> Outgrew the DIY stack and joined the existing reporting team to
+              build a more robust, automated BI platform in Sisense.
+            </div>
+          </div>
+
+          <div class="pioneer-arrow">→</div>
+
+          <div class="pioneer-node" tabindex="0">
+            <div class="pioneer-badge" style="background:#161b22; border:1px solid var(--border);">
+              <svg viewBox="0 0 24 24" fill="#4285F4" xmlns="http://www.w3.org/2000/svg"><path d="M11.9475 0c-1.1598.0021-2.0982.944-2.096 2.1038a2.1 2.1 0 00.356 1.166l.895-.8959a.884.884 0 11.565.564l-.895.895c.9593.6478 2.2621.3953 2.91-.564.6478-.9593.3953-2.262-.564-2.91A2.096 2.096 0 0011.9475 0zm-.835 6.1128a3.2629 3.2629 0 00-.653-1.965l-1.164 1.162a1.667 1.667 0 01-.318 2.012l.632 1.5449a3.2819 3.2819 0 001.503-2.754zm-3.2499 1.666h-.03c-.9217.0009-1.6697-.7455-1.6707-1.6673-.001-.9217.7454-1.6697 1.6672-1.6707a1.669 1.669 0 01.9195.275l1.152-1.152c-1.4069-1.141-3.4724-.9257-4.6135.4811s-.9257 3.4723.481 4.6135a3.2799 3.2799 0 002.7275.6652l-.633-1.5439v-.001zm4.1279 1.3359c-.728 0-1.452.106-2.15.315l.922 2.2519c2.6872-.6819 5.4184.9438 6.1002 3.631.6818 2.6873-.9439 5.4184-3.6311 6.1002s-5.4184-.9439-6.1002-3.631c-.5682-2.2394.4655-4.5774 2.5041-5.6643l-.91-2.2449c-3.6908 1.808-5.2173 6.2657-3.4093 9.9567l.0005.001c1.808 3.6909 6.2657 5.2173 9.9567 3.4093l.001-.0005c3.6913-1.8071 5.2187-6.2645 3.4116-9.9558a7.4417 7.4417 0 00-6.6865-4.1696h-.008l-.001.001z"/></svg>
+            </div>
+            <div class="pioneer-label">Looker</div>
+            <div class="pioneer-sublabel">Company migration</div>
+            <div class="pioneer-tooltip">
+              <strong>Led the transition.</strong> Represented marketing and the digital sales channels team
+              in the company-wide migration to Looker — the fourth platform evolution in three years.
+            </div>
+          </div>
+
+        </div>
+
+        <p class="expansion-footnote">
+          Five platforms, one team, three years — each move traded up for more scale, more automation, and
+          more trust in the numbers.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <div class="timeline-date">Jun 2017 – Mar 2019</div>
+          <div class="timeline-company">CardWorks</div>
+        </div>
+        <div>
+          <div class="timeline-role">Data Scientist / Analyst</div>
+          <ul class="timeline-bullets">
+            <li>Automated credit card collections workflows in SAS, reducing manual processing time and improving operational consistency across account management.</li>
+            <li>Developed performance monitoring and ad hoc reporting solutions to support collections strategy and credit decision-making.</li>
+          </ul>
+          <div class="timeline-metrics">
+            <span class="metric-chip">SAS automation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <div class="timeline-date">Aug 2015 – Jun 2017</div>
+          <div class="timeline-company">Clearlink</div>
+        </div>
+        <div>
+          <div class="timeline-role">Paid Search Specialist / Analyst</div>
+          <ul class="timeline-bullets">
+            <li>Managed and optimized PPC accounts across national telecom brand partners — hands-on campaign experience that directly shaped how I approach marketing measurement and channel analytics.</li>
+            <li>Reduced costs 40% while improving click-through rate on the second-largest brand; grew sales call volume 50%+ on another account through bid management and ad copy testing.</li>
+          </ul>
+          <div class="timeline-metrics">
+            <span class="metric-chip">-40% cost</span>
+            <span class="metric-chip">+50% call volume</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Education ── -->
+<section id="education">
+  <div class="container">
+    <p class="section-label">// Credentials</p>
+    <h2 class="section-title">Education</h2>
+    <p class="section-subtitle">Degrees and relevant coursework.</p>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon">🎓</div>
+        <div>
+          <div class="cert-name">M.S., Business Analytics</div>
+          <div class="cert-issuer">University of Utah</div>
+          <div class="cert-year">2017</div>
+          <p style="color: var(--muted); font-size: 0.8rem; margin-top: 4px;">Predictive Analytics, Data Mining, Data Visualization, Statistics, SQL, R</p>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🎓</div>
+        <div>
+          <div class="cert-name">B.S., Marketing</div>
+          <div class="cert-issuer">University of Utah</div>
+          <div class="cert-year">2016</div>
+          <p style="color: var(--muted); font-size: 0.8rem; margin-top: 4px;">Marketing Research, Marketing Analytics, Marketing Management</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">// Contact</p>
+    <h2 class="section-title">Let's Connect</h2>
+    <p class="section-subtitle">
+      Open to Director of Analytics opportunities. Best way to reach me is email.
+    </p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:parkerllake@gmail.com">parkerllake@gmail.com</a>
+      <a class="btn btn-outline" href="https://linkedin.com/in/parkerllake" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <p>Built by Parker Lake · 2026</p>
+  </div>
+</footer>
+
+<!-- ── Smooth active-nav highlight ── -->
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.style.color = '');
+        const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+        if (active) active.style.color = 'var(--accent)';
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => navObserver.observe(s));
+
+  /* ── Scroll-reveal: fade/rise elements into place, and light up each
+     timeline stop as the page scrolls back through past roles. ── */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const revealGroups = [
+    '.metric-card',
+    '.skill-category',
+    '.project-card',
+    '.timeline-item',
+    '.timeline-expansion',
+    '.cert-card',
+    '.pioneer-node'
+  ];
+
+  if (!reduceMotion) {
+    revealGroups.forEach(selector => {
+      const els = document.querySelectorAll(selector);
+      els.forEach((el, i) => {
+        el.classList.add('reveal');
+        el.style.transitionDelay = Math.min(i * 0.08, 0.4) + 's';
+      });
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  }
+
+  /* Timeline dots light up as each role scrolls into view, reinforcing the
+     "scrolling down = moving back through time" read of the section. */
+  const timelineDotObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.timeline-item').forEach(el => timelineDotObserver.observe(el));
+</script>
+
+</body>
+</html>
