@@ -7,14 +7,14 @@
   <style>
     /* ── Design Tokens ── */
     :root {
-      --bg:        #0d1117;
-      --surface:   #161b22;
-      --border:    #30363d;
-      --accent:    #58a6ff;
-      --accent2:   #3fb950;
-      --muted:     #8b949e;
-      --text:      #e6edf3;
-      --text-sub:  #c9d1d9;
+      --bg:        #ffffff;
+      --surface:   #f6f7f9;
+      --border:    #e3e6ea;
+      --accent:    #2563eb;
+      --accent2:   #16a34a;
+      --muted:     #6b7280;
+      --text:      #111827;
+      --text-sub:  #374151;
       --radius:    12px;
       --font:      'Inter', system-ui, -apple-system, sans-serif;
       --mono:      'JetBrains Mono', 'Fira Code', monospace;
@@ -45,7 +45,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(13,17,23,0.85);
+      background: rgba(255,255,255,0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 14px 0;
@@ -106,6 +106,36 @@
       font-size: 1rem;
       margin-bottom: 40px;
     }
+    .hero-layout {
+      display: flex;
+      align-items: center;
+      gap: 44px;
+      flex-wrap: wrap;
+    }
+    .hero-text { flex: 1 1 420px; min-width: 280px; }
+    .hero-photo-frame { flex-shrink: 0; }
+    .hero-photo {
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--surface);
+      box-shadow: 0 6px 24px rgba(15,23,42,0.12);
+    }
+    .hero-photo-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #ffffff;
+      font-family: var(--mono);
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    @media (max-width: 640px) {
+      .hero-layout { flex-direction: column; align-items: flex-start; gap: 28px; }
+    }
     .hero-cta {
       display: flex;
       gap: 14px;
@@ -125,9 +155,9 @@
     }
     .btn-primary {
       background: var(--accent);
-      color: #0d1117;
+      color: #ffffff;
     }
-    .btn-primary:hover { background: #79b8ff; text-decoration: none; color: #0d1117; }
+    .btn-primary:hover { background: #1d4ed8; text-decoration: none; color: #ffffff; }
     .btn-outline {
       background: transparent;
       color: var(--text);
@@ -202,8 +232,8 @@
       gap: 6px;
     }
     .tag {
-      background: rgba(88,166,255,0.08);
-      border: 1px solid rgba(88,166,255,0.2);
+      background: rgba(37,99,235,0.08);
+      border: 1px solid rgba(37,99,235,0.2);
       color: var(--accent);
       padding: 3px 10px;
       border-radius: 4px;
@@ -211,13 +241,13 @@
       font-family: var(--mono);
     }
     .tag.green {
-      background: rgba(63,185,80,0.08);
-      border-color: rgba(63,185,80,0.2);
+      background: rgba(22,163,74,0.08);
+      border-color: rgba(22,163,74,0.2);
       color: var(--accent2);
     }
     .tag.gray {
-      background: rgba(139,148,158,0.08);
-      border-color: rgba(139,148,158,0.2);
+      background: rgba(107,114,128,0.08);
+      border-color: rgba(107,114,128,0.2);
       color: var(--muted);
     }
 
@@ -269,8 +299,8 @@
       line-height: 1.6;
     }
     .project-impact {
-      background: rgba(63,185,80,0.06);
-      border: 1px solid rgba(63,185,80,0.15);
+      background: rgba(22,163,74,0.06);
+      border: 1px solid rgba(22,163,74,0.15);
       border-radius: 6px;
       padding: 10px 14px;
       font-size: 0.82rem;
@@ -333,8 +363,8 @@
       margin-top: 14px;
     }
     .metric-chip {
-      background: rgba(88,166,255,0.06);
-      border: 1px solid rgba(88,166,255,0.15);
+      background: rgba(37,99,235,0.06);
+      border: 1px solid rgba(37,99,235,0.15);
       padding: 5px 12px;
       border-radius: 6px;
       font-size: 0.78rem;
@@ -411,40 +441,34 @@
       font-family: var(--mono);
     }
 
-    /* ── Tooltip (recommendations) ── */
-    .rec-badge {
-      display: inline-flex;
+    /* ── Icon System (Lucide, inline) ── */
+    .icon { display: inline-block; vertical-align: -3px; }
+    .icon svg { display: block; }
+    .project-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(37,99,235,0.08);
+      display: flex;
       align-items: center;
-      gap: 5px;
-      background: rgba(255,193,7,0.08);
-      border: 1px dashed rgba(255,193,7,0.3);
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-size: 0.72rem;
-      color: #d29922;
-      cursor: help;
-      vertical-align: middle;
-      margin-left: 8px;
-      position: relative;
+      justify-content: center;
+      flex-shrink: 0;
     }
-    .rec-badge:hover .rec-tooltip {
-      display: block;
+    .project-icon svg { width: 20px; height: 20px; stroke: var(--accent); }
+    .impact-icon { width: 14px; height: 14px; stroke: var(--accent2); vertical-align: -2px; margin-right: 2px; }
+    .cert-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(22,163,74,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
-    .rec-tooltip {
-      display: none;
-      position: absolute;
-      left: 0;
-      top: calc(100% + 6px);
-      width: 260px;
-      background: #1c2128;
-      border: 1px solid rgba(255,193,7,0.3);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 0.78rem;
-      color: var(--text-sub);
-      z-index: 200;
-      line-height: 1.5;
-    }
+    .cert-icon svg { width: 20px; height: 20px; stroke: var(--accent2); }
+    .expansion-tag svg { width: 13px; height: 13px; vertical-align: -2px; margin-right: 3px; }
+    .pioneer-arrow svg { width: 16px; height: 16px; stroke: var(--muted); display: block; }
 
     /* ── Responsive ── */
     @media (max-width: 640px) {
@@ -481,7 +505,7 @@
       outline: none;
     }
     .pioneer-node:hover, .pioneer-node:focus-within {
-      background: rgba(88, 166, 255, 0.06);
+      background: rgba(37, 99, 235, 0.05);
     }
     .pioneer-badge {
       width: 56px;
@@ -490,7 +514,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      box-shadow: 0 2px 10px rgba(15,23,42,0.15);
       margin-bottom: 10px;
       position: relative;
       flex-shrink: 0;
@@ -544,7 +568,7 @@
       line-height: 1.45;
       color: var(--text-sub);
       text-align: left;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.16);
       transition: opacity 0.15s ease, visibility 0.15s ease;
       z-index: 20;
       pointer-events: none;
@@ -589,7 +613,7 @@
       top: 6px;
       bottom: 6px;
       width: 2px;
-      background: linear-gradient(180deg, var(--border), rgba(48,54,61,0.3));
+      background: linear-gradient(180deg, var(--border), rgba(227,230,234,0));
       z-index: 0;
     }
     .timeline-item::before {
@@ -609,7 +633,7 @@
     .timeline-item.is-visible::before {
       border-color: var(--accent);
       background: var(--accent);
-      box-shadow: 0 0 0 5px rgba(88,166,255,0.15);
+      box-shadow: 0 0 0 5px rgba(37,99,235,0.15);
     }
 
     .timeline-expansion {
@@ -618,8 +642,8 @@
       margin: 4px 0 32px;
       padding: 30px 30px 26px;
       border-radius: 14px;
-      background: linear-gradient(155deg, rgba(88,166,255,0.07), rgba(63,185,80,0.03));
-      border: 1px solid rgba(88,166,255,0.2);
+      background: linear-gradient(155deg, rgba(37,99,235,0.06), rgba(22,163,74,0.03));
+      border: 1px solid rgba(37,99,235,0.18);
     }
     .expansion-tag {
       display: inline-block;
@@ -628,7 +652,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--accent);
-      background: rgba(88,166,255,0.12);
+      background: rgba(37,99,235,0.12);
       padding: 4px 10px;
       border-radius: 6px;
       margin-bottom: 14px;
@@ -672,30 +696,42 @@
 <!-- ── Hero ── -->
 <section id="hero">
   <div class="container">
-    <p class="hero-eyebrow">👋 Hello, I'm</p>
-    <h1 class="hero-name">Parker Lake</h1>
-    <p class="hero-title">
-      <span>Analytics Leader · Marketing Data & BI</span>
-    </p>
-    <p class="hero-desc">
-      I build the measurement infrastructure that helps marketing organizations make better decisions —
-      BI platforms, data pipelines, attribution frameworks, and lately, AI-augmented reporting workflows.
-      Currently Sr. Manager, Data Analysis at Cox Automotive, leading marketing analytics for a multi-brand
-      B2B portfolio. Open to Director of Analytics opportunities.
-    </p>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="#projects">View My Work</a>
-      <a class="btn btn-outline" href="resume.pdf" target="_blank">Download Résumé</a>
-    </div>
-    <div class="social-row">
-      <a class="social-chip" href="https://linkedin.com/in/parkerllake" target="_blank">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-        LinkedIn
-      </a>
-      <a class="social-chip" href="mailto:parkerllake@gmail.com">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        Email
-      </a>
+    <div class="hero-layout">
+      <div class="hero-photo-frame">
+        <!-- Placeholder initials avatar. Once a headshot is supplied, replace the div below with:
+             <img src="profile.jpg" alt="Parker Lake" class="hero-photo"> -->
+        <div class="hero-photo hero-photo-placeholder">PL</div>
+      </div>
+      <div class="hero-text">
+        <p class="hero-eyebrow">Hello, I'm</p>
+        <h1 class="hero-name">Parker Lake</h1>
+        <p class="hero-title">
+          <span>Analytics Leader · Marketing Data & BI</span>
+        </p>
+        <p class="hero-desc">
+          I'm the person who shows up to a team with zero analytics and leaves with a fully governed BI
+          stack. 10+ years connecting marketing performance to business outcomes across telecom, fintech,
+          and automotive — with a paid-search-era instinct for how channels actually behave baked in. At
+          Cox Automotive I built our B2B marketing analytics function from scratch: the platform, the
+          pipelines, the governance, the people. I'm hands-on by default and a manager by necessity — still
+          happiest a few layers deep in a data model, just with a team alongside me now. Open to Director
+          of Analytics roles where pioneering is part of the job description.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#projects">View My Work</a>
+          <a class="btn btn-outline" href="resume.pdf" target="_blank">Download Résumé</a>
+        </div>
+        <div class="social-row">
+          <a class="social-chip" href="https://linkedin.com/in/parkerllake" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            LinkedIn
+          </a>
+          <a class="social-chip" href="mailto:parkerllake@gmail.com">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+            Email
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -816,7 +852,7 @@
 
       <div class="project-card">
         <div class="project-header">
-          <span class="project-icon">🏗️</span>
+          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg></span>
         </div>
         <div class="project-name">B2B Marketing Analytics Function</div>
         <div class="project-desc">
@@ -825,7 +861,7 @@
           infrastructure used across the org.
         </div>
         <div class="project-impact">
-          <strong>📈 Impact:</strong> 15+ data sources integrated, serving 6+ brands and 70+ stakeholders
+          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> 15+ data sources integrated, serving 6+ brands and 70+ stakeholders
         </div>
         <div class="project-tags">
           <span class="tag">Domo</span>
@@ -836,7 +872,7 @@
 
       <div class="project-card">
         <div class="project-header">
-          <span class="project-icon">🔗</span>
+          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg></span>
         </div>
         <div class="project-name">UTM Governance & Attribution Framework</div>
         <div class="project-desc">
@@ -845,7 +881,7 @@
           or aggregate.
         </div>
         <div class="project-impact">
-          <strong>📈 Impact:</strong> Unified taxonomy across 6+ business units, enabling trustworthy
+          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> Unified taxonomy across 6+ business units, enabling trustworthy
           cross-channel reporting
         </div>
         <div class="project-tags">
@@ -857,7 +893,7 @@
 
       <div class="project-card">
         <div class="project-header">
-          <span class="project-icon">📊</span>
+          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M5 21v-6"/><path d="M12 21V3"/><path d="M19 21V9"/></svg></span>
         </div>
         <div class="project-name">Enterprise Analytics for NADA Conference</div>
         <div class="project-desc">
@@ -866,7 +902,7 @@
           registrations, attendance, and list penetration.
         </div>
         <div class="project-impact">
-          <strong>📈 Impact:</strong> 4 consecutive years; account-based KPI framework adopted enterprise-wide
+          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> 4 consecutive years; account-based KPI framework adopted enterprise-wide
         </div>
         <div class="project-tags">
           <span class="tag gray">KPI Design</span>
@@ -877,7 +913,7 @@
 
       <div class="project-card">
         <div class="project-header">
-          <span class="project-icon">☁️</span>
+          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></span>
         </div>
         <div class="project-name">Domo → Snowflake Migration</div>
         <div class="project-desc">
@@ -886,7 +922,7 @@
           architecture.
         </div>
         <div class="project-impact">
-          <strong>📈 Impact:</strong> In progress — modernizing the data foundation for a multi-brand
+          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> In progress — modernizing the data foundation for a multi-brand
           analytics portfolio
         </div>
         <div class="project-tags">
@@ -898,7 +934,7 @@
 
       <div class="project-card">
         <div class="project-header">
-          <span class="project-icon">🧭</span>
+          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></svg></span>
         </div>
         <div class="project-name">Full-Funnel Customer Journey Model</div>
         <div class="project-desc">
@@ -907,7 +943,7 @@
           touchpoint to conversion.
         </div>
         <div class="project-impact">
-          <strong>📈 Impact:</strong> End-to-end visibility across both online and call-center conversion paths
+          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> End-to-end visibility across both online and call-center conversion paths
         </div>
         <div class="project-tags">
           <span class="tag green">Redshift</span>
@@ -918,7 +954,7 @@
 
       <div class="project-card">
         <div class="project-header">
-          <span class="project-icon">🤖</span>
+          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
         </div>
         <div class="project-name">Ward Manager App <span style="color: var(--muted); font-weight: 400;">(Personal Project)</span></div>
         <div class="project-desc">
@@ -927,7 +963,7 @@
           speaker tracking and callings management.
         </div>
         <div class="project-impact">
-          <strong>📈 Impact:</strong> Runs in production every week, automating scheduling and coordination
+          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> Runs in production every week, automating scheduling and coordination
         </div>
         <div class="project-tags">
           <span class="tag">Claude API</span>
@@ -998,7 +1034,7 @@
       </div>
 
       <div class="timeline-expansion" id="case-study">
-        <span class="expansion-tag">⚡ Featured Deep-Dive</span>
+        <span class="expansion-tag"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>Featured Deep-Dive</span>
         <h3 class="expansion-title">From Zero to Enterprise BI</h3>
         <p class="expansion-intro">
           At Clearlink, I joined a digital sales channels team with no analytics function at all. Over
@@ -1024,10 +1060,10 @@
             </div>
           </div>
 
-          <div class="pioneer-arrow">→</div>
+          <div class="pioneer-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg></div>
 
           <div class="pioneer-node" tabindex="0">
-            <div class="pioneer-badge" style="background:#161b22; border:1px solid var(--border);">
+            <div class="pioneer-badge" style="background:#1e293b;">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="4" y="13" width="3.4" height="7" rx="1" fill="#4285F4"/>
                 <rect x="10.3" y="8.5" width="3.4" height="11.5" rx="1" fill="#34A853"/>
@@ -1042,7 +1078,7 @@
             </div>
           </div>
 
-          <div class="pioneer-arrow">→</div>
+          <div class="pioneer-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg></div>
 
           <div class="pioneer-node" tabindex="0">
             <div class="pioneer-badge" style="background:#8C4FFF;">
@@ -1060,7 +1096,7 @@
             </div>
           </div>
 
-          <div class="pioneer-arrow">→</div>
+          <div class="pioneer-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg></div>
 
           <div class="pioneer-node" tabindex="0">
             <div class="pioneer-badge" style="background:#017CEE;">
@@ -1078,7 +1114,7 @@
             </div>
           </div>
 
-          <div class="pioneer-arrow">→</div>
+          <div class="pioneer-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg></div>
 
           <div class="pioneer-node" tabindex="0">
             <div class="pioneer-badge" style="background:#00B8A9;">
@@ -1098,10 +1134,10 @@
             </div>
           </div>
 
-          <div class="pioneer-arrow">→</div>
+          <div class="pioneer-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg></div>
 
           <div class="pioneer-node" tabindex="0">
-            <div class="pioneer-badge" style="background:#161b22; border:1px solid var(--border);">
+            <div class="pioneer-badge" style="background:#1e293b;">
               <svg viewBox="0 0 24 24" fill="#4285F4" xmlns="http://www.w3.org/2000/svg"><path d="M11.9475 0c-1.1598.0021-2.0982.944-2.096 2.1038a2.1 2.1 0 00.356 1.166l.895-.8959a.884.884 0 11.565.564l-.895.895c.9593.6478 2.2621.3953 2.91-.564.6478-.9593.3953-2.262-.564-2.91A2.096 2.096 0 0011.9475 0zm-.835 6.1128a3.2629 3.2629 0 00-.653-1.965l-1.164 1.162a1.667 1.667 0 01-.318 2.012l.632 1.5449a3.2819 3.2819 0 001.503-2.754zm-3.2499 1.666h-.03c-.9217.0009-1.6697-.7455-1.6707-1.6673-.001-.9217.7454-1.6697 1.6672-1.6707a1.669 1.669 0 01.9195.275l1.152-1.152c-1.4069-1.141-3.4724-.9257-4.6135.4811s-.9257 3.4723.481 4.6135a3.2799 3.2799 0 002.7275.6652l-.633-1.5439v-.001zm4.1279 1.3359c-.728 0-1.452.106-2.15.315l.922 2.2519c2.6872-.6819 5.4184.9438 6.1002 3.631.6818 2.6873-.9439 5.4184-3.6311 6.1002s-5.4184-.9439-6.1002-3.631c-.5682-2.2394.4655-4.5774 2.5041-5.6643l-.91-2.2449c-3.6908 1.808-5.2173 6.2657-3.4093 9.9567l.0005.001c1.808 3.6909 6.2657 5.2173 9.9567 3.4093l.001-.0005c3.6913-1.8071 5.2187-6.2645 3.4116-9.9558a7.4417 7.4417 0 00-6.6865-4.1696h-.008l-.001.001z"/></svg>
             </div>
             <div class="pioneer-label">Looker</div>
@@ -1167,7 +1203,7 @@
     <p class="section-subtitle">Degrees and relevant coursework.</p>
     <div class="certs-grid">
       <div class="cert-card">
-        <div class="cert-icon">🎓</div>
+        <div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></div>
         <div>
           <div class="cert-name">M.S., Business Analytics</div>
           <div class="cert-issuer">University of Utah</div>
@@ -1176,7 +1212,7 @@
         </div>
       </div>
       <div class="cert-card">
-        <div class="cert-icon">🎓</div>
+        <div class="cert-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></div>
         <div>
           <div class="cert-name">B.S., Marketing</div>
           <div class="cert-issuer">University of Utah</div>
