@@ -485,7 +485,7 @@
     .subdive-title svg { width: 18px; height: 18px; stroke: var(--accent); flex-shrink: 0; }
     .subdive-desc { font-size: 0.88rem; color: var(--text-sub); margin-bottom: 18px; max-width: 640px; }
 
-    .arch-diagram { display: flex; align-items: stretch; gap: 14px; flex-wrap: wrap; }
+    .arch-diagram { display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
     .arch-col { flex: 1; min-width: 180px; display: flex; flex-direction: column; }
     .arch-col-header { display: flex; align-items: center; gap: 7px; margin-bottom: 12px; }
     .arch-col-header svg { width: 15px; height: 15px; stroke: var(--accent); }
@@ -616,6 +616,7 @@
       background: rgba(37,99,235,0.06);
       border-color: rgba(37,99,235,0.25);
       font-size: 0.72rem;
+      word-break: break-all;
     }
     .catalog-table-wrap { overflow-x: auto; }
     .catalog-table { width: 100%; border-collapse: collapse; font-size: 0.76rem; min-width: 520px; }
@@ -817,7 +818,7 @@
       margin: 4px 0 32px;
       padding: 30px 30px 26px;
       border-radius: 14px;
-      background: linear-gradient(155deg, rgba(37,99,235,0.06), rgba(22,163,74,0.03));
+      background: linear-gradient(155deg, rgba(37,99,235,0.06), rgba(22,163,74,0.03)), var(--bg);
       border: 1px solid rgba(37,99,235,0.18);
     }
     .expansion-tag {
