@@ -470,6 +470,97 @@
     .expansion-tag svg { width: 13px; height: 13px; vertical-align: -2px; margin-right: 3px; }
     .pioneer-arrow svg { width: 16px; height: 16px; stroke: var(--muted); display: block; }
 
+    /* ── Cox Automotive Deep-Dive: subsections, architecture diagram,
+       before/after compare, KPI evolution steps ── */
+    .subdive { margin-top: 32px; padding-top: 28px; border-top: 1px dashed var(--border); }
+    .subdive:first-of-type { margin-top: 20px; padding-top: 0; border-top: none; }
+    .subdive-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .subdive-title svg { width: 18px; height: 18px; stroke: var(--accent); flex-shrink: 0; }
+    .subdive-desc { font-size: 0.88rem; color: var(--text-sub); margin-bottom: 18px; max-width: 640px; }
+
+    .arch-diagram { display: flex; align-items: stretch; gap: 14px; flex-wrap: wrap; }
+    .arch-col { flex: 1; min-width: 180px; display: flex; flex-direction: column; }
+    .arch-col-header { display: flex; align-items: center; gap: 7px; margin-bottom: 12px; }
+    .arch-col-header svg { width: 15px; height: 15px; stroke: var(--accent); }
+    .arch-col-title {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .arch-chip-list { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .arch-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 0.82rem;
+      color: var(--text-sub);
+    }
+    .arch-hub {
+      background: linear-gradient(155deg, rgba(37,99,235,0.08), rgba(22,163,74,0.04));
+      border: 1.5px solid rgba(37,99,235,0.35);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex: 1;
+    }
+    .arch-hub-name { font-weight: 700; font-size: 1.05rem; }
+    .arch-hub-sub { font-size: 0.75rem; color: var(--muted); }
+    .arch-connector { display: flex; align-items: center; justify-content: center; align-self: center; flex-shrink: 0; }
+    .arch-connector svg { width: 20px; height: 20px; stroke: var(--muted); }
+
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .compare-col { border-radius: 10px; padding: 16px; border: 1px solid var(--border); }
+    .compare-col.before { background: rgba(220,38,38,0.04); border-color: rgba(220,38,38,0.18); }
+    .compare-col.after { background: rgba(22,163,74,0.05); border-color: rgba(22,163,74,0.2); }
+    .compare-label { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.82rem; margin-bottom: 10px; }
+    .compare-label.before-label { color: #dc2626; }
+    .compare-label.before-label svg { stroke: #dc2626; width: 15px; height: 15px; }
+    .compare-label.after-label { color: var(--accent2); }
+    .compare-label.after-label svg { stroke: var(--accent2); width: 15px; height: 15px; }
+    .compare-example {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 9px;
+      margin-bottom: 6px;
+      color: var(--text-sub);
+      word-break: break-all;
+    }
+    .compare-note { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+
+    .kpi-steps { display: flex; gap: 4px; align-items: stretch; flex-wrap: wrap; }
+    .kpi-step { flex: 1; min-width: 140px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+    .kpi-step-year { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+    .kpi-step-desc { font-size: 0.82rem; color: var(--text-sub); }
+    .kpi-connector { display: flex; align-items: center; color: var(--muted); flex-shrink: 0; }
+    .kpi-connector svg { width: 16px; height: 16px; stroke: var(--muted); }
+
+    @media (max-width: 640px) {
+      .arch-diagram { flex-direction: column; }
+      .arch-connector svg { transform: rotate(90deg); }
+      .compare-grid { grid-template-columns: 1fr; }
+      .kpi-steps { flex-direction: column; }
+      .kpi-connector svg { transform: rotate(90deg); margin: 0 auto; }
+    }
+
     /* ── Responsive ── */
     @media (max-width: 640px) {
       .timeline-item { grid-template-columns: 1fr; gap: 4px; }
@@ -1007,6 +1098,137 @@
             <span class="metric-chip">0→2 direct reports</span>
           </div>
         </div>
+      </div>
+
+      <div class="timeline-expansion" id="cox-deep-dive">
+        <span class="expansion-tag"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>Featured Deep-Dive</span>
+        <h3 class="expansion-title">Building B2B Analytics at Cox Automotive</h3>
+        <p class="expansion-intro">
+          Three connected efforts turned a marketing org with scattered spreadsheets into one with a
+          governed, self-service analytics platform. Here's how the data got in, how it got trustworthy,
+          and how measurement grew up for the company's biggest annual event.
+        </p>
+
+        <div class="subdive">
+          <h4 class="subdive-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+            From 15+ Sources to One Platform
+          </h4>
+          <p class="subdive-desc">
+            Built the Domo environment from scratch as the single home for B2B marketing data — sole owner
+            of ingestion, modeling, and dashboard delivery.
+          </p>
+          <div class="arch-diagram">
+            <div class="arch-col">
+              <div class="arch-col-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                <span class="arch-col-title">15+ Data Sources</span>
+              </div>
+              <div class="arch-chip-list">
+                <div class="arch-chip">Paid media platforms</div>
+                <div class="arch-chip">Web & product analytics</div>
+                <div class="arch-chip">CRM & sales data</div>
+                <div class="arch-chip">Email & marketing automation</div>
+                <div class="arch-chip">Event & conference systems</div>
+              </div>
+            </div>
+            <div class="arch-connector">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="arch-hub">
+              <span class="arch-hub-name">Domo</span>
+              <span class="arch-hub-sub">Unified BI platform</span>
+              <span class="arch-hub-sub">Owned pipelines · dashboards · governance</span>
+            </div>
+            <div class="arch-connector">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="arch-col">
+              <div class="arch-col-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+                <span class="arch-col-title">Delivered To</span>
+              </div>
+              <div class="arch-chip-list">
+                <div class="arch-chip">6+ brands</div>
+                <div class="arch-chip">70+ stakeholders</div>
+                <div class="arch-chip">Self-service dashboards</div>
+                <div class="arch-chip">Forecasting & identity tools</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subdive">
+          <h4 class="subdive-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg>
+            UTM Governance: Before vs. After
+          </h4>
+          <p class="subdive-desc">
+            Six-plus business units had grown their own naming habits independently, so nothing rolled up
+            and nothing could be trusted at the portfolio level.
+          </p>
+          <div class="compare-grid">
+            <div class="compare-col before">
+              <div class="compare-label before-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                Before — every team, its own dialect
+              </div>
+              <div class="compare-example">utm_source=fb&amp;utm_medium=social</div>
+              <div class="compare-example">Source=Facebook_Ads&amp;Med=paid</div>
+              <div class="compare-example">fb_paid_campaign_2023</div>
+              <div class="compare-note">6+ naming conventions, none of them compatible</div>
+            </div>
+            <div class="compare-col after">
+              <div class="compare-label after-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>
+                After — one governed taxonomy
+              </div>
+              <div class="compare-example">utm_source=meta</div>
+              <div class="compare-example">utm_medium=paid_social</div>
+              <div class="compare-example">utm_campaign=[bu]_[initiative]_[period]</div>
+              <div class="compare-note">Every channel rolls up, every brand comparable</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subdive">
+          <h4 class="subdive-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M8 17h.01"/><path d="M12 17h.01"/><path d="M16 17h.01"/></svg>
+            NADA: From Vanity to Account-Based KPIs
+          </h4>
+          <p class="subdive-desc">
+            Four years running the enterprise measurement strategy for the company's biggest annual
+            conference — each year trading a vanity metric for one that actually predicted pipeline.
+          </p>
+          <div class="kpi-steps">
+            <div class="kpi-step">
+              <div class="kpi-step-year">Year 1</div>
+              <div class="kpi-step-desc">Booth traffic & impressions — activity, not outcomes</div>
+            </div>
+            <div class="kpi-connector">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="kpi-step">
+              <div class="kpi-step-year">Year 2</div>
+              <div class="kpi-step-desc">Registration tracking tied to named accounts</div>
+            </div>
+            <div class="kpi-connector">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="kpi-step">
+              <div class="kpi-step-year">Year 3</div>
+              <div class="kpi-step-desc">Added attendance rate & list penetration by account</div>
+            </div>
+            <div class="kpi-connector">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="kpi-step">
+              <div class="kpi-step-year">Year 4</div>
+              <div class="kpi-step-desc">Account-based framework adopted enterprise-wide</div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div class="timeline-item">
