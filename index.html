@@ -635,6 +635,38 @@
     .catalog-table td:last-child { font-family: var(--mono); color: var(--accent); font-size: 0.7rem; }
     .catalog-mockup-caption { font-size: 0.78rem; color: var(--muted); margin-top: 14px; }
 
+    .pis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .pis-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+    .pis-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .pis-block p { font-size: 0.85rem; color: var(--text-sub); line-height: 1.55; }
+
+    .catalog-appheader {
+      background: #1e3a5f;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      flex-wrap: wrap;
+    }
+    .catalog-appheader-title { color: #ffffff; font-weight: 700; font-size: 0.92rem; }
+    .catalog-appheader-tabs { display: flex; gap: 22px; }
+    .catalog-appheader-tab {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.8rem;
+      padding-bottom: 3px;
+      border-bottom: 2px solid transparent;
+    }
+    .catalog-appheader-tab.active { color: #ffffff; border-bottom-color: var(--accent); font-weight: 600; }
+
     @media (max-width: 640px) {
       .flow-diagram { flex-direction: column; align-items: stretch; }
       .flow-connector { align-self: center; margin: -4px 0; }
@@ -1052,9 +1084,9 @@
         </div>
         <div class="project-name">The Marketing Catalog</div>
         <div class="project-desc">
-          Designed and built a tool where marketers log every campaign and tie it to a shared Initiative.
-          It auto-generates a unique, trackable UTM Campaign value — plus standardized UTM Source/Medium
-          values — so fragmented campaigns across channels unify into one reportable story.
+          Designed and built a tool where every channel-specific Effort — whatever native ID system it
+          uses — gets logged against a shared Initiative. It auto-generates a standardized UTM Campaign
+          value per Effort, unifying fragmented campaigns into one reportable story.
         </div>
         <div class="project-impact">
           <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> Unifies campaigns across 6+ business units into reportable Initiatives, with
@@ -1170,7 +1202,7 @@
           <p style="color: var(--muted); font-size: 0.85rem; margin: -4px 0 10px;">Promoted from Manager, Data Analysis — Nov 2024</p>
           <ul class="timeline-bullets">
             <li>Built the Retail B2B marketing analytics function from scratch — sole owner and administrator of the Domo BI platform, including data ingestion pipelines, dashboard development, and self-service reporting infrastructure.</li>
-            <li>Designed and built the Marketing Catalog — a tool and data pipeline that unifies fragmented campaigns across 6+ business units under shared Initiatives, with auto-generated UTM values that trace performance data back to campaign and initiative.</li>
+            <li>Designed and built the Marketing Catalog — a tool and data pipeline that logs every channel's native campaign identifiers against shared Initiatives, auto-generating standardized UTM values that trace performance data back to campaign and initiative.</li>
             <li>Integrated 15+ data sources into a unified Domo environment, more than doubling the performance metrics available to stakeholders.</li>
             <li>Led enterprise-wide analytics for the NADA conference across 4 consecutive years, shifting measurement to account-based KPIs including registrations, attendance, and list penetration.</li>
             <li>Serve as the primary analytics partner for brand, product, channel, and strategy marketing teams, owning the analytics roadmap across a multi-brand B2B portfolio.</li>
@@ -1248,25 +1280,48 @@
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
             The Marketing Catalog: Unifying Campaigns Into Initiatives
           </h4>
-          <p class="subdive-desc">
-            Marketing was running dozens of campaigns at once across a dozen channels, and stakeholders
-            wanted them viewed together as a single initiative — but nothing in the data logically tied
-            a Facebook campaign to the email send and landing page that were actually part of the same
-            push. Naming conventions alone couldn't fix that. So I designed and built the <strong>Marketing
-            Catalog</strong>: a tool where marketers log every campaign and tie it to a shared Initiative.
-            The catalog then mints a unique, trackable UTM Campaign value for each one — along with
-            cleaned-up, standardized UTM Source and Medium values — so reporting can roll up by Initiative
-            or drill into any single campaign, and every dollar of web and conversion data traces back to
-            exactly where it came from.
-          </p>
+
+          <div class="pis-grid">
+            <div class="pis-block">
+              <span class="pis-label">Problem</span>
+              <p>Marketing ran dozens of campaigns across a dozen+ channels — but every channel identifies
+              its own work differently: a Campaign ID in Google Ads, an SFMC Campaign Tag in email, a
+              Campaign Name in paid social. Stakeholders wanted it all viewed as one initiative; nothing
+              in the data could logically connect it.</p>
+            </div>
+            <div class="pis-block">
+              <span class="pis-label">Idea &amp; Implementation</span>
+              <p>I designed and built the Marketing Catalog: every channel-specific execution (an
+              <strong>Effort</strong>) is logged against a shared <strong>Initiative</strong>, capturing
+              whatever native identifier that channel actually uses. The catalog generates a standardized
+              UTM Campaign value for each Effort and cleans up UTM Source/Medium into one taxonomy. I built
+              the logging interface and the pipelines that bring it into reporting.</p>
+            </div>
+            <div class="pis-block">
+              <span class="pis-label">Solution</span>
+              <p>Reporting groups by Initiative for the full cross-channel picture, or drills into any
+              single Effort — every dollar of web and conversion data traces back to exactly where it
+              came from, no matter which platform's own ID system it started in.</p>
+            </div>
+          </div>
 
           <div class="flow-diagram">
             <div class="flow-step">
               <div class="flow-step-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
               </div>
-              <div class="flow-step-label">Log Campaign</div>
-              <div class="flow-step-desc">Marketer registers a campaign in the catalog and ties it to an Initiative</div>
+              <div class="flow-step-label">Log Effort</div>
+              <div class="flow-step-desc">Each channel execution is logged with its own native identifier</div>
+            </div>
+            <div class="flow-connector">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M8 5h13"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="M3 10a2 2 0 0 0 2 2h3"/><path d="M3 5v12a2 2 0 0 0 2 2h3"/></svg>
+              </div>
+              <div class="flow-step-label">Assign to Initiative</div>
+              <div class="flow-step-desc">Every Effort is tied to the shared Initiative it belongs to</div>
             </div>
             <div class="flow-connector">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
@@ -1275,18 +1330,8 @@
               <div class="flow-step-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
               </div>
-              <div class="flow-step-label">Generate UTM ID</div>
-              <div class="flow-step-desc">Catalog mints a unique UTM Campaign value tied to that Initiative</div>
-            </div>
-            <div class="flow-connector">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-            <div class="flow-step">
-              <div class="flow-step-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/><path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14"/><path d="M8 6v8"/></svg>
-              </div>
-              <div class="flow-step-label">Tag & Deploy</div>
-              <div class="flow-step-desc">Standardized UTM applied across paid social, email, search, display & more</div>
+              <div class="flow-step-label">Generate UTM Campaign</div>
+              <div class="flow-step-desc">Catalog mints one standardized, trackable value per Effort</div>
             </div>
             <div class="flow-connector">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
@@ -1296,7 +1341,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
               </div>
               <div class="flow-step-label">Data Flows Back</div>
-              <div class="flow-step-desc">Web & conversion data returns tagged with the UTM Campaign value</div>
+              <div class="flow-step-desc">Web & conversion data returns tagged with that UTM value</div>
             </div>
             <div class="flow-connector">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
@@ -1306,51 +1351,57 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
               </div>
               <div class="flow-step-label">Unified Reporting</div>
-              <div class="flow-step-desc">Group by Initiative for the full picture, or drill into any one campaign</div>
+              <div class="flow-step-desc">Group by Initiative for the full picture, or drill into any Effort</div>
             </div>
           </div>
 
           <div class="catalog-mockup">
-            <div class="catalog-mockup-header">
-              <span class="catalog-mockup-dot red"></span>
-              <span class="catalog-mockup-dot yellow"></span>
-              <span class="catalog-mockup-dot green"></span>
-              <span class="catalog-mockup-title">Marketing Catalog — New Campaign</span>
+            <div class="catalog-appheader">
+              <span class="catalog-appheader-title">Marketing Catalog</span>
+              <div class="catalog-appheader-tabs">
+                <span class="catalog-appheader-tab">Initiatives</span>
+                <span class="catalog-appheader-tab active">Efforts</span>
+              </div>
             </div>
             <div class="catalog-mockup-body">
               <div class="catalog-form">
                 <div class="catalog-field">
                   <label>Initiative</label>
-                  <div class="catalog-input">Q3 SUV Launch ▾</div>
-                </div>
-                <div class="catalog-field">
-                  <label>Campaign Name</label>
-                  <div class="catalog-input">Instagram Reels — Awareness</div>
+                  <div class="catalog-input">Spring Trade-In Event ▾</div>
                 </div>
                 <div class="catalog-field">
                   <label>Channel</label>
-                  <div class="catalog-input">Paid Social ▾</div>
+                  <div class="catalog-input">Webinars & Events ▾</div>
+                </div>
+                <div class="catalog-field">
+                  <label>Identifier Type</label>
+                  <div class="catalog-input">Registration Page ID ▾</div>
+                </div>
+                <div class="catalog-field">
+                  <label>Identifier Value</label>
+                  <div class="catalog-input">webinar-tradein-0426</div>
                 </div>
                 <div class="catalog-field generated">
                   <label>Generated UTM Campaign</label>
-                  <div class="catalog-input">q3_suv_launch_paidsocial_2214</div>
+                  <div class="catalog-input">spring_trade_in_event_8844</div>
                 </div>
               </div>
               <div class="catalog-table-wrap">
                 <table class="catalog-table">
                   <thead>
-                    <tr><th>Campaign</th><th>Channel</th><th>Initiative</th><th>UTM Campaign</th></tr>
+                    <tr><th>Initiative</th><th>Channel</th><th>Identifier Type</th><th>Identifier Value</th><th>UTM Campaign</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Instagram Reels — Awareness</td><td>Paid Social</td><td>Q3 SUV Launch</td><td>q3_suv_launch_paidsocial_2214</td></tr>
-                    <tr><td>SUV Launch Email Blast</td><td>Email</td><td>Q3 SUV Launch</td><td>q3_suv_launch_email_2215</td></tr>
-                    <tr><td>Search — SUV Keywords</td><td>Paid Search</td><td>Q3 SUV Launch</td><td>q3_suv_launch_paidsearch_2216</td></tr>
+                    <tr><td>Spring Trade-In Event</td><td>Paid Social</td><td>Campaign Name</td><td>trade_in_ig_reels_q2</td><td>spring_trade_in_event_8841</td></tr>
+                    <tr><td>Spring Trade-In Event</td><td>Email</td><td>SFMC Campaign Tag</td><td>TRADEIN-SP26</td><td>spring_trade_in_event_8842</td></tr>
+                    <tr><td>Spring Trade-In Event</td><td>Google Ads</td><td>Campaign ID</td><td>5528190021</td><td>spring_trade_in_event_8843</td></tr>
                   </tbody>
                 </table>
               </div>
               <p class="catalog-mockup-caption">
-                Three campaigns, three channels, three different owners — one Initiative ties them
-                together so reporting shows the full picture instead of three disconnected numbers.
+                Four channels, four different identifier systems — Campaign ID, SFMC Tag, Campaign Name,
+                Registration Page ID — one Initiative ties them together, and the generated UTM Campaign
+                is what makes it all queryable.
               </p>
             </div>
           </div>
