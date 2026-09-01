@@ -545,6 +545,9 @@
       word-break: break-all;
     }
     .compare-note { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+    .compare-item { display: flex; align-items: flex-start; gap: 9px; font-size: 0.84rem; color: var(--text-sub); margin-bottom: 10px; }
+    .compare-item svg { width: 15px; height: 15px; stroke: var(--muted); flex-shrink: 0; margin-top: 2px; }
+    .compare-item:last-of-type { margin-bottom: 0; }
 
     .kpi-steps { display: flex; gap: 4px; align-items: stretch; flex-wrap: wrap; }
     .kpi-step { flex: 1; min-width: 140px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
@@ -1231,10 +1234,70 @@
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
             From 15+ Sources to One Platform
           </h4>
-          <p class="subdive-desc">
-            Built the Domo environment from scratch as the single home for B2B marketing data — sole owner
-            of ingestion, modeling, and dashboard delivery.
-          </p>
+          <div class="pis-grid">
+            <div class="pis-block">
+              <span class="pis-label">Problem</span>
+              <p>When I joined, the team produced reporting once a month — pulling numbers into an Excel
+              workbook and a PowerPoint deck that multiple people would update by hand. It was slow,
+              inconsistent, and couldn't scale as the org added brands.</p>
+            </div>
+            <div class="pis-block">
+              <span class="pis-label">Idea &amp; Implementation</span>
+              <p>I identified every data source feeding that manual process, brought Domo onto the team,
+              and became its administrator — a role I've held ever since. Within months, reporting was
+              fully automated, built on a self-serve model: tools designed for stakeholders to use
+              directly, not just consume.</p>
+            </div>
+            <div class="pis-block">
+              <span class="pis-label">Solution</span>
+              <p>A monthly, all-hands manual exercise became always-on self-service reporting — now
+              spanning 15+ data sources across 6+ brands and 70+ stakeholders, scaling without adding
+              headcount for every new request.</p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="compare-col before">
+              <div class="compare-label before-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                Before I joined
+              </div>
+              <div class="compare-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 17h2"/><path d="M14 17h2"/></svg>
+                One Excel workbook, updated by hand
+              </div>
+              <div class="compare-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/></svg>
+                One PowerPoint deck, assembled monthly
+              </div>
+              <div class="compare-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+                Multiple contributors, stitched together by hand
+              </div>
+              <div class="compare-note">One report, once a month, entirely manual</div>
+            </div>
+            <div class="compare-col after">
+              <div class="compare-label after-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>
+                After
+              </div>
+              <div class="compare-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                Automated Domo dashboards, always current
+              </div>
+              <div class="compare-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+                Self-serve — stakeholders pull their own answers
+              </div>
+              <div class="compare-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>
+                Automated in a matter of months
+              </div>
+              <div class="compare-note">Always-on self-service across 15+ sources</div>
+            </div>
+          </div>
+
+          <p style="font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 14px;">The platform today</p>
           <div class="arch-diagram">
             <div class="arch-col">
               <div class="arch-col-header">
