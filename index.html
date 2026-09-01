@@ -524,31 +524,6 @@
     .arch-connector { display: flex; align-items: center; justify-content: center; align-self: center; flex-shrink: 0; }
     .arch-connector svg { width: 20px; height: 20px; stroke: var(--muted); }
 
-    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .compare-col { border-radius: 10px; padding: 16px; border: 1px solid var(--border); }
-    .compare-col.before { background: rgba(220,38,38,0.04); border-color: rgba(220,38,38,0.18); }
-    .compare-col.after { background: rgba(22,163,74,0.05); border-color: rgba(22,163,74,0.2); }
-    .compare-label { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.82rem; margin-bottom: 10px; }
-    .compare-label.before-label { color: #dc2626; }
-    .compare-label.before-label svg { stroke: #dc2626; width: 15px; height: 15px; }
-    .compare-label.after-label { color: var(--accent2); }
-    .compare-label.after-label svg { stroke: var(--accent2); width: 15px; height: 15px; }
-    .compare-example {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 6px 9px;
-      margin-bottom: 6px;
-      color: var(--text-sub);
-      word-break: break-all;
-    }
-    .compare-note { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
-    .compare-item { display: flex; align-items: flex-start; gap: 9px; font-size: 0.84rem; color: var(--text-sub); margin-bottom: 10px; }
-    .compare-item svg { width: 15px; height: 15px; stroke: var(--muted); flex-shrink: 0; margin-top: 2px; }
-    .compare-item:last-of-type { margin-bottom: 0; }
-
     .kpi-steps { display: flex; gap: 4px; align-items: stretch; flex-wrap: wrap; }
     .kpi-step { flex: 1; min-width: 140px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
     .kpi-step-year { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
@@ -676,7 +651,6 @@
       .flow-connector svg { transform: rotate(90deg); }
       .arch-diagram { flex-direction: column; }
       .arch-connector svg { transform: rotate(90deg); }
-      .compare-grid { grid-template-columns: 1fr; }
       .kpi-steps { flex-direction: column; }
       .kpi-connector svg { transform: rotate(90deg); margin: 0 auto; }
     }
