@@ -359,15 +359,15 @@
     .timeline-metrics {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
+      gap: 6px;
+      margin: 2px 0 12px;
     }
     .metric-chip {
       background: rgba(37,99,235,0.06);
       border: 1px solid rgba(37,99,235,0.15);
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 0.78rem;
+      padding: 3px 9px;
+      border-radius: 5px;
+      font-size: 0.7rem;
       font-family: var(--mono);
       color: var(--accent);
     }
@@ -1297,6 +1297,12 @@
         <div>
           <div class="timeline-role">Sr. Manager, Data Analysis</div>
           <p style="color: var(--muted); font-size: 0.85rem; margin: -4px 0 10px;">Promoted from Manager, Data Analysis — Nov 2024</p>
+          <div class="timeline-metrics">
+            <span class="metric-chip">15+ data sources</span>
+            <span class="metric-chip">6+ brands</span>
+            <span class="metric-chip">70+ stakeholders</span>
+            <span class="metric-chip">0→2 direct reports</span>
+          </div>
           <ul class="timeline-bullets">
             <li>Built the Retail B2B marketing analytics function from scratch — sole owner and administrator of the Domo BI platform, integrating 15+ data sources into a fully automated, self-service reporting environment. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-manual-selfserve"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
             <li>Designed and built the Marketing Catalog — a tool and data pipeline that logs every channel's native campaign identifiers against shared Initiatives, auto-generating standardized UTM values that trace performance data back to campaign and initiative. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-marketing-catalog"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
@@ -1305,12 +1311,6 @@
             <li>Serve as the primary analytics partner for brand, product, channel, and strategy marketing teams, owning the analytics roadmap across a multi-brand B2B portfolio.</li>
             <li>Grew team from 0 to 2 direct reports while maintaining hands-on technical ownership, expanding coverage from 3 to 6+ brands and 70+ stakeholders in 3 years.</li>
           </ul>
-          <div class="timeline-metrics">
-            <span class="metric-chip">15+ data sources</span>
-            <span class="metric-chip">6+ brands</span>
-            <span class="metric-chip">70+ stakeholders</span>
-            <span class="metric-chip">0→2 direct reports</span>
-          </div>
           <div class="award-badge">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>
             3× Cox Automotive Excellence Award nominee <span class="award-badge-sub">(2× Innovator, 1× Maverick, in the award's first 3 years)</span>
@@ -1685,6 +1685,12 @@
         </div>
         <div>
           <div class="timeline-role">Sr. Business Analyst</div>
+          <div class="timeline-metrics">
+            <span class="metric-chip">Zero → full analytics stack</span>
+            <span class="metric-chip">Redshift + Airflow + git</span>
+            <span class="metric-chip">Directed data engineering builds</span>
+            <span class="metric-chip">Sisense & Looker migrations</span>
+          </div>
           <ul class="timeline-bullets">
             <li>Joined a team with zero existing analytics function and built the first standard reporting from scratch in Excel — the team's first real visibility into channel performance.</li>
             <li>Evolved that reporting into Google Data Studio (now Looker Studio) for richer visualization and a self-service experience for stakeholders.</li>
@@ -1693,12 +1699,6 @@
             <li>Outgrew that setup and joined forces with the existing reporting team to build out Sisense as a more robust, automated reporting platform.</li>
             <li>Represented marketing and the digital sales channels team in the company's migration to Looker — the fourth analytics platform evolution in three years.</li>
           </ul>
-          <div class="timeline-metrics">
-            <span class="metric-chip">Zero → full analytics stack</span>
-            <span class="metric-chip">Redshift + Airflow + git</span>
-            <span class="metric-chip">Directed data engineering builds</span>
-            <span class="metric-chip">Sisense & Looker migrations</span>
-          </div>
           <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="case-study">
             <span class="deepdive-toggle-label-closed">See the deep-dive</span>
             <span class="deepdive-toggle-label-open">Hide the deep-dive</span>
@@ -1841,13 +1841,13 @@
         </div>
         <div>
           <div class="timeline-role">Data Scientist / Analyst</div>
+          <div class="timeline-metrics">
+            <span class="metric-chip">SAS automation</span>
+          </div>
           <ul class="timeline-bullets">
             <li>Automated credit card collections workflows in SAS, reducing manual processing time and improving operational consistency across account management.</li>
             <li>Developed performance monitoring and ad hoc reporting solutions to support collections strategy and credit decision-making.</li>
           </ul>
-          <div class="timeline-metrics">
-            <span class="metric-chip">SAS automation</span>
-          </div>
         </div>
       </div>
 
@@ -1858,14 +1858,14 @@
         </div>
         <div>
           <div class="timeline-role">Paid Search Specialist / Analyst</div>
-          <ul class="timeline-bullets">
-            <li>Managed and optimized PPC accounts across national telecom brand partners — hands-on campaign experience that directly shaped how I approach marketing measurement and channel analytics.</li>
-            <li>Reduced costs 40% while improving click-through rate on the second-largest brand; grew sales call volume 50%+ on another account through bid management and ad copy testing.</li>
-          </ul>
           <div class="timeline-metrics">
             <span class="metric-chip">-40% cost</span>
             <span class="metric-chip">+50% call volume</span>
           </div>
+          <ul class="timeline-bullets">
+            <li>Managed and optimized PPC accounts across national telecom brand partners — hands-on campaign experience that directly shaped how I approach marketing measurement and channel analytics.</li>
+            <li>Reduced costs 40% while improving click-through rate on the second-largest brand; grew sales call volume 50%+ on another account through bid management and ad copy testing.</li>
+          </ul>
         </div>
       </div>
 
