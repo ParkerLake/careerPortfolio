@@ -887,10 +887,12 @@
       border: 1px solid rgba(37,99,235,0.18);
     }
 
+    .deepdive-lead { font-size: 0.82rem; color: var(--muted); margin-top: 16px; margin-bottom: 8px; }
+    .deepdive-toggle-group { display: flex; flex-wrap: wrap; gap: 8px; }
     .deepdive-toggle {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       margin-top: 14px;
       padding: 7px 14px;
       border-radius: 999px;
@@ -904,11 +906,14 @@
       transition: background 0.2s ease, border-color 0.2s ease;
     }
     .deepdive-toggle:hover { background: rgba(37,99,235,0.12); }
-    .deepdive-toggle svg { width: 15px; height: 15px; stroke: var(--accent); transition: transform 0.3s ease; flex-shrink: 0; }
-    .deepdive-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+    .deepdive-toggle > svg:first-child { width: 15px; height: 15px; stroke: var(--accent); flex-shrink: 0; }
+    .deepdive-toggle > svg:last-child { width: 15px; height: 15px; stroke: var(--accent); transition: transform 0.3s ease; flex-shrink: 0; }
+    .deepdive-toggle[aria-expanded="true"] > svg:last-child { transform: rotate(180deg); }
     .deepdive-toggle-label-open { display: none; }
     .deepdive-toggle[aria-expanded="true"] .deepdive-toggle-label-closed { display: none; }
     .deepdive-toggle[aria-expanded="true"] .deepdive-toggle-label-open { display: inline; }
+    .expansion-title-icon { display: flex; align-items: center; gap: 10px; }
+    .expansion-title-icon svg { width: 22px; height: 22px; stroke: var(--accent); flex-shrink: 0; }
 
     .award-badge {
       display: inline-flex;
@@ -1290,31 +1295,42 @@
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>
             3× Cox Automotive Excellence Award nominee <span class="award-badge-sub">(2× Innovator, 1× Maverick, in the award's first 3 years)</span>
           </div>
-          <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="cox-deep-dive">
-            <span class="deepdive-toggle-label-closed">See the deep-dive</span>
-            <span class="deepdive-toggle-label-open">Hide the deep-dive</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
+          <p class="deepdive-lead">Four pieces of that build worth a closer look:</p>
+          <div class="deepdive-toggle-group">
+            <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="cox-manual-selfserve">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+              <span class="deepdive-toggle-label-closed">From Manual to Self-Serve</span>
+              <span class="deepdive-toggle-label-open">From Manual to Self-Serve</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="cox-marketing-catalog">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
+              <span class="deepdive-toggle-label-closed">The Marketing Catalog</span>
+              <span class="deepdive-toggle-label-open">The Marketing Catalog</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="cox-goals-manager">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              <span class="deepdive-toggle-label-closed">The Initiative Goals Manager</span>
+              <span class="deepdive-toggle-label-open">The Initiative Goals Manager</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="cox-nada">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M8 17h.01"/><path d="M12 17h.01"/><path d="M16 17h.01"/></svg>
+              <span class="deepdive-toggle-label-closed">NADA: Vanity to Account-Based KPIs</span>
+              <span class="deepdive-toggle-label-open">NADA: Vanity to Account-Based KPIs</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="timeline-expansion" id="cox-deep-dive">
+      <div class="timeline-expansion" id="cox-manual-selfserve">
         <div class="timeline-expansion-inner">
           <div class="timeline-expansion-content">
-        <span class="expansion-tag"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>Featured Deep-Dive</span>
-        <h3 class="expansion-title">Building B2B Analytics at Cox Automotive</h3>
-        <p class="expansion-intro">
-          Four connected efforts turned a marketing org with scattered spreadsheets into one with a
-          governed, self-service analytics platform. Here's how the data got in, how it got trustworthy,
-          how goals got set with evidence instead of guesswork, and how measurement grew up for the
-          company's biggest annual event.
-        </p>
+            <span class="expansion-tag"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>Featured Deep-Dive</span>
+            <h3 class="expansion-title expansion-title-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>From Manual to Self-Serve: Building the Platform From Scratch</h3>
 
-        <div class="subdive">
-          <h4 class="subdive-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
-            From Manual to Self-Serve: Building the Platform From Scratch
-          </h4>
           <div class="pis-grid">
             <div class="pis-block">
               <span class="pis-label">Problem</span>
@@ -1376,13 +1392,17 @@
               </div>
             </div>
           </div>
+        
+          </div>
         </div>
+      </div>
 
-        <div class="subdive">
-          <h4 class="subdive-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
-            The Marketing Catalog: Unifying Campaigns Into Initiatives
-          </h4>
+      <div class="timeline-expansion" id="cox-marketing-catalog">
+        <div class="timeline-expansion-inner">
+          <div class="timeline-expansion-content">
+            <span class="expansion-tag"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>Featured Deep-Dive</span>
+            <h3 class="expansion-title expansion-title-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>The Marketing Catalog: Unifying Campaigns Into Initiatives</h3>
+
 
           <div class="pis-grid">
             <div class="pis-block">
@@ -1508,13 +1528,17 @@
               </p>
             </div>
           </div>
+        
+          </div>
         </div>
+      </div>
 
-        <div class="subdive">
-          <h4 class="subdive-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-            The Initiative Goals Manager: Forecasting Before You Launch
-          </h4>
+      <div class="timeline-expansion" id="cox-goals-manager">
+        <div class="timeline-expansion-inner">
+          <div class="timeline-expansion-content">
+            <span class="expansion-tag"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>Featured Deep-Dive</span>
+            <h3 class="expansion-title expansion-title-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>The Initiative Goals Manager: Forecasting Before You Launch</h3>
+
           <div class="pis-grid">
             <div class="pis-block">
               <span class="pis-label">Problem</span>
@@ -1596,13 +1620,17 @@
               </p>
             </div>
           </div>
+        
+          </div>
         </div>
+      </div>
 
-        <div class="subdive">
-          <h4 class="subdive-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M8 17h.01"/><path d="M12 17h.01"/><path d="M16 17h.01"/></svg>
-            NADA: From Vanity to Account-Based KPIs
-          </h4>
+      <div class="timeline-expansion" id="cox-nada">
+        <div class="timeline-expansion-inner">
+          <div class="timeline-expansion-content">
+            <span class="expansion-tag"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>Featured Deep-Dive</span>
+            <h3 class="expansion-title expansion-title-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M8 17h.01"/><path d="M12 17h.01"/><path d="M16 17h.01"/></svg>NADA: From Vanity to Account-Based KPIs</h3>
+
           <div class="pis-grid">
             <div class="pis-block">
               <span class="pis-label">Problem</span>
@@ -1652,9 +1680,8 @@
               <div class="kpi-step-desc">Account-based framework adopted enterprise-wide</div>
             </div>
           </div>
-        </div>
-
-      </div>
+        
+          </div>
         </div>
       </div>
 
