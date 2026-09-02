@@ -613,6 +613,55 @@
     .catalog-table td:last-child { font-family: var(--mono); color: var(--accent); font-size: 0.7rem; }
     .catalog-mockup-caption { font-size: 0.78rem; color: var(--muted); margin-top: 14px; }
 
+    .catalog-appheader-badge {
+      margin-left: auto;
+      font-size: 0.68rem;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .goals-layout { display: grid; grid-template-columns: 200px 1fr; gap: 20px; }
+    .goals-panel { display: flex; flex-direction: column; gap: 12px; }
+    .goals-channel { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; }
+    .goals-channel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px 10px;
+      padding: 10px 14px;
+      background: var(--surface);
+      border-radius: 8px 8px 0 0;
+      font-weight: 600;
+      font-size: 0.84rem;
+    }
+    .goals-channel:not(:has(.goals-channel-body)) .goals-channel-header { border-radius: 8px; }
+    .goals-metric-table-wrap { overflow-x: auto; }
+    .goals-channel.active .goals-channel-header { background: rgba(37,99,235,0.07); color: var(--accent); }
+    .goals-channel-sub { font-weight: 400; color: var(--muted); font-size: 0.72rem; }
+    .goals-channel-body { padding: 14px; border-top: 1px solid var(--border); }
+    .goals-metric-table { width: 100%; min-width: 340px; border-collapse: collapse; font-size: 0.76rem; }
+    @media (max-width: 640px) { .goals-metric-table { font-size: 0.72rem; } .goals-metric-table th, .goals-metric-table td { padding: 6px 5px; } }
+    .goals-metric-table th {
+      text-align: left;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.66rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .goals-metric-table td { padding: 7px 8px; border-bottom: 1px solid var(--border); color: var(--text-sub); }
+    .goals-metric-table td.est { font-family: var(--mono); color: var(--accent); font-weight: 600; }
+    @media (max-width: 640px) {
+      .goals-layout { grid-template-columns: 1fr; }
+    }
+
     .pis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 28px; }
     .pis-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
     .pis-label {
@@ -662,7 +711,7 @@
       .projects-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
       .timeline::before, .timeline-item::before { display: none; }
-      .timeline-expansion { padding: 22px 18px 18px; margin-left: 0; }
+      .timeline-expansion-content { padding: 22px 18px 18px; }
     }
 
     /* ── Pioneer Diagram (Clearlink case study) ── */
@@ -824,12 +873,58 @@
     .timeline-expansion {
       position: relative;
       z-index: 2;
-      margin: 4px 0 32px;
+      display: grid;
+      grid-template-rows: 0fr;
+      margin: 0;
+      transition: grid-template-rows 0.45s cubic-bezier(.2,.7,.3,1), margin 0.45s cubic-bezier(.2,.7,.3,1);
+    }
+    .timeline-expansion.is-open { grid-template-rows: 1fr; margin: 4px 0 32px; }
+    .timeline-expansion-inner { overflow: hidden; min-height: 0; }
+    .timeline-expansion-content {
       padding: 30px 30px 26px;
       border-radius: 14px;
       background: linear-gradient(155deg, rgba(37,99,235,0.06), rgba(22,163,74,0.03)), var(--bg);
       border: 1px solid rgba(37,99,235,0.18);
     }
+
+    .deepdive-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(37,99,235,0.3);
+      background: rgba(37,99,235,0.06);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .deepdive-toggle:hover { background: rgba(37,99,235,0.12); }
+    .deepdive-toggle svg { width: 15px; height: 15px; stroke: var(--accent); transition: transform 0.3s ease; flex-shrink: 0; }
+    .deepdive-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+    .deepdive-toggle-label-open { display: none; }
+    .deepdive-toggle[aria-expanded="true"] .deepdive-toggle-label-closed { display: none; }
+    .deepdive-toggle[aria-expanded="true"] .deepdive-toggle-label-open { display: inline; }
+
+    .award-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 12px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: rgba(217,119,6,0.08);
+      border: 1px solid rgba(217,119,6,0.25);
+      color: #b45309;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .award-badge svg { width: 15px; height: 15px; stroke: #b45309; flex-shrink: 0; }
+    .award-badge-sub { font-weight: 400; color: var(--muted); font-size: 0.76rem; }
     .expansion-tag {
       display: inline-block;
       font-family: var(--mono);
@@ -1166,7 +1261,7 @@
   <div class="container">
     <p class="section-label">// Experience</p>
     <h2 class="section-title">Work History</h2>
-    <p class="section-subtitle">Ordered most-recent first — scroll down to move back through time. The timeline pauses where there's a deeper story to tell.</p>
+    <p class="section-subtitle">Ordered most-recent first — scroll down to move back through time. Click into a role for the deeper story — diagrams, mockups, and all.</p>
     <div class="timeline">
 
       <div class="timeline-item">
@@ -1191,16 +1286,28 @@
             <span class="metric-chip">70+ stakeholders</span>
             <span class="metric-chip">0→2 direct reports</span>
           </div>
+          <div class="award-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>
+            3× Cox Automotive Excellence Award nominee <span class="award-badge-sub">(2× Innovator, 1× Maverick, in the award's first 3 years)</span>
+          </div>
+          <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="cox-deep-dive">
+            <span class="deepdive-toggle-label-closed">See the deep-dive</span>
+            <span class="deepdive-toggle-label-open">Hide the deep-dive</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
         </div>
       </div>
 
       <div class="timeline-expansion" id="cox-deep-dive">
+        <div class="timeline-expansion-inner">
+          <div class="timeline-expansion-content">
         <span class="expansion-tag"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>Featured Deep-Dive</span>
         <h3 class="expansion-title">Building B2B Analytics at Cox Automotive</h3>
         <p class="expansion-intro">
-          Three connected efforts turned a marketing org with scattered spreadsheets into one with a
+          Four connected efforts turned a marketing org with scattered spreadsheets into one with a
           governed, self-service analytics platform. Here's how the data got in, how it got trustworthy,
-          and how measurement grew up for the company's biggest annual event.
+          how goals got set with evidence instead of guesswork, and how measurement grew up for the
+          company's biggest annual event.
         </p>
 
         <div class="subdive">
@@ -1405,13 +1512,119 @@
 
         <div class="subdive">
           <h4 class="subdive-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            The Initiative Goals Manager: Forecasting Before You Launch
+          </h4>
+          <div class="pis-grid">
+            <div class="pis-block">
+              <span class="pis-label">Problem</span>
+              <p>Before a new initiative launched, goals were set from gut feel or last year's number
+              plus a round percentage. Across 6+ brands and dozens of possible channel combinations,
+              that guesswork produced targets that were either sandbagged or unreachable — and
+              indefensible either way once real results came in.</p>
+            </div>
+            <div class="pis-block">
+              <span class="pis-label">Idea &amp; Implementation</span>
+              <p>I built a Domo app where a stakeholder configures an initiative — brand, type, channel
+              mix, volume, and how aggressive to be — and Bayesian models trained on that brand and
+              channel's historical performance cascade through the inputs to produce a Low/Med/High
+              estimated range for every metric that matters, from clicks to opportunities.</p>
+            </div>
+            <div class="pis-block">
+              <span class="pis-label">Solution</span>
+              <p>Goal-setting became a forecast instead of a guess. Every new initiative now launches
+              with targets grounded in how that exact configuration has actually performed before, not
+              what sounded reasonable in a planning meeting.</p>
+            </div>
+          </div>
+
+          <div class="catalog-mockup">
+            <div class="catalog-appheader">
+              <span class="catalog-appheader-title">Initiative Goals Manager</span>
+              <span class="catalog-appheader-badge">Bayesian Forecast</span>
+            </div>
+            <div class="catalog-mockup-body">
+              <div class="goals-layout">
+                <div class="goals-panel">
+                  <div class="catalog-field">
+                    <label>Initiative</label>
+                    <div class="catalog-input">Spring Trade-In Event ▾</div>
+                  </div>
+                  <div class="catalog-field">
+                    <label>Type</label>
+                    <div class="catalog-input">Thought Leadership ▾</div>
+                  </div>
+                  <div class="catalog-field">
+                    <label>Brand</label>
+                    <div class="catalog-input">Brand A ▾</div>
+                  </div>
+                  <div class="catalog-field">
+                    <label>Audience Size</label>
+                    <div class="catalog-input">4,500</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="goals-channel active">
+                    <div class="goals-channel-header">
+                      <span>✓ Email</span>
+                      <span class="goals-channel-sub">Monthly sends · Aggression</span>
+                    </div>
+                    <div class="goals-channel-body">
+                      <div class="goals-metric-table-wrap">
+                      <table class="goals-metric-table">
+                        <thead><tr><th>Metric</th><th>Low</th><th>Med</th><th>High</th><th>Est. Value</th></tr></thead>
+                        <tbody>
+                          <tr><td>Clicks</td><td>820</td><td>1,240</td><td>1,690</td><td class="est">1,240</td></tr>
+                          <tr><td>Leads</td><td>34</td><td>52</td><td>71</td><td class="est">52</td></tr>
+                          <tr><td>Opportunities</td><td>6</td><td>9</td><td>13</td><td class="est">9</td></tr>
+                        </tbody>
+                      </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="goals-channel">
+                    <div class="goals-channel-header"><span>Paid Search</span></div>
+                  </div>
+                  <div class="goals-channel">
+                    <div class="goals-channel-header"><span>Display</span></div>
+                  </div>
+                </div>
+              </div>
+              <p class="catalog-mockup-caption">
+                Change the brand, channel, or aggression level and the ranges recompute — a model
+                trained on that specific combination's history, not a flat rule of thumb.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="subdive">
+          <h4 class="subdive-title">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M8 17h.01"/><path d="M12 17h.01"/><path d="M16 17h.01"/></svg>
             NADA: From Vanity to Account-Based KPIs
           </h4>
-          <p class="subdive-desc">
-            Four years running the enterprise measurement strategy for the company's biggest annual
-            conference — each year trading a vanity metric for one that actually predicted pipeline.
-          </p>
+          <div class="pis-grid">
+            <div class="pis-block">
+              <span class="pis-label">Problem</span>
+              <p>Every year, leadership wanted to know if the company's biggest annual conference was
+              worth the investment — but the only numbers on hand were booth traffic and impressions,
+              activity metrics that said nothing about whether the right accounts actually showed up or
+              moved.</p>
+            </div>
+            <div class="pis-block">
+              <span class="pis-label">Idea &amp; Implementation</span>
+              <p>I ran the enterprise measurement strategy for four consecutive years — digging into
+              registration, attendance, and account-level data to find what actually predicted pipeline,
+              then presenting the findings and a recommended shift in what to measure to conference
+              leadership and cross-functional stakeholders ahead of every show.</p>
+            </div>
+            <div class="pis-block">
+              <span class="pis-label">Solution</span>
+              <p>Each presentation changed what the company measured the following year — four straight
+              upgrades that took the program from counting badge scans to an account-based framework
+              adopted enterprise-wide.</p>
+            </div>
+          </div>
           <div class="kpi-steps">
             <div class="kpi-step">
               <div class="kpi-step-year">Year 1</div>
@@ -1442,6 +1655,8 @@
         </div>
 
       </div>
+        </div>
+      </div>
 
       <div class="timeline-item">
         <div class="timeline-meta">
@@ -1464,10 +1679,17 @@
             <span class="metric-chip">Directed data engineering builds</span>
             <span class="metric-chip">Sisense & Looker migrations</span>
           </div>
+          <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="case-study">
+            <span class="deepdive-toggle-label-closed">See the deep-dive</span>
+            <span class="deepdive-toggle-label-open">Hide the deep-dive</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
         </div>
       </div>
 
       <div class="timeline-expansion" id="case-study">
+        <div class="timeline-expansion-inner">
+          <div class="timeline-expansion-content">
         <span class="expansion-tag"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>Featured Deep-Dive</span>
         <h3 class="expansion-title">From Zero to Enterprise BI</h3>
         <p class="expansion-intro">
@@ -1589,6 +1811,8 @@
           more trust in the numbers.
         </p>
       </div>
+        </div>
+      </div>
 
       <div class="timeline-item">
         <div class="timeline-meta">
@@ -1706,7 +1930,6 @@
     '.skill-category',
     '.project-card',
     '.timeline-item',
-    '.timeline-expansion',
     '.cert-card',
     '.pioneer-node'
   ];
@@ -1743,6 +1966,30 @@
   }, { threshold: 0.3 });
 
   document.querySelectorAll('.timeline-item').forEach(el => timelineDotObserver.observe(el));
+
+  /* Deep-dive accordion: clicking a role's toggle expands its featured
+     deep-dive inline, closing any other deep-dive that's currently open. */
+  document.querySelectorAll('.deepdive-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.getAttribute('aria-controls'));
+      if (!target) return;
+      const wasOpen = target.classList.contains('is-open');
+
+      document.querySelectorAll('.timeline-expansion.is-open').forEach(exp => {
+        exp.classList.remove('is-open');
+        const openBtn = document.querySelector(`.deepdive-toggle[aria-controls="${exp.id}"]`);
+        if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!wasOpen) {
+        target.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        setTimeout(() => {
+          btn.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        }, reduceMotion ? 0 : 120);
+      }
+    });
+  });
 </script>
 
 </body>
