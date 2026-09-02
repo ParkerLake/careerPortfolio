@@ -887,8 +887,6 @@
       border: 1px solid rgba(37,99,235,0.18);
     }
 
-    .deepdive-lead { font-size: 0.82rem; color: var(--muted); margin-top: 16px; margin-bottom: 8px; }
-    .deepdive-toggle-group { display: flex; flex-wrap: wrap; gap: 8px; }
     .deepdive-toggle {
       display: inline-flex;
       align-items: center;
@@ -909,9 +907,31 @@
     .deepdive-toggle > svg:first-child { width: 15px; height: 15px; stroke: var(--accent); flex-shrink: 0; }
     .deepdive-toggle > svg:last-child { width: 15px; height: 15px; stroke: var(--accent); transition: transform 0.3s ease; flex-shrink: 0; }
     .deepdive-toggle[aria-expanded="true"] > svg:last-child { transform: rotate(180deg); }
+
+    .deepdive-toggle-inline {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-left: 2px;
+      color: var(--accent);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: var(--font);
+      white-space: nowrap;
+    }
+    .deepdive-toggle-inline:hover { text-decoration: underline; }
+    .deepdive-toggle-inline svg { width: 12px; height: 12px; stroke: var(--accent); align-self: center; transition: transform 0.3s ease; flex-shrink: 0; }
+    .deepdive-toggle-inline[aria-expanded="true"] svg { transform: rotate(180deg); }
+
     .deepdive-toggle-label-open { display: none; }
-    .deepdive-toggle[aria-expanded="true"] .deepdive-toggle-label-closed { display: none; }
-    .deepdive-toggle[aria-expanded="true"] .deepdive-toggle-label-open { display: inline; }
+    .deepdive-toggle[aria-expanded="true"] .deepdive-toggle-label-closed,
+    .deepdive-toggle-inline[aria-expanded="true"] .deepdive-toggle-label-closed { display: none; }
+    .deepdive-toggle[aria-expanded="true"] .deepdive-toggle-label-open,
+    .deepdive-toggle-inline[aria-expanded="true"] .deepdive-toggle-label-open { display: inline; }
     .expansion-title-icon { display: flex; align-items: center; gap: 10px; }
     .expansion-title-icon svg { width: 22px; height: 22px; stroke: var(--accent); flex-shrink: 0; }
 
@@ -1278,10 +1298,10 @@
           <div class="timeline-role">Sr. Manager, Data Analysis</div>
           <p style="color: var(--muted); font-size: 0.85rem; margin: -4px 0 10px;">Promoted from Manager, Data Analysis — Nov 2024</p>
           <ul class="timeline-bullets">
-            <li>Built the Retail B2B marketing analytics function from scratch — sole owner and administrator of the Domo BI platform, including data ingestion pipelines, dashboard development, and self-service reporting infrastructure.</li>
-            <li>Designed and built the Marketing Catalog — a tool and data pipeline that logs every channel's native campaign identifiers against shared Initiatives, auto-generating standardized UTM values that trace performance data back to campaign and initiative.</li>
-            <li>Integrated 15+ data sources into a unified Domo environment, more than doubling the performance metrics available to stakeholders.</li>
-            <li>Led enterprise-wide analytics for the NADA conference across 4 consecutive years, shifting measurement to account-based KPIs including registrations, attendance, and list penetration.</li>
+            <li>Built the Retail B2B marketing analytics function from scratch — sole owner and administrator of the Domo BI platform, integrating 15+ data sources into a fully automated, self-service reporting environment. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-manual-selfserve"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
+            <li>Designed and built the Marketing Catalog — a tool and data pipeline that logs every channel's native campaign identifiers against shared Initiatives, auto-generating standardized UTM values that trace performance data back to campaign and initiative. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-marketing-catalog"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
+            <li>Built the Initiative Goals Manager — a Domo app that runs Bayesian forecasts on historical performance so new initiatives launch with data-backed goals instead of guesswork. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-goals-manager"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
+            <li>Led enterprise-wide analytics for the NADA conference across 4 consecutive years, shifting measurement to account-based KPIs including registrations, attendance, and list penetration. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-nada"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
             <li>Serve as the primary analytics partner for brand, product, channel, and strategy marketing teams, owning the analytics roadmap across a multi-brand B2B portfolio.</li>
             <li>Grew team from 0 to 2 direct reports while maintaining hands-on technical ownership, expanding coverage from 3 to 6+ brands and 70+ stakeholders in 3 years.</li>
           </ul>
@@ -1294,33 +1314,6 @@
           <div class="award-badge">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>
             3× Cox Automotive Excellence Award nominee <span class="award-badge-sub">(2× Innovator, 1× Maverick, in the award's first 3 years)</span>
-          </div>
-          <p class="deepdive-lead">Four pieces of that build worth a closer look:</p>
-          <div class="deepdive-toggle-group">
-            <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="cox-manual-selfserve">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
-              <span class="deepdive-toggle-label-closed">From Manual to Self-Serve</span>
-              <span class="deepdive-toggle-label-open">From Manual to Self-Serve</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="cox-marketing-catalog">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
-              <span class="deepdive-toggle-label-closed">The Marketing Catalog</span>
-              <span class="deepdive-toggle-label-open">The Marketing Catalog</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="cox-goals-manager">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-              <span class="deepdive-toggle-label-closed">The Initiative Goals Manager</span>
-              <span class="deepdive-toggle-label-open">The Initiative Goals Manager</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="cox-nada">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 13h.01"/><path d="M12 13h.01"/><path d="M16 13h.01"/><path d="M8 17h.01"/><path d="M12 17h.01"/><path d="M16 17h.01"/></svg>
-              <span class="deepdive-toggle-label-closed">NADA: Vanity to Account-Based KPIs</span>
-              <span class="deepdive-toggle-label-open">NADA: Vanity to Account-Based KPIs</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
           </div>
         </div>
       </div>
@@ -1996,7 +1989,7 @@
 
   /* Deep-dive accordion: clicking a role's toggle expands its featured
      deep-dive inline, closing any other deep-dive that's currently open. */
-  document.querySelectorAll('.deepdive-toggle').forEach(btn => {
+  document.querySelectorAll('.deepdive-toggle, .deepdive-toggle-inline').forEach(btn => {
     btn.addEventListener('click', () => {
       const target = document.getElementById(btn.getAttribute('aria-controls'));
       if (!target) return;
@@ -2004,8 +1997,9 @@
 
       document.querySelectorAll('.timeline-expansion.is-open').forEach(exp => {
         exp.classList.remove('is-open');
-        const openBtn = document.querySelector(`.deepdive-toggle[aria-controls="${exp.id}"]`);
-        if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+        document.querySelectorAll(`.deepdive-toggle[aria-controls="${exp.id}"], .deepdive-toggle-inline[aria-controls="${exp.id}"]`).forEach(openBtn => {
+          openBtn.setAttribute('aria-expanded', 'false');
+        });
       });
 
       if (!wasOpen) {
