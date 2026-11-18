@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parker Lake — Portfolio</title>
-  <meta name="description" content="Parker Lake: analytics leader across marketing data, BI, attribution, and data science. Built analytics functions from scratch at Cox Automotive and Clearlink." />
+  <meta name="description" content="Parker Lake connects marketing spend to the revenue it earned. Analytics leader across attribution, BI, and data science; built analytics functions from zero at Clearlink and Cox Automotive." />
   <style>
     /* ── Design Tokens ── */
     :root {
@@ -33,6 +33,22 @@
     /* DRAFT PLACEHOLDERS — search for "fill-in" and clear all before publishing */
     .fill-in { background: #fef08a; color: #713f12; border-radius: 4px; padding: 1px 6px; font-weight: 600; font-size: 0.85em; }
 
+
+    /* ── Path to purchase (hero motif) ── */
+    .path { margin-top: 56px; }
+    .path-track { display: flex; align-items: center; flex-wrap: wrap; }
+    .path-node { font-family: var(--mono); font-size: 0.78rem; padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text-sub); opacity: 0; animation: pathIn .5s ease forwards; animation-delay: calc(var(--i) * .14s); white-space: nowrap; }
+    .path-link { flex: 1 1 12px; min-width: 12px; max-width: 56px; height: 2px; background: var(--accent); opacity: .35; }
+    .path-caption { margin-top: 16px; color: var(--muted); font-size: 0.95rem; max-width: 560px; }
+    @keyframes pathIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .path-node { animation: none; opacity: 1; } }
+    @media (max-width: 640px) { .path-track { gap: 8px; } .path-link { display: none; } }
+    /* ── Also built list ── */
+    .more-list { list-style: none; display: grid; gap: 12px; }
+    .more-list li { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 22px; }
+    .more-list strong { display: block; margin-bottom: 2px; }
+    .more-list span { color: var(--text-sub); font-size: 0.95rem; }
+
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -49,7 +65,7 @@
 
     /* ── Layout ── */
     .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
-    section { padding: 80px 0; }
+    section { padding: 64px 0; }
     section + section { border-top: 1px solid var(--border); }
 
     /* ── Nav ── */
@@ -1001,10 +1017,10 @@
   <div class="container">
     <span class="nav-logo">parker.lake</span>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#about">Proof</a></li>
+      <li><a href="#capabilities">Range</a></li>
       <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
+      <li><a href="#projects">More Work</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -1024,18 +1040,14 @@
         <p class="hero-eyebrow">Hello, I'm</p>
         <h1 class="hero-name">Parker Lake</h1>
         <p class="hero-title">
-          <span>Analytics Leader · Marketing Data, BI & Attribution</span>
+          <span>I connect every marketing dollar to the revenue it earned.</span>
         </p>
         <p class="hero-desc">
-          I'm the person who shows up to a team with zero analytics and leaves with a fully governed BI
-          stack. 10+ years connecting marketing performance to business outcomes across telecom, fintech,
-          and automotive — with a paid-search-era instinct for how channels actually behave baked in. At
-          Cox Automotive I built our B2B marketing analytics function from scratch: the platform, the
-          pipelines, the governance, the people. I'm hands-on by default and a manager by necessity — still
-          happiest a few layers deep in a data model, just with a team alongside me now. Whether the need is analytics and data science, data visualization, standing up reporting, or laying the foundation for multi-touch attribution, I've done it. Open to analytics leadership and senior hands-on roles where building from scratch is part of the job description.
+          Analytics leader. I started in paid search, so I know what marketers actually need from a number,
+          and I've built the measurement behind it from zero twice: at Clearlink, then at Cox Automotive.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#projects">View My Work</a>
+          <a class="btn btn-primary" href="#capabilities">See the Proof</a>
           <a class="btn btn-outline" href="resume.pdf" target="_blank">Download Résumé</a>
         </div>
         <div class="social-row">
@@ -1050,104 +1062,90 @@
         </div>
       </div>
     </div>
+    <div class="path">
+      <div class="path-track" role="img" aria-label="The path to purchase: impression, click, chat, call, cart or form, lead, sale, revenue">
+        <div class="path-node" style="--i:0">Impression</div>
+        <div class="path-link"></div>
+        <div class="path-node" style="--i:1">Click</div>
+        <div class="path-link"></div>
+        <div class="path-node" style="--i:2">Chat · Call · Cart · Form</div>
+        <div class="path-link"></div>
+        <div class="path-node" style="--i:3">Lead</div>
+        <div class="path-link"></div>
+        <div class="path-node" style="--i:4">Sale</div>
+        <div class="path-link"></div>
+        <div class="path-node" style="--i:5">Revenue</div>
+      </div>
+      <p class="path-caption">The path to purchase has a lot of handoffs. I build the data that survives all of them.</p>
+    </div>
+
   </div>
 </section>
 
 <!-- ── About / Impact Numbers ── -->
 <section id="about">
   <div class="container">
-    <p class="section-label">// Impact</p>
-    <h2 class="section-title">By the Numbers</h2>
+    <p class="section-label">// Results</p>
+    <h2 class="section-title">Proof, not adjectives.</h2>
     <div class="metrics-row">
-      <div class="metric-card">
-        <div class="metric-value">10+</div>
-        <div class="metric-label">Years in Data & Analytics</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">15+</div>
-        <div class="metric-label">Data Sources Unified in One BI Platform</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">6+</div>
-        <div class="metric-label">Brands / 70+ Core Stakeholders Served</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">5</div>
-        <div class="metric-label">Years Leading NADA Conference Analytics</div>
-      </div>
+      <div class="metric-card"><div class="metric-value">5</div><div class="metric-label">years leading NADA analytics</div></div>
+      <div class="metric-card"><div class="metric-value">15+</div><div class="metric-label">data sources, one platform</div></div>
+      <div class="metric-card"><div class="metric-value">200+</div><div class="metric-label">Domo users administered</div></div>
+      <div class="metric-card"><div class="metric-value">10+</div><div class="metric-label">years in data &amp; analytics</div></div>
     </div>
-    <p style="color: var(--text-sub); max-width: 620px;">
-      I'm an analytics leader with 10+ years connecting marketing performance to business outcomes across
-      telecom, financial services, and automotive. I started my career running paid search campaigns, which
-      gave me a marketer's instinct for how channels actually work, before moving into analytics and spending
-      the last several years building the measurement infrastructure that helps marketers make better decisions.
-      At Cox Automotive, I built and lead a B2B marketing analytics function from the ground up — standing up
-      the BI platform, owning the data pipelines, and establishing KPI governance across a multi-brand
-      portfolio. I'm a hands-on technical contributor and people manager who translates complex data into
-      insights that drive action, and lately I've been integrating AI-assisted workflows into that work to
-      move faster without losing rigor.
-    </p>
   </div>
 </section>
 
 <!-- ── Capabilities ── -->
 <section id="capabilities">
   <div class="container">
-    <p class="section-label">// Capabilities</p>
-    <h2 class="section-title">If You Need It, I've Done It</h2>
-    <p class="section-subtitle">
-      Each of these is something I've done, not something I've read about, with the place I did it.
-    </p>
+    <p class="section-label">// Range</p>
+    <h2 class="section-title">Pick a problem.</h2>
+    <p class="section-subtitle">Here's where I've already solved it.</p>
     <div class="cap-grid">
       <div class="cap-card">
-        <div class="cap-need">Stand up reporting or an analytics function from nothing</div>
-        <p class="cap-proof">Built the first standard reporting at Clearlink and grew it through five platforms; built Cox Automotive's B2B marketing analytics function from scratch, from zero to two direct reports.</p>
+        <div class="cap-need">Build analytics from nothing</div>
+        <p class="cap-proof">Clearlink had no reporting. Cox had no analytics function. I built both from zero into self-serve reporting.</p>
         <p class="cap-where">Clearlink · Cox Automotive</p>
       </div>
       <div class="cap-card">
-        <div class="cap-need">Move a team to self-serve BI</div>
-        <p class="cap-proof">Onboarded a new BI tool and took the team from monthly spreadsheets and PowerPoints to daily self-serve dashboards. <span class="fill-in">[FILL IN: hours saved]</span></p>
+        <div class="cap-need">Replace the monthly deck with a daily dashboard</div>
+        <p class="cap-proof">Moved a team from monthly spreadsheets and PowerPoints to daily self-serve dashboards, and run the Domo instance behind it: access, metric definitions, data quality.</p>
         <p class="cap-where">Cox Automotive</p>
+        <!-- TODO(detail): hours saved on self-serve reporting -->
       </div>
       <div class="cap-card">
-        <div class="cap-need">Build the foundation for multi-touch attribution</div>
-        <p class="cap-proof">Developed the Marketing Catalog, an attribution system that catalogs marketing efforts and ties spend, impressions, and clicks to web success metrics, sales, and revenue downstream, driving the UTM strategy and end-to-end marketing effectiveness reporting. <span class="fill-in">[FILL IN: % of spend covered]</span></p>
+        <div class="cap-need">Tie spend to revenue</div>
+        <p class="cap-proof">The Marketing Catalog links each effort's spend, impressions, and clicks to web success metrics, sales, and revenue. It drives our UTM strategy and is the foundation multi-touch attribution needs.</p>
         <p class="cap-where">Cox Automotive</p>
+        <!-- TODO(detail): % of spend covered by the catalog -->
       </div>
       <div class="cap-card">
-        <div class="cap-need">Create data that doesn't exist yet</div>
-        <p class="cap-proof">Worked with the developers building the chat and cart tools to design the data structure needed for effective reporting on brand-new channels. <span class="fill-in">[FILL IN: what it unlocked]</span></p>
+        <div class="cap-need">Instrument a channel that doesn't exist yet</div>
+        <p class="cap-proof">Worked with the developers building Clearlink's chat and cart tools to design the data structure the new channels needed for effective reporting.</p>
+        <p class="cap-where">Clearlink</p>
+        <!-- TODO(detail): what the chat/cart data captured and what it unlocked -->
+      </div>
+      <div class="cap-card">
+        <div class="cap-need">Find out which channel really pays</div>
+        <p class="cap-proof">Tested how call, chat, cart, and form cannibalize and feed each other. Chat-warmed calls carried the highest gross value, then calls, chat, and cart. It informed call-center staffing.</p>
         <p class="cap-where">Clearlink</p>
       </div>
       <div class="cap-card">
-        <div class="cap-need">Prove out how channels interact</div>
-        <p class="cap-proof">Led testing of cannibalization and sales-path value across call, chat, cart, and form. Chat-warmed calls carried the highest gross value, then calls, chat, and cart, which informed call-center staffing.</p>
-        <p class="cap-where">Clearlink</p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-need">Run enterprise reporting and set the strategy</div>
-        <p class="cap-proof">Led NADA reporting for five consecutive years and drove strategy for data management, reporting, and goal setting.</p>
+        <div class="cap-need">Turn analysis into strategy</div>
+        <p class="cap-proof">Five years of NADA analysis changed what Cox measures at the show, from booth traffic to accounts and demo quality, and has shaped goal setting and strategy for each show since.</p>
         <p class="cap-where">Cox Automotive</p>
       </div>
       <div class="cap-card">
-        <div class="cap-need">Analytics and traditional data science</div>
-        <p class="cap-proof">M.S. in Business Analytics; SAS automation of collections workflows at CardWorks; Bayesian forecasting behind the Initiative Goals Manager.</p>
+        <div class="cap-need">Go deeper than dashboards</div>
+        <p class="cap-proof">M.S. in Business Analytics. Taught myself SAS in weeks to automate collections workflows at CardWorks. Built Bayesian forecasting into Cox's Initiative Goals Manager.</p>
         <p class="cap-where">University of Utah · CardWorks · Cox Automotive</p>
+        <!-- TODO(detail): how many weeks for SAS, first thing shipped -->
       </div>
       <div class="cap-card">
-        <div class="cap-need">Own a BI platform: governance, definitions, quality</div>
-        <p class="cap-proof">Admin of Cox Automotive's Domo instance for Marketing and Events: 200+ users, data access and quality, metric definitions, and pipelines. At Clearlink, led marketing's move from Sisense to Looker.</p>
-        <p class="cap-where">Cox Automotive · Clearlink</p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-need">Build AI-assisted analytics, with guardrails</div>
-        <p class="cap-proof">Built and manage 30+ custom reporting apps with Claude and Amazon Quick, plus automated AI summaries in Domo. Built in dev environments, reviewed through approval boards, with a human in the loop over full automation.</p>
+        <div class="cap-need">Ship AI-assisted analytics, safely</div>
+        <p class="cap-proof">30+ custom reporting apps built with Claude and Amazon Quick, plus automated AI summaries in Domo. Built in dev, reviewed through approval boards, human-in-the-loop over full automation.</p>
         <p class="cap-where">Cox Automotive</p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-need">Learn new tools fast</div>
-        <p class="cap-proof">Taught myself SAS in weeks, then Redshift and Airflow, Domo, Snowflake, and the Claude API. Built and run the Ward Manager automation as a volunteer church secretary.</p>
-        <p class="cap-where">Throughout</p>
       </div>
     </div>
   </div>
@@ -1223,169 +1221,13 @@
 <!-- ── Projects ── -->
 <section id="projects">
   <div class="container">
-    <p class="section-label">// Projects</p>
-    <h2 class="section-title">Selected Work</h2>
-    <p class="section-subtitle">
-      A curated look at the analytics platforms, frameworks, and tools I've built — professional work
-      described at a level I can share publicly, plus a personal project or two.
-    </p>
-    <div class="projects-grid">
-
-      <div class="project-card">
-        <div class="project-header">
-          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg></span>
-        </div>
-        <div class="project-name">B2B Marketing Analytics Function</div>
-        <div class="project-desc">
-          Built Cox Automotive's Retail B2B marketing analytics function from the ground up — sole owner
-          and administrator of the Domo BI platform, data ingestion pipelines, and self-service reporting
-          infrastructure used across the org. Took the team from monthly spreadsheets and PowerPoints to daily self-serve dashboards.
-        </div>
-        <div class="project-impact">
-          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> 15+ data sources integrated, serving 6+ brands and 70+ stakeholders · 200+ Domo users · <span class="fill-in">[FILL IN: hours saved]</span>
-        </div>
-        <div class="project-tags">
-          <span class="tag">Domo</span>
-          <span class="tag">SQL</span>
-          <span class="tag gray">Data Pipelines</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg></span>
-        </div>
-        <div class="project-name">The Marketing Catalog</div>
-        <div class="project-desc">
-          Designed and built a tool where every channel-specific Effort — whatever native ID system it
-          uses — gets logged against a shared Initiative. It auto-generates a standardized UTM Campaign
-          value per Effort, unifying fragmented campaigns into one reportable story. Marketing spend, impressions, and clicks tie through to web success metrics, sales, and revenue downstream.
-        </div>
-        <div class="project-impact">
-          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> Unifies campaigns across 6+ business units into reportable Initiatives, with
-          full campaign-to-conversion traceability · Drives the UTM strategy and end-to-end marketing effectiveness reporting · <span class="fill-in">[FILL IN: % of spend covered]</span>
-        </div>
-        <div class="project-tags">
-          <span class="tag">Attribution</span>
-          <span class="tag gray">Campaign Taxonomy</span>
-          <span class="tag">Data Pipelines</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M5 21v-6"/><path d="M12 21V3"/><path d="M19 21V9"/></svg></span>
-        </div>
-        <div class="project-name">Enterprise Analytics for NADA Conference</div>
-        <div class="project-desc">
-          Led enterprise-wide measurement strategy for Cox Automotive's presence at the NADA conference
-          for 5 consecutive years, shifting the focus from vanity metrics to account-based KPIs like
-          registrations, attendance, and list penetration.
-        </div>
-        <div class="project-impact">
-          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> 5 consecutive years; account-level focus now drives goal setting and strategy for each show
-        </div>
-        <div class="project-tags">
-          <span class="tag gray">KPI Design</span>
-          <span class="tag gray">Stakeholder Management</span>
-          <span class="tag">Event Analytics</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></span>
-        </div>
-        <div class="project-name">Domo → Snowflake Migration</div>
-        <div class="project-desc">
-          Partnering on migrating the marketing analytics stack off Domo-native ingestion and onto a
-          governed Snowflake data warehouse, contributing data modeling and pipeline logic for the new
-          architecture.
-        </div>
-        <div class="project-impact">
-          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> In progress — modernizing the data foundation for a multi-brand
-          analytics portfolio
-        </div>
-        <div class="project-tags">
-          <span class="tag green">Snowflake</span>
-          <span class="tag">Data Modeling</span>
-          <span class="tag">SQL</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></svg></span>
-        </div>
-        <div class="project-name">Full-Funnel Customer Journey Model</div>
-        <div class="project-desc">
-          At Clearlink, partnered on a data model stitching together web clickstream, CRM/lead, and call
-          center telephony data to create end-to-end visibility into how customers moved from digital
-          touchpoint to conversion.
-        </div>
-        <div class="project-impact">
-          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> End-to-end visibility across both online and call-center conversion paths
-        </div>
-        <div class="project-tags">
-          <span class="tag green">Redshift</span>
-          <span class="tag gray">AWS</span>
-          <span class="tag">SQL</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-        </div>
-        <div class="project-name">Pioneering Chat &amp; Cart Data <span style="color: var(--muted); font-weight: 400;">(Clearlink)</span></div>
-        <div class="project-desc">
-          Worked directly with the developers building Clearlink's chat and cart tools to define the data structure needed to report on them effectively, turning brand-new channels into usable data. <span class="fill-in">[FILL IN: what was captured and what it unlocked]</span>
-        </div>
-        <div class="project-impact">
-          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> <span class="fill-in">[FILL IN: result: first reports, metrics enabled, scale]</span>
-        </div>
-        <div class="project-tags">
-          <span class="tag">Data Modeling</span><span class="tag">Instrumentation</span><span class="tag gray">Cross-Team Partnership</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/></svg></span>
-        </div>
-        <div class="project-name">Cross-Channel Interaction Testing <span style="color: var(--muted); font-weight: 400;">(Clearlink)</span></div>
-        <div class="project-desc">
-          Led testing and analysis of cannibalization and sales-path value across chat, cart, and call. Chat-warmed calls carried the highest gross value, followed by calls, then chat, then cart. Each played a critical role in balancing call-center staffing and maximizing profit from the websites.
-        </div>
-        <div class="project-impact">
-          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> Informed call-center staffing and website profit decisions
-        </div>
-        <div class="project-tags">
-          <span class="tag">Channel Analytics</span><span class="tag">Testing</span><span class="tag gray">Call · Chat · Cart · Form</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-header">
-          <span class="project-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
-        </div>
-        <div class="project-name">Ward Manager App <span style="color: var(--muted); font-weight: 400;">(Personal Project)</span></div>
-        <div class="project-desc">
-          Built a personal automation tool for church administrative work: a Make.com scenario that calls
-          the Claude API and delivers scheduling results via SMS/Slack, plus a Google Apps Script tool for
-          speaker tracking and callings management.
-        </div>
-        <div class="project-impact">
-          <span class="icon impact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg></span><strong>Impact:</strong> Runs in production every week, automating scheduling and coordination
-        </div>
-        <div class="project-tags">
-          <span class="tag">Claude API</span>
-          <span class="tag">Make.com</span>
-          <span class="tag gray">Google Apps Script</span>
-        </div>
-      </div>
-
-    </div>
+    <p class="section-label">// More work</p>
+    <h2 class="section-title">Also built.</h2>
+    <ul class="more-list">
+      <li><strong>Domo → Snowflake migration (Cox Automotive)</strong><span>Moving the marketing analytics stack onto a governed warehouse, contributing data modeling and pipeline logic. In progress.</span></li>
+      <li><strong>Full-funnel customer journey model (Clearlink)</strong><span>Stitched web clickstream, CRM/lead, and call-center telephony data into one view of how customers moved from click to conversion.</span></li>
+      <li><strong>Ward Manager (personal)</strong><span>A Make.com and Claude API scheduler that delivers results by SMS and Slack, plus an Apps Script tracker for speakers and callings. Runs in production every week.</span></li>
+    </ul>
   </div>
 </section>
 
@@ -1394,7 +1236,7 @@
   <div class="container">
     <p class="section-label">// Experience</p>
     <h2 class="section-title">Work History</h2>
-    <p class="section-subtitle">Ordered most-recent first — scroll down to move back through time. Click into a role for the deeper story — diagrams, mockups, and all.</p>
+    <p class="section-subtitle">Most recent first. Open a story for the diagrams and mockups.</p>
     <div class="timeline">
 
       <div class="timeline-item">
@@ -1413,13 +1255,12 @@
             <span class="metric-chip">0→2 direct reports</span>
           </div>
           <ul class="timeline-bullets">
-            <li>Built the Retail B2B marketing analytics function from scratch — sole owner and administrator of the Domo BI platform, integrating 15+ data sources into a fully automated, self-service reporting environment. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-manual-selfserve"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
-            <li>Designed and built the Marketing Catalog — a tool and data pipeline that logs every channel's native campaign identifiers against shared Initiatives, auto-generating standardized UTM values that trace performance data back to campaign and initiative. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-marketing-catalog"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
-            <li>Built the Initiative Goals Manager — a Domo app that runs Bayesian forecasts on historical performance so new initiatives launch with data-backed goals instead of guesswork. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-goals-manager"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
-            <li>Led enterprise-wide analytics for the NADA conference across 5 consecutive years, shifting measurement to account-based KPIs including registrations, attendance, and list penetration. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-nada"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
-            <li>Use Claude and Amazon Quick daily to build and manage 30+ custom reporting applications (attribution ID generation, forecasting and goal setting, data export, performance reporting), plus automated weekly AI summaries and AI-assisted PowerPoints in Domo. Built in dev environments, reviewed through approval boards, with human-in-the-loop preferred over full automation.</li>
-            <li>Serve as the primary analytics partner for brand, product, channel, and strategy marketing teams, owning the analytics roadmap across a multi-brand B2B portfolio.</li>
-            <li>Grew team from 0 to 2 direct reports while maintaining hands-on technical ownership, expanding coverage from 3 to 6+ brands and 70+ stakeholders in 3 years.</li>
+            <li>Built the analytics function from zero: the Domo platform, 15+ data sources, and daily self-serve dashboards in place of monthly decks. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-manual-selfserve"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
+            <li>Created the Marketing Catalog, one record per campaign that ties spend, clicks, and impressions to sales and revenue. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-marketing-catalog"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
+            <li>Built the Initiative Goals Manager: Bayesian forecasts so new initiatives launch with data-backed goals. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-goals-manager"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
+            <li>Led NADA analytics for five years, changing what the company measures and how it sets goals. <button class="deepdive-toggle-inline" type="button" aria-expanded="false" aria-controls="cox-nada"><span class="deepdive-toggle-label-closed">See the deep-dive</span><span class="deepdive-toggle-label-open">Hide the deep-dive</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m6 9 6 6 6-6"/></svg></button></li>
+            <li>Build and manage 30+ custom reporting apps with Claude and Amazon Quick, under approval boards and human review.</li>
+            <li>Primary analytics partner to brand, product, channel, and strategy teams. Grew the team from 0 to 2 and coverage from 3 to 6+ brands.</li>
           </ul>
           <div class="award-badge">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>
@@ -1780,13 +1621,7 @@
               <div class="kpi-step-year">Year 4</div>
               <div class="kpi-step-desc">Account-level focus now guides each show's goals and strategy</div>
             </div>
-            <div class="kpi-connector">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
-            </div>
-            <div class="kpi-step">
-              <div class="kpi-step-year">Year 5</div>
-              <div class="kpi-step-desc"><span class="fill-in">[FILL IN: what changed in year 5]</span></div>
-            </div>
+            <!-- TODO(detail): NADA year 5 step (what changed) -->
           </div>
         
           </div>
@@ -1807,14 +1642,12 @@
             <span class="metric-chip">Sisense & Looker migrations</span>
           </div>
           <ul class="timeline-bullets">
-            <li>Joined a team with zero existing analytics function and built the first standard reporting from scratch in Excel — the team's first real visibility into channel performance.</li>
-            <li>Evolved that reporting into Google Data Studio (now Looker Studio) for richer visualization and a self-service experience for stakeholders.</li>
-            <li>Gained access to Redshift, the company's data warehouse, and partnered with data engineering to design and automate new data processes with Airflow — directing engineers on what data to capture and how to land it in Redshift — promoting all changes through git. Owned the digital sales channel reporting tables in Redshift, with Python scripts deployed on AWS and orchestrated in Airflow, reviewed and promoted to production by data engineering.</li>
-            <li>Partnered on a full-funnel customer journey model stitching together web clickstream, CRM/lead, and call center telephony data for end-to-end conversion visibility across online and call-center paths.</li>
-            <li>Pioneered data from new channels: worked directly with the developers building the chat and cart tools to define the data structure needed for effective reporting. <span class="fill-in">[FILL IN: what was captured, what it unlocked]</span></li>
-            <li>Led testing and analysis of cannibalization and sales-path value across chat, cart, and call. Chat-warmed calls carried the highest gross value, followed by calls, then chat, then cart. Each played a critical role in balancing call-center staffing and maximizing profit from the websites.</li>
-            <li>Outgrew that setup and joined forces with the existing reporting team to build out Sisense as a more robust, automated reporting platform.</li>
-            <li>Led the marketing org's transition in the company-wide Looker migration (which spanned every department that needed reporting), alongside one other marketing representative — the fourth analytics platform evolution in three years.</li>
+            <li>Took reporting from nothing to a self-serve stack in three years: Excel, Looker Studio, Redshift and Airflow, Sisense, then Looker.</li>
+            <li>Owned the digital sales channel tables in Redshift. Wrote Python on AWS and Airflow, promoted through git with data engineering review.</li>
+            <li>Designed the data structure for the new chat and cart tools alongside the developers building them.</li>
+            <li>Tested how call, chat, cart, and form compete and combine. Chat-warmed calls carried the highest gross value, which informed call-center staffing.</li>
+            <li>Built a full-funnel journey model across web clickstream, CRM/lead, and call-center data.</li>
+            <li>Led marketing's side of the company-wide Looker migration, alongside one other marketing representative.</li>
           </ul>
           <button class="deepdive-toggle" type="button" aria-expanded="false" aria-controls="case-study">
             <span class="deepdive-toggle-label-closed">See the deep-dive</span>
@@ -1961,8 +1794,8 @@
             <span class="metric-chip">Self-taught SAS in weeks</span>
           </div>
           <ul class="timeline-bullets">
-            <li>Taught myself SAS in a matter of weeks, then used it to automate credit card collections workflows, reducing manual processing time and improving operational consistency across account management. <span class="fill-in">[FILL IN: how many weeks, first thing you shipped]</span></li>
-            <li>Developed performance monitoring and ad hoc reporting solutions to support collections strategy and credit decision-making.</li>
+            <li>Taught myself SAS in weeks, then automated credit card collections workflows and cut manual processing time.</li>
+            <li>Built performance monitoring and ad hoc reporting for collections strategy and credit decisions.</li>
           </ul>
         </div>
       </div>
@@ -2022,9 +1855,9 @@
 <section id="contact">
   <div class="container">
     <p class="section-label">// Contact</p>
-    <h2 class="section-title">Let's Connect</h2>
+    <h2 class="section-title">Got a measurement problem?</h2>
     <p class="section-subtitle">
-      Open to analytics leadership and senior hands-on roles. Best way to reach me is email.
+      Open to analytics leadership and senior hands-on roles. Email is the fastest way to reach me.
     </p>
     <div class="contact-links">
       <a class="btn btn-primary" href="mailto:parkerllake@gmail.com">parkerllake@gmail.com</a>
