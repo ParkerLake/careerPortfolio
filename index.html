@@ -29,6 +29,8 @@
     .cap-card:hover { border-color: var(--accent); }
     .cap-need { font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; }
     .cap-proof { color: var(--text-sub); font-size: 0.95rem; }
+    .cap-link { display: inline-block; margin-top: 12px; font-weight: 600; font-size: 0.88rem; }
+    .demo-cta { display: inline-block; margin-top: 16px; }
     .cap-where { margin-top: 12px; color: var(--muted); font-size: 0.78rem; font-family: var(--mono); }
     /* DRAFT PLACEHOLDERS — search for "fill-in" and clear all before publishing */
     .fill-in { background: #fef08a; color: #713f12; border-radius: 4px; padding: 1px 6px; font-weight: 600; font-size: 0.85em; }
@@ -1048,6 +1050,7 @@
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#capabilities">See the Proof</a>
+          <a class="btn btn-outline" href="catalog-demo.html">Try the Catalog Demo</a>
           <a class="btn btn-outline" href="resume.pdf" target="_blank">Download Résumé</a>
         </div>
         <div class="social-row">
@@ -1118,6 +1121,7 @@
         <div class="cap-need">Tie spend to revenue</div>
         <p class="cap-proof">The Marketing Catalog links each effort's spend, impressions, and clicks to web success metrics, sales, and revenue. It drives our UTM strategy and is the foundation multi-touch attribution needs.</p>
         <p class="cap-where">Cox Automotive</p>
+        <a class="cap-link" href="catalog-demo.html">Try the interactive demo →</a>
         <!-- TODO(detail): % of spend covered by the catalog -->
       </div>
       <div class="cap-card">
@@ -1352,7 +1356,7 @@
             <div class="pis-block">
               <span class="pis-label">Problem</span>
               <p>Marketing ran dozens of campaigns across a dozen+ channels — but every channel identifies
-              its own work differently: a Campaign ID in Google Ads, an SFMC Campaign Tag in email, a
+              its own work differently: a Campaign ID in Google Ads, an Email Name in email, a
               Campaign Name in paid social. Stakeholders wanted it all viewed as one initiative; nothing
               in the data could logically connect it.</p>
             </div>
@@ -1438,15 +1442,15 @@
                 </div>
                 <div class="catalog-field">
                   <label>Channel</label>
-                  <div class="catalog-input">Webinars & Events ▾</div>
+                  <div class="catalog-input">Email ▾</div>
                 </div>
                 <div class="catalog-field">
                   <label>Identifier Type</label>
-                  <div class="catalog-input">Registration Page ID ▾</div>
+                  <div class="catalog-input">Email Name ▾</div>
                 </div>
                 <div class="catalog-field">
                   <label>Identifier Value</label>
-                  <div class="catalog-input">webinar-tradein-0426</div>
+                  <div class="catalog-input">STE_Email_Reminder_02</div>
                 </div>
                 <div class="catalog-field generated">
                   <label>Generated UTM Campaign</label>
@@ -1459,17 +1463,18 @@
                     <tr><th>Initiative</th><th>Channel</th><th>Identifier Type</th><th>Identifier Value</th><th>UTM Campaign</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Spring Trade-In Event</td><td>Paid Social</td><td>Campaign Name</td><td>trade_in_ig_reels_q2</td><td>spring_trade_in_event_8841</td></tr>
-                    <tr><td>Spring Trade-In Event</td><td>Email</td><td>SFMC Campaign Tag</td><td>TRADEIN-SP26</td><td>spring_trade_in_event_8842</td></tr>
+                    <tr><td>Spring Trade-In Event</td><td>Paid Social</td><td>Campaign Name</td><td>STE_Social_Reels_Q2</td><td>spring_trade_in_event_8841</td></tr>
+                    <tr><td>Spring Trade-In Event</td><td>Email</td><td>Email Name</td><td>STE_Email_SpringPromo_01</td><td>spring_trade_in_event_8842</td></tr>
                     <tr><td>Spring Trade-In Event</td><td>Google Ads</td><td>Campaign ID</td><td>5528190021</td><td>spring_trade_in_event_8843</td></tr>
                   </tbody>
                 </table>
               </div>
               <p class="catalog-mockup-caption">
-                Four channels, four different identifier systems — Campaign ID, SFMC Tag, Campaign Name,
-                Registration Page ID — one Initiative ties them together, and the generated UTM Campaign
-                is what makes it all queryable.
+                Three channels, three different identifier systems: Campaign ID, Email Name, Campaign Name.
+                One Initiative ties them together, and the generated UTM Campaign is what makes it all
+                queryable.
               </p>
+              <a class="btn btn-primary demo-cta" href="catalog-demo.html">Try the interactive demo</a>
             </div>
           </div>
         
