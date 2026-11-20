@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marketing Catalog: interactive demo · Parker Lake</title>
+<meta name="description" content="A simplified, interactive version of the Marketing Catalog: log a campaign, launch it, follow one ID from the send to the website to the CRM, and see why you don't need a naming convention. All data is simulated." />
+<style>
+  :root {
+    --bg: #f6f7f9; --surface: #ffffff; --ink: #111827; --muted: #6b7280; --rule: #e3e6ea; --text-sub: #374151;
+    --accent: #2563eb; --accent-soft: rgba(37,99,235,.08); --accent-ink: #1d4ed8;
+    --ok: #16a34a; --ok-soft: rgba(22,163,74,.1); --ok-ink: #15803d;
+    --bad: #dc2626; --bad-soft: rgba(220,38,38,.08);
+    --navy: #1e3a5f;
+    --serif: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    --r: 12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #fff; color: var(--ink); font: 16px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent-ink); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  [hidden] { display: none !important; }
+
+  .top { border-bottom: 1px solid var(--rule); background: #fff; }
+  .top-in { max-width: 1120px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .top a { text-decoration: none; font-weight: 600; font-size: .95rem; }
+  .badge { font: 600 .72rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 7px 10px; border: 1px solid var(--rule); border-radius: 999px; color: var(--muted); background: var(--surface); }
+
+  .shell { max-width: 1160px; margin: 0 auto; padding: 0 20px 96px; }
+  .app { border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; background: #fff; box-shadow: 0 4px 18px rgba(15,23,42,.06); }
+  .app-chrome { background: var(--bg); border-bottom: 1px solid var(--rule); padding: 10px 14px; display: flex; align-items: center; gap: 6px; }
+  .app-chrome i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .app-chrome i:nth-child(1) { background: #f87171; } .app-chrome i:nth-child(2) { background: #fbbf24; } .app-chrome i:nth-child(3) { background: #34d399; }
+  .app-chrome span { margin-left: 8px; font: .76rem/1 var(--mono); color: var(--muted); }
+  .app-header { background: var(--navy); padding: 14px 22px; display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+  .app-title { color: #fff; font-weight: 700; font-size: .92rem; }
+  .app-tabs { display: flex; gap: 22px; }
+  .app-tabs span { color: rgba(255,255,255,.55); font-size: .8rem; padding-bottom: 3px; border-bottom: 2px solid transparent; }
+  .app-tabs span.active { color: #fff; border-bottom-color: var(--accent); font-weight: 600; }
+  .app-badge { margin-left: auto; font: .68rem/1 var(--mono); background: rgba(255,255,255,.15); color: #fff; padding: 5px 10px; border-radius: 5px; text-transform: uppercase; letter-spacing: .04em; }
+  .app-body { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 40px; padding: 28px 28px 8px; }
+
+  .intro { padding: 56px 0 36px; max-width: 760px; }
+  .eyebrow { font: 600 .75rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 18px; }
+  h1 { font: 800 clamp(2rem, 4.6vw, 3.1rem)/1.08 var(--serif); letter-spacing: -.03em; margin-bottom: 18px; }
+  .lede { font-size: 1.1rem; color: var(--muted); max-width: 640px; }
+
+  .rail { position: sticky; top: 24px; align-self: start; }
+  .rail-title { font: 600 .72rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .rail ol { list-style: none; position: relative; }
+  .rail ol::before { content: ""; position: absolute; left: 11px; top: 12px; bottom: 12px; width: 2px; background: var(--rule); }
+  .rail li { position: relative; display: flex; align-items: center; gap: 14px; padding: 9px 0; color: var(--muted); font-size: .95rem; transition: color .3s; }
+  .rail .dot { position: relative; z-index: 1; width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 2px solid var(--rule); display: grid; place-items: center; font: 700 .65rem/1 var(--mono); transition: all .35s; }
+  .rail li.now { color: var(--ink); font-weight: 600; }
+  .rail li.now .dot { border-color: var(--accent); color: var(--accent-ink); }
+  .rail li.done { color: var(--ink); }
+  .rail li.done .dot { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .rail-id { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule); }
+  .rail-id small { display: block; font: 600 .68rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .rail-id .idchip { font-size: .7rem; word-break: normal; overflow-wrap: anywhere; display: inline-block; }
+
+  .idchip { font-family: var(--mono); font-size: .85em; background: var(--accent-soft); color: var(--accent-ink); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius: 6px; padding: 2px 7px; word-break: break-all; }
+  td .idchip { white-space: nowrap; word-break: normal; }
+  .idchip.pulse { animation: pulse 1.6s ease-out 1; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 100% { box-shadow: 0 0 0 12px transparent; } }
+  .idchip.bad { background: var(--bad-soft); color: var(--bad); border-color: color-mix(in srgb, var(--bad) 35%, transparent); }
+
+  .stage { padding: 8px 0 56px; scroll-margin-top: 24px; }
+  .stage.in { animation: rise .6s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  .num { font: 600 .75rem/1 var(--mono); letter-spacing: .08em; color: var(--accent-ink); margin-bottom: 10px; }
+  h2 { font: 700 clamp(1.6rem, 3.4vw, 2.2rem)/1.1 var(--serif); letter-spacing: -.02em; margin-bottom: 10px; }
+  .sub { color: var(--muted); max-width: 660px; margin-bottom: 26px; }
+  h3 { font: 700 1.15rem/1.3 var(--serif); margin-bottom: 4px; }
+
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 24px; }
+  .grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+
+  .field { margin-bottom: 16px; }
+  label, .lbl { display: block; font: 600 .68rem/1 var(--sans); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  input[type=text], select { width: 100%; font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; transition: border-color .2s, box-shadow .2s; }
+  input[type=text]:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  input[aria-invalid=true] { border-color: var(--bad); }
+  input:disabled, select:disabled { opacity: .65; cursor: not-allowed; }
+  .err { color: var(--bad); font-size: .88rem; margin-top: 6px; min-height: 1.2em; }
+  .hint { color: var(--muted); font-size: .85rem; margin-top: 6px; }
+  .ro { font-family: var(--mono); font-size: .9rem; padding: 11px 13px; border: 1px dashed var(--rule); border-radius: 10px; color: var(--muted); }
+  .btn { font: 600 .95rem/1 var(--sans); cursor: pointer; border: 0; border-radius: 8px; padding: 14px 20px; background: var(--accent); color: #fff; transition: transform .15s, filter .2s; }
+  .btn:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn:disabled { opacity: .55; cursor: default; }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--rule); }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+
+  .gen-label { font: 600 .72rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .gen-value { font: 600 clamp(1.05rem, 2.2vw, 1.35rem)/1.3 var(--mono); color: var(--accent-ink); background: var(--accent-soft); border-radius: 10px; padding: 14px 16px; word-break: break-all; margin-bottom: 16px; }
+  .kv { display: grid; grid-template-columns: 120px 1fr; gap: 8px 12px; font-size: .9rem; }
+  .kv dt { color: var(--muted); font-family: var(--mono); font-size: .76rem; padding-top: 2px; }
+  .kv dd { word-break: break-word; }
+  .url { font: .8rem/1.5 var(--mono); color: var(--muted); word-break: break-all; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--rule); }
+  .url b { color: var(--accent-ink); font-weight: 600; }
+
+  .tracked { font: .85rem/1.6 var(--mono); color: var(--muted); word-break: break-all; padding: 14px 16px; border: 1px dashed var(--rule); border-radius: 10px; background: var(--bg); }
+  .tracked .added { color: var(--accent-ink); background: var(--accent-soft); border-radius: 5px; padding: 1px 3px; }
+  .tracked .added.pop { animation: pulse 1.6s ease-out 1; }
+
+  .tbl-wrap { overflow-x: auto; margin-top: 20px; border: 1px solid var(--rule); border-radius: var(--r); background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; min-width: 640px; }
+  table.wide { min-width: 780px; }
+  table.tight { min-width: 0; font-size: .84rem; }
+  table.tight td.mono { overflow-wrap: anywhere; }
+  table.tight tr.tot td.num-r { white-space: nowrap; }
+  .pane { min-width: 0; }
+  th { text-align: left; font: 600 .66rem/1 var(--sans); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); padding: 12px 14px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+  tr:last-child td { border-bottom: 0; }
+  td.mono, .mono { font-family: var(--mono); font-size: .82rem; }
+  td.num-r, th.num-r { text-align: right; }
+  tr.new td, tr.me td { background: var(--accent-soft); }
+  tr.new td { animation: flash 2.4s ease-out 1; }
+  @keyframes flash { 0% { background: color-mix(in srgb, var(--accent) 30%, transparent); } 100% { background: var(--accent-soft); } }
+  tr.tot td { font-weight: 700; border-top: 1px solid var(--rule); background: color-mix(in srgb, var(--ink) 4%, transparent); }
+  tr.miss td { background: var(--bad-soft); }
+  tr.pick { cursor: pointer; }
+  tr.pick:hover td { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+  tr.pick[aria-selected=true] td { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  tr.pick:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .ev { display: inline-block; font: .72rem/1 var(--mono); padding: 4px 7px; margin: 1px 3px 1px 0; border-radius: 5px; background: color-mix(in srgb, var(--ink) 7%, transparent); color: var(--muted); }
+  .ev.key { background: var(--accent-soft); color: var(--accent-ink); }
+  .st { font: 600 .74rem/1 var(--mono); white-space: nowrap; }
+  .st.ok { color: var(--ok-ink); }
+  .st.no { color: var(--bad); }
+
+  .note { margin-top: 22px; padding: 14px 18px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; font-size: .92rem; max-width: 720px; }
+  .note b { display: block; font: 600 .7rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 6px; }
+
+  #results { margin-top: 20px; }
+
+  .funnel { display: grid; gap: 12px; margin-top: 18px; }
+  .frow { display: grid; grid-template-columns: 150px 1fr 96px; gap: 14px; align-items: center; }
+  .frow .name { font-size: .92rem; color: var(--muted); }
+  .bar { height: 26px; background: color-mix(in srgb, var(--ink) 6%, transparent); border-radius: 7px; overflow: hidden; }
+  .bar > div { height: 100%; width: 0; background: var(--accent); border-radius: 7px; transition: width 1s cubic-bezier(.2,.7,.2,1); }
+  .frow .val { font: 600 1rem/1 var(--mono); text-align: right; }
+  .headline { font: 700 clamp(1.25rem, 2.6vw, 1.7rem)/1.25 var(--serif); }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 6px 0 18px; }
+  .kpi { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 18px; }
+  .kpi .v { font: 700 clamp(1.5rem, 3vw, 2rem)/1 var(--mono); letter-spacing: -.02em; }
+  .kpi .l { margin-top: 8px; font-size: .82rem; color: var(--muted); }
+  .toppage { font-size: .95rem; color: var(--muted); margin-bottom: 4px; }
+  .toppage b { color: var(--ink); font-family: var(--mono); font-weight: 600; }
+
+  .switch { display: inline-flex; align-items: center; gap: 12px; padding: 6px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); margin: 8px 0 4px; }
+  .switch button { font: 600 .85rem/1 var(--sans); border: 0; background: transparent; color: var(--muted); padding: 10px 16px; border-radius: 999px; cursor: pointer; transition: all .25s; }
+  .switch button[aria-pressed=true] { background: var(--accent); color: #fff; }
+  .switch button.off[aria-pressed=true] { background: var(--bad); }
+  .banner { margin-top: 14px; padding: 12px 16px; border-radius: 10px; font-size: .92rem; background: var(--bad-soft); color: var(--bad); }
+  .banner.ok { background: var(--ok-soft); color: var(--ok-ink); }
+
+  .lookup { margin-top: 20px; }
+  .lookup .arrow { font: 600 .78rem/1 var(--mono); color: var(--accent-ink); margin: 12px 0; }
+  .lookup .arrow.bad { color: var(--bad); }
+
+  /* stage 5: names vs catalog */
+  .conv { font-size: .95rem; margin-bottom: 16px; }
+  .conv code { font: 600 .9em var(--mono); background: var(--accent-soft); color: var(--accent-ink); padding: 2px 7px; border-radius: 6px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .chip-btn { font: .8rem/1 var(--mono); border: 1px solid var(--rule); background: var(--bg); color: var(--ink); padding: 9px 12px; border-radius: 999px; cursor: pointer; transition: all .2s; }
+  .chip-btn:hover { border-color: var(--accent); }
+  .chip-btn[aria-pressed=true] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-ink); }
+  .panes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; margin-top: 20px; align-items: start; }
+  .pane { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; }
+  .pane-h { padding: 18px 18px 14px; }
+  .pane-h p { color: var(--muted); font-size: .88rem; }
+  .pane .banner { margin: 0; border-radius: 0; }
+
+  .vs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 18px; align-items: stretch; }
+  .vs > *, .twice > * { min-width: 0; }
+  .vs .cap { color: var(--muted); font-size: .88rem; margin-top: 12px; }
+  .vs .big { font: 700 2rem/1 var(--mono); margin: 12px 0 2px; }
+  .vs .row { display: grid; grid-template-columns: 1.2fr 2fr 40px; gap: 10px; align-items: center; margin-top: 12px; font-size: .84rem; }
+  .vs .mini { height: 14px; border-radius: 5px; background: color-mix(in srgb, var(--ink) 6%, transparent); overflow: hidden; }
+  .vs .mini > div { height: 100%; background: color-mix(in srgb, var(--ink) 28%, transparent); }
+  .vs .row.me .mini > div { background: var(--accent); }
+  .vs .row .n { font: 600 .85rem/1 var(--mono); text-align: right; }
+  .vs .row span:first-child { overflow-wrap: anywhere; }
+  .twice { display: grid; gap: 28px; margin-top: 8px; }
+  .twice h3 { font-size: 1.3rem; margin-bottom: 4px; }
+  .twice .sub { margin-bottom: 14px; }
+
+  .chain { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; margin: 34px 0 26px; }
+  .link { flex: 1 1 130px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--r); padding: 16px; position: relative; }
+  .link small { display: block; font: 600 .66rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .link strong { font: 700 1.05rem/1.25 var(--serif); word-break: break-word; }
+  .link .big { font: 700 1.5rem/1 var(--mono); }
+  .points { display: grid; gap: 14px; max-width: 700px; margin-bottom: 28px; }
+  .points p { padding-left: 18px; position: relative; }
+  .points p::before { content: ""; position: absolute; left: 0; top: .6em; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .points b { font-weight: 700; }
+
+
+  /* ── motion ── */
+  .scene { position: relative; height: 104px; margin: 6px 0 4px; border-radius: 10px; background: var(--bg); border: 1px solid var(--rule); overflow: hidden; display: flex; align-items: flex-start; justify-content: space-between; padding: 12px 12px 0; }
+  .scene .end { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px; font: 600 .68rem/1 var(--sans); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); background: var(--bg); padding: 6px 8px; border-radius: 8px; }
+  .scene .end svg { width: 28px; height: 28px; stroke: var(--navy); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .scene .end.r svg { transition: transform .3s; }
+  .scene .end.r.bump svg { animation: bump .35s ease; }
+  @keyframes bump { 50% { transform: scale(1.18); } }
+  .scene .track { position: absolute; left: 70px; right: 70px; top: 36px; height: 0; border-top: 2px dashed var(--rule); }
+  .scene .fly { position: absolute; top: 26px; left: 70px; width: 20px; height: 20px; opacity: 0; color: var(--accent); }
+  .scene .fly svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .scene.go .fly { animation: flyAcross 1.5s cubic-bezier(.35,.1,.3,1) infinite; }
+  @keyframes flyAcross { 0% { left: 70px; opacity: 0; transform: translateY(0) scale(.7); } 12% { opacity: 1; } 50% { transform: translateY(var(--dy, 0)) scale(1); } 88% { opacity: 1; } 100% { left: calc(100% - 92px); opacity: 0; transform: translateY(0) scale(.7); } }
+  .scene .status { position: absolute; left: 0; right: 0; bottom: 6px; text-align: center; font: 600 .74rem/1 var(--mono); color: var(--muted); z-index: 1; }
+  .scene.done { background: var(--ok-soft); border-color: transparent; }
+  .scene.done .status { color: var(--ok-ink); }
+  .scene.done .track { border-color: var(--ok); }
+
+  .carry { position: relative; height: 66px; margin: 2px 0 22px; border: 1px solid var(--rule); border-radius: 10px; background: var(--bg); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; overflow: hidden; }
+  .carry .end { z-index: 2; background: var(--bg); padding: 4px 8px; font: 600 .68rem/1.2 var(--sans); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+  .carry .end svg { width: 20px; height: 20px; stroke: var(--navy); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .carry .track { position: absolute; left: 110px; right: 160px; top: 50%; border-top: 2px dashed var(--rule); }
+  .carry .rider { position: absolute; top: 50%; left: 110px; transform: translateY(-50%); z-index: 3; white-space: nowrap; font-size: .72rem; box-shadow: 0 2px 8px rgba(37,99,235,.25); background: #fff; }
+  .carry.go .rider { animation: ride 1.9s cubic-bezier(.45,.05,.2,1) both; }
+  @keyframes ride { from { left: 110px; } to { left: calc(100% - 160px - var(--w, 220px)); } }
+  .carry.go .end.r svg { animation: bump .4s ease 1.8s; }
+
+  .rowin { opacity: 0; animation: rowIn .5s cubic-bezier(.2,.7,.2,1) forwards; animation-delay: var(--d, 0s); }
+  @keyframes rowIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .newbadge { display: inline-block; font: 700 .6rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: #fff; background: var(--ok); border-radius: 4px; padding: 3px 5px; margin-left: 8px; vertical-align: middle; animation: fadeOut .4s ease 2.6s forwards; }
+  @keyframes fadeOut { to { opacity: 0; width: 0; padding: 0; margin: 0; } }
+  .caret::after { content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 2px; background: var(--accent); vertical-align: -2px; animation: blink .8s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .vs .mini > div, .rollbar { transition: width .9s cubic-bezier(.2,.7,.2,1); }
+  tr.miss td { animation: missFlash 1s ease-out 1; }
+  @keyframes missFlash { 0% { background: color-mix(in srgb, var(--bad) 28%, transparent); } 100% { background: var(--bad-soft); } }
+  .tick { animation: tickIn .45s ease; }
+  @keyframes tickIn { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  @media (max-width: 860px) {
+    .app-body { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 16px 0; }
+    .app-header { padding: 12px 16px; gap: 14px; } .app-badge { display: none; }
+    .rail { position: sticky; top: 0; z-index: 5; background: #fff; padding: 10px 16px; border-bottom: 1px solid var(--rule); margin: 0 -16px 8px; }
+    .rail-title, .rail ol::before { display: none; }
+    .rail ol { display: flex; gap: 4px; justify-content: space-between; }
+    .rail li { flex-direction: column; gap: 4px; font-size: .64rem; padding: 0; text-align: center; flex: 1; }
+    .rail-id { display: none; }
+    .grid2, .vs, .panes { grid-template-columns: minmax(0, 1fr); }
+    .vs .row { grid-template-columns: 1fr 70px 36px; }
+    .scene .end { font-size: .6rem; letter-spacing: .02em; text-align: center; }
+    .scene .track { left: 58px; right: 58px; }
+    .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .frow { grid-template-columns: 1fr 76px; }
+    .frow .bar { grid-column: 1 / -1; grid-row: 2; }
+    .intro { padding-top: 40px; }
+    .stage { scroll-margin-top: 80px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .stage.in, tr.new td, .idchip.pulse, .tracked .added.pop, .rowin, .carry.go .rider, .scene.go .fly, tr.miss td, .newbadge, .tick, .caret::after { animation: none !important; }
+    .rowin { opacity: 1; } .carry.go .rider { left: calc(100% - 160px - var(--w, 220px)); } .newbadge { display: none; }
+    .bar > div { transition: none; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a href="index.html">← Parker Lake</a>
+    <span class="badge">Interactive demo · simulated data</span>
+  </div>
+</header>
+
+<div class="shell">
+  <section class="intro">
+    <p class="eyebrow">Marketing Catalog, simplified</p>
+    <h1>Follow one ID from the send to the lead.</h1>
+    <p class="lede">This is a stripped-down version of the Marketing Catalog I built at Cox Automotive. Log a campaign, launch it, and watch the ID the catalog creates tie the email, the website, and the CRM together. Then see why you don't need a naming convention to group your campaigns. It takes about two minutes, and every number here is made up.</p>
+    <noscript><p class="note"><b>JavaScript needed</b>This demo runs in your browser and needs JavaScript turned on.</p></noscript>
+  </section>
+
+  <div class="app">
+  <div class="app-chrome" aria-hidden="true"><i></i><i></i><i></i><span>marketing-catalog / demo</span></div>
+  <div class="app-header">
+    <span class="app-title">Marketing Catalog</span>
+    <div class="app-tabs" aria-hidden="true"><span>Initiatives</span><span class="active">Efforts</span><span>Reporting</span></div>
+    <span class="app-badge">Simulated data</span>
+  </div>
+  <div class="app-body">
+  <nav class="rail" aria-label="Demo progress">
+    <p class="rail-title">The path of one ID</p>
+    <ol id="rail">
+      <li data-s="1" class="now"><span class="dot">1</span>Catalog</li>
+      <li data-s="2"><span class="dot">2</span>Launch</li>
+      <li data-s="3"><span class="dot">3</span>Website</li>
+      <li data-s="4"><span class="dot">4</span>CRM</li>
+      <li data-s="5"><span class="dot">5</span>Names</li>
+      <li data-s="6"><span class="dot">6</span>Result</li>
+    </ol>
+    <div class="rail-id" id="railId" hidden><small>Tracking ID</small><span class="idchip" id="railIdVal"></span></div>
+  </nav>
+
+  <main id="stages">
+    <!-- 1 -->
+    <section class="stage in" id="s1" aria-labelledby="h1s">
+      <p class="num">01</p>
+      <h2 id="h1s">Log it in the catalog</h2>
+      <p class="sub">Every campaign gets logged once, against the initiative it belongs to, using the identifier its platform already has. The catalog hands back one standard UTM value.</p>
+      <div class="grid2">
+        <form class="card" id="form" novalidate>
+          <div class="field">
+            <label for="ini">Initiative</label>
+            <select id="ini"></select>
+          </div>
+          <div class="field">
+            <label for="chan">Channel</label>
+            <select id="chan"></select>
+          </div>
+          <div class="field">
+            <span class="lbl">Identifier type</span>
+            <div class="ro" id="idtype"></div>
+          </div>
+          <div class="field">
+            <label for="idval">Identifier value</label>
+            <input type="text" id="idval" maxlength="60" autocomplete="off" aria-describedby="idHint idvalErr" />
+            <p class="hint" id="idHint"></p>
+            <p class="err" id="idvalErr" role="alert"></p>
+          </div>
+          <div class="btn-row">
+            <button class="btn" type="button" id="create">Create catalog entry</button>
+            <button class="btn ghost" type="button" id="reset1" hidden>Start over</button>
+          </div>
+        </form>
+        <div class="card" aria-live="polite">
+          <p class="gen-label">Generated UTM campaign</p>
+          <div class="gen-value" id="genUtm"></div>
+          <dl class="kv">
+            <dt>utm_source</dt><dd id="genSrc"></dd>
+            <dt>utm_medium</dt><dd id="genMed"></dd>
+            <dt>Effort ID</dt><dd id="genId"></dd>
+          </dl>
+          <p class="url" id="genUrl"></p>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table class="wide" aria-label="Catalog">
+          <thead><tr><th>Initiative</th><th>Channel</th><th>Identifier type</th><th>Identifier value</th><th>UTM campaign</th></tr></thead>
+          <tbody id="catBody"></tbody>
+        </table>
+      </div>
+      <div class="note" id="note1"></div>
+    </section>
+
+    <!-- 2 -->
+    <section class="stage" id="s2" hidden aria-labelledby="h2s">
+      <p class="num">02</p>
+      <h2 id="h2s">Set it up, then launch it</h2>
+      <p class="sub">Now go to the platform. Create the campaign there, and the catalog's UTM values go on your links.</p>
+      <div class="card">
+        <div class="field">
+          <label for="pname" id="pnameLbl">Name your campaign</label>
+          <input type="text" id="pname" maxlength="60" autocomplete="off" aria-describedby="pnameHelp pnameErr" />
+          <p class="hint" id="pnameHelp"></p>
+          <p class="err" id="pnameErr" role="alert"></p>
+        </div>
+        <div class="field">
+          <span class="lbl">Your links, with the UTM values added</span>
+          <p class="tracked" id="tracked"></p>
+        </div>
+        <div class="scene" id="lane" aria-hidden="true"></div>
+        <div class="btn-row" id="launchRow"><button class="btn" id="launch" type="button">Launch</button></div>
+        <div id="results" hidden>
+          <p class="headline" id="headline"></p>
+          <div class="funnel" id="funnel"></div>
+        </div>
+      </div>
+      <div class="note" id="note2" hidden></div>
+      <div class="btn-row" id="next2" hidden style="margin-top:22px"><button class="btn" type="button" id="to3">Follow the clicks to the website →</button></div>
+    </section>
+
+    <!-- 3 -->
+    <section class="stage" id="s3" hidden aria-labelledby="h3s">
+      <p class="num">03</p>
+      <h2 id="h3s">Clicks become sessions</h2>
+      <p class="sub">The website's analytics record the UTM campaign on every visit. That value is the catalog's ID, so each session can be tied to its effort.</p>
+      <div class="carry" id="carry3" aria-hidden="true"></div>
+      <div class="kpis" id="kpis3"></div>
+      <p class="toppage" id="top3"></p>
+      <div class="switch" role="group" aria-label="Catalog on or off">
+        <button type="button" class="on" aria-pressed="true" data-cat="on">With the catalog</button>
+        <button type="button" class="off" aria-pressed="false" data-cat="off">Without it</button>
+      </div>
+      <div class="tbl-wrap">
+        <table class="wide" aria-label="Web analytics sessions">
+          <thead><tr><th>Landing page</th><th>utm_source / medium</th><th>utm_campaign</th><th>Events</th><th>Tied to an effort?</th></tr></thead>
+          <tbody id="webBody"></tbody>
+        </table>
+      </div>
+      <div class="banner" id="webBanner" hidden></div>
+      <div class="card lookup" id="lookup3" aria-live="polite"></div>
+      <div class="btn-row" id="next3" style="margin-top:22px"><button class="btn" type="button" id="to4">See who became a lead →</button></div>
+    </section>
+
+    <!-- 4 -->
+    <section class="stage" id="s4" hidden aria-labelledby="h4s">
+      <p class="num">04</p>
+      <h2 id="h4s">Sessions become leads</h2>
+      <p class="sub">The UTM campaign is passed into the CRM when someone fills out a form, so every lead keeps the ID it arrived with.</p>
+      <div class="carry" id="carry4" aria-hidden="true"></div>
+      <div class="kpis" id="kpis4" style="grid-template-columns:repeat(3,minmax(0,1fr))"></div>
+      <div class="switch" role="group" aria-label="Catalog on or off">
+        <button type="button" class="on" aria-pressed="true" data-cat="on">With the catalog</button>
+        <button type="button" class="off" aria-pressed="false" data-cat="off">Without it</button>
+      </div>
+      <div class="tbl-wrap">
+        <table class="wide" aria-label="CRM leads">
+          <thead><tr><th>Lead</th><th>Company</th><th>Lead source campaign</th><th>Traced back to</th></tr></thead>
+          <tbody id="crmBody"></tbody>
+        </table>
+      </div>
+      <div class="banner" id="crmBanner" hidden></div>
+      <p class="sub" style="margin-top:12px;font-size:.85rem" id="crmMore"></p>
+      <div class="btn-row" id="next4" style="margin-top:14px"><button class="btn" type="button" id="to5">One more thing: names →</button></div>
+    </section>
+
+    <!-- 5 -->
+    <section class="stage" id="s5" hidden aria-labelledby="h5s">
+      <p class="num">05</p>
+      <h2 id="h5s">Why not just use a naming convention?</h2>
+      <p class="sub">A common way to group campaigns is to start every name with a code for the initiative, then text-mine the data for it. That works until someone mistypes the code. Pick a name and see who gets counted.</p>
+      <div class="card">
+        <p class="conv" id="conv"></p>
+        <label for="rname">If this campaign had been launched as</label>
+        <input type="text" id="rname" maxlength="60" autocomplete="off" />
+        <div class="chips" id="chips" role="group" aria-label="Example names"></div>
+      </div>
+      <div class="panes" aria-live="polite">
+        <div class="pane" id="byName"></div>
+        <div class="pane" id="byCat"></div>
+      </div>
+      <div class="note" id="note5"></div>
+      <div class="btn-row" id="next5" style="margin-top:22px"><button class="btn" type="button" id="to6">What the ID buys you →</button></div>
+    </section>
+
+    <!-- 6 -->
+    <section class="stage" id="s6" hidden aria-labelledby="h6s">
+      <p class="num">06</p>
+      <h2 id="h6s">What the ID buys you</h2>
+      <p class="sub">One ID, minted once in the catalog, carried by every system that touched the campaign. Two things come out of it.</p>
+      <div class="twice">
+        <div>
+          <h3>1. Group what belongs together, across channels</h3>
+          <p class="sub">The initiative is assigned in the catalog. Nobody mines names, and nobody maintains exceptions.</p>
+          <div class="tbl-wrap" style="margin-top:0"><table id="rollup" aria-label="Initiative rollup"></table></div>
+        </div>
+        <div>
+          <h3>2. Credit the specific campaign, not just the channel</h3>
+          <p class="sub">Sessions and leads trace back to the email, ad, or post that earned them.</p>
+          <div class="vs" id="vs"></div>
+        </div>
+      </div>
+      <div class="chain" id="chain"></div>
+      <div class="points">
+        <p><b>No text mining.</b> Grouping comes from the catalog, not from patterns in names, so a typo can't orphan a campaign.</p>
+        <p><b>Reporting gets simpler and optimization becomes possible.</b> You can see which campaign worked, not just that the channel did.</p>
+        <p><b>It's the groundwork for multi-touch attribution.</b> Once every touch carries an ID, touches can be joined into a customer's journey.</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn" type="button" id="again">Try another effort</button>
+        <a class="btn ghost" style="text-decoration:none" href="index.html#experience">Read how I built it</a>
+      </div>
+    </section>
+  </main>
+  </div>
+  </div>
+</div>
+<div class="sr" id="live" aria-live="polite"></div>
+
+<script>
+(() => {
+  'use strict';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const fmt = n => n.toLocaleString('en-US');
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+  const say = t => { $('#live').textContent = t; };
+
+  // seeded randomness: the numbers depend on the identifier
+  function seedFrom(str) { let h = 1779033703 ^ str.length; for (let i = 0; i < str.length; i++) { h = Math.imul(h ^ str.charCodeAt(i), 3432918353); h = (h << 13) | (h >>> 19); } h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); return (h ^= h >>> 16) >>> 0; }
+  function rng(seed) { let a = seed; return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+  // ── catalog data ──
+  // Each seeded effort has the platform identifier (idVal) and the name it was launched under.
+  const INITIATIVES = [
+    { name: 'Spring Trade-In Event', rows: [
+      { ch: 'social', idVal: 'STE_Social_Reels_Q2', name: 'STE_Social_Reels_Q2', id: 8841 },
+      { ch: 'email', idVal: 'STE_Email_SpringPromo_01', name: 'STE_Email_SpringPromo_01', id: 8842 },
+      { ch: 'google', idVal: '5528190021', name: 'STE_Search_TradeIn', id: 8843 }] },
+    { name: 'Fall Inventory Push', rows: [
+      { ch: 'email', idVal: 'FIP_Email_OctInventory', name: 'FIP_Email_OctInventory', id: 8837 },
+      { ch: 'google', idVal: '6671203348', name: 'FIP_Search_Inventory', id: 8838 },
+      { ch: 'social', idVal: 'FIP_Social_Carousel', name: 'FIP_Social_Carousel', id: 8839 }] },
+    { name: 'Dealer Summit Follow-Up', rows: [
+      { ch: 'social', idVal: 'DSF_Social_LinkedIn', name: 'DSF_Social_LinkedIn', id: 8834 },
+      { ch: 'email', idVal: 'DSF_Email_Thanks_01', name: 'DSF_Email_Thanks_01', id: 8835 },
+      { ch: 'google', idVal: '7710032291', name: 'DSF_Search_Summit', id: 8836 }] },
+  ];
+  const NEXT_ID = 8844;
+  const fake = r => Math.floor(r() * 9e9 + 1e9);
+
+  // nameIsId: the platform's identifier IS the name, so the name used at launch must match the catalog exactly.
+  const CH = {
+    email: { label: 'Email', kind: 'email', idType: 'Email Name', nameIsId: true, source: 'email', medium: 'email', lane: 'Sending', nameLbl: 'Name your email',
+      idDefault: () => 'Spring Promo Email 1', idHint: 'The name of the email in the email platform.', launch: 'Send the email',
+      gen(r, name) { const sent = Math.round((6000 + r() * 34000) / 10) * 10, del = Math.round(sent * (.965 + r() * .03)), opn = Math.round(del * (.19 + r() * .14)), clk = Math.round(opn * (.07 + r() * .09));
+        return { steps: [['Sent', sent], ['Delivered', del], ['Opened', opn], ['Clicked', clk]], clicks: clk, headline: `“${name}” was sent to ${fmt(sent)} recipients.`, sub: 'The email platform sends it, and every tracked link carries the UTM values.' }; } },
+    google: { label: 'Google Ads', kind: 'campaign', idType: 'Campaign ID', nameIsId: false, source: 'google', medium: 'cpc', lane: 'Serving ads', nameLbl: 'Name your campaign',
+      idDefault: (r) => String(fake(r)), idHint: 'The ID Google Ads assigns to the campaign.', launch: 'Start the campaign',
+      gen(r, name) { const imp = Math.round((90000 + r() * 510000) / 100) * 100, clk = Math.round(imp * (.025 + r() * .03));
+        return { steps: [['Impressions', imp], ['Clicks', clk]], clicks: clk, headline: `“${name}” served ${fmt(imp)} impressions.`, sub: 'The ad platform runs it, and the UTM values ride along on the final URL.' }; } },
+    social: { label: 'Paid Social', kind: 'campaign', idType: 'Campaign Name', nameIsId: true, source: 'meta', medium: 'paid_social', lane: 'Serving ads', nameLbl: 'Name your campaign',
+      idDefault: () => 'Campaign 1', idHint: 'The campaign name in the social platform.', launch: 'Start the campaign',
+      gen(r, name) { const imp = Math.round((150000 + r() * 750000) / 100) * 100, eng = Math.round(imp * (.012 + r() * .02)), clk = Math.round(imp * (.006 + r() * .01));
+        return { steps: [['Impressions', imp], ['Engagements', eng], ['Clicks', clk]], clicks: clk, headline: `“${name}” served ${fmt(imp)} impressions.`, sub: 'The social platform runs it, and the UTM values ride along on the ad link.' }; } },
+  };
+
+  const PAGES = ['/spring-trade-in', '/pricing', '/inventory-tools', '/schedule-a-demo', '/appraisal-tool'];
+  const EVENTS = ['page_view', 'scroll', 'video_play', 'form_start'];
+  const LEADS = [['Maya Okafor', 'Brightline Auto Group'], ['Daniel Reyes', 'Summit Ridge Motors'], ['Priya Natarajan', 'Harbor & Main Auto'], ['Tom Whitaker', 'Cedar Valley Dealerships'], ['Lena Fischer', 'Northgate Fleet']];
+
+  // ── state ──
+  let nextId = NEXT_ID;
+  const S = { created: false, launched: false, withCat: true, e: null, m: null, name: '' };
+
+  // ── stage 1 ──
+  const ini = $('#ini'), chan = $('#chan'), idval = $('#idval');
+  INITIATIVES.forEach((i, k) => ini.add(new Option(i.name, k)));
+  Object.entries(CH).forEach(([k, c]) => chan.add(new Option(c.label, k)));
+  let idDirty = false;
+
+  const abbr = n => n.split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0, 3);
+  function defaultId() { const c = CH[chan.value], i = INITIATIVES[ini.value]; return c.idDefault(rng(seedFrom(i.name + c.label))); }
+  const NOTE1 = '<b>Behind the scenes</b>Each platform identifies a campaign its own way: a Campaign ID in Google Ads, an Email Name in the email platform, a Campaign Name in paid social. The catalog records whichever one the channel uses, then mints one standard UTM value for it.';
+  function syncPreview() {
+    const c = CH[chan.value], i = INITIATIVES[ini.value];
+    $('#idtype').textContent = c.idType;
+    $('#idHint').textContent = c.idHint;
+    if (!idDirty && !S.created) idval.value = defaultId();
+    const utm = `${slug(i.name)}_${S.created ? S.e.id : nextId}`;
+    $('#genUtm').textContent = utm;
+    $('#genSrc').textContent = c.source; $('#genMed').textContent = c.medium;
+    $('#genId').textContent = S.created ? String(S.e.id) : `${nextId} (assigned on create)`;
+    $('#genUrl').innerHTML = `https://www.example.com/${slug(i.name).replace(/_/g, '-')}?utm_source=${c.source}&amp;utm_medium=${c.medium}&amp;utm_campaign=<b>${utm}</b>`;
+    renderCatalog();
+  }
+  function renderCatalog() {
+    const i = INITIATIVES[ini.value];
+    let h = i.rows.map(r => `<tr><td>${esc(i.name)}</td><td>${CH[r.ch].label}</td><td>${CH[r.ch].idType}</td><td class="mono">${esc(r.idVal)}</td><td class="mono">${slug(i.name)}_${r.id}</td></tr>`).join('');
+    if (S.created) h += `<tr class="new"><td>${esc(S.e.ini)}</td><td>${esc(S.e.chLabel)}</td><td>${esc(S.e.idType)}</td><td class="mono">${esc(S.e.idVal)}</td><td class="mono"><span class="idchip pulse">${esc(S.e.utm)}</span></td></tr>`;
+    $('#catBody').innerHTML = h;
+  }
+  [ini, chan].forEach(el => el.addEventListener('change', () => { idDirty = false; syncPreview(); }));
+  idval.addEventListener('input', () => { idDirty = true; idval.removeAttribute('aria-invalid'); $('#idvalErr').textContent = ''; });
+
+  function createEntry() {
+    if (S.created) return;
+    const val = idval.value.trim();
+    if (!val) { idval.setAttribute('aria-invalid', 'true'); $('#idvalErr').textContent = `Enter the ${CH[chan.value].idType} the platform uses for this campaign.`; idval.focus(); return; }
+    idval.removeAttribute('aria-invalid'); $('#idvalErr').textContent = '';
+    const c = CH[chan.value], i = INITIATIVES[ini.value];
+    const id = nextId++;
+    S.created = true;
+    S.e = { id, ini: i.name, iniIdx: +ini.value, chKey: chan.value, chLabel: c.label, idType: c.idType, idVal: val, utm: `${slug(i.name)}_${id}`, src: c.source, med: c.medium, page: '/' + slug(i.name).replace(/_/g, '-') };
+    [ini, chan, idval, $('#create')].forEach(el => el.disabled = true);
+    $('#reset1').hidden = false;
+    syncPreview();
+    typeText($('#genUtm'), S.e.utm);
+    setRailId(S.e.utm);
+    $('#note1').innerHTML = `<b>Behind the scenes</b>Effort ${id} is now in the catalog under “${esc(i.name)}”. The platform's ${esc(c.idType)} is the key, and the UTM value is what will travel with the traffic.`;
+    prepStage2();
+    reveal(2);
+    say(`Catalog entry created. Tracking ID ${S.e.utm}.`);
+  }
+  // Wired directly (not via form submit) so it also works where form submission is blocked, e.g. sandboxed previews.
+  $('#create').addEventListener('click', createEntry);
+  $('#form').addEventListener('submit', ev => { ev.preventDefault(); createEntry(); });
+  idval.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); createEntry(); } });
+
+  // ── rail + reveal ──
+  function setRail(n) { $$('#rail li').forEach(li => { const k = +li.dataset.s; li.classList.toggle('done', k < n); li.classList.toggle('now', k === n); $('.dot', li).textContent = k < n ? '✓' : k; }); }
+  function setRailId(v) { $('#railId').hidden = false; const el = $('#railIdVal'); el.textContent = v; el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
+  function reveal(n) {
+    const s = $('#s' + n); s.hidden = false; s.classList.remove('in'); void s.offsetWidth; s.classList.add('in');
+    setRail(n);
+    setTimeout(() => s.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }), 60);
+  }
+
+
+  // ── motion helpers ──
+  const IC = {
+    send: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+    mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+    person: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+    people: '<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3.2-5.5 7-5.5s7 2 7 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14.8c2 .7 3.5 2.2 3.5 5.2"/>',
+    target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>',
+    eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+    heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8Z"/>',
+    share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
+    cursor: '<path d="m4 4 7 17 2.5-7.5L21 11Z"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+    form: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
+    db: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+  };
+  const svg = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
+  const SCENE = {
+    email:  { from: ['send', 'Email platform'], fly: 'mail', to: ['person', 'Inboxes'], verb: 'Sending', done: 'sent' },
+    google: { from: ['target', 'Google Ads'], fly: 'eye', to: ['people', 'Searchers'], verb: 'Serving', done: 'impressions' },
+    social: { from: ['share', 'Social platform'], fly: 'heart', to: ['people', 'Audience'], verb: 'Serving', done: 'impressions' },
+  };
+  function sceneHtml(k) {
+    const c = SCENE[k];
+    return `<div class="end l">${svg(c.from[0])}${c.from[1]}</div><div class="track"></div>` +
+      Array.from({ length: 9 }, (_, i) => `<span class="fly" style="animation-delay:${(i * 0.17).toFixed(2)}s;--dy:${((i % 3) - 1) * 14}px">${svg(c.fly)}</span>`).join('') +
+      `<div class="end r">${svg(c.to[0])}${c.to[1]}</div><div class="status" id="laneTxt">Ready to launch</div>`;
+  }
+  async function typeText(el, text) {
+    if (reduce) { el.textContent = text; return; }
+    el.classList.add('caret'); el.textContent = '';
+    for (let i = 1; i <= text.length; i++) { el.textContent = text.slice(0, i); await sleep(22); }
+    el.classList.remove('caret');
+  }
+  function carry(id, from, to) {
+    const el = $(id), e = S.e;
+    el.classList.remove('go');
+    el.innerHTML = `<div class="end l">${svg(from[0])}${from[1]}</div><div class="track"></div><span class="idchip rider">utm_campaign=${esc(e.utm)}</span><div class="end r">${svg(to[0])}${to[1]}</div>`;
+    el.style.setProperty('--w', Math.ceil($('.rider', el).getBoundingClientRect().width || 230) + 'px');
+    void el.offsetWidth; el.classList.add('go');
+  }
+
+  // ── stage 2 ──
+  const pname = $('#pname');
+  function trackedHtml(pop) {
+    const e = S.e;
+    return `https://www.example.com${e.page}<span class="added${pop ? ' pop' : ''}">?utm_source=${e.src}&amp;utm_medium=${e.med}&amp;utm_campaign=${esc(e.utm)}</span>`;
+  }
+  function prepStage2() {
+    const c = CH[S.e.chKey];
+    $('#pnameLbl').textContent = c.nameLbl;
+    pname.value = c.nameIsId ? S.e.idVal : 'Campaign 1'; pname.disabled = false;
+    $('#pnameHelp').textContent = c.nameIsId
+      ? `The catalog is keyed on the ${c.idType}, “${S.e.idVal}”. Use that name here. If it ends up different, you can update the catalog entry.`
+      : `Google Ads assigned the ${c.idType} ${S.e.idVal}, so the name can be anything. The catalog doesn't read names.`;
+    $('#pnameErr').textContent = ''; pname.removeAttribute('aria-invalid');
+    $('#tracked').innerHTML = trackedHtml(true);
+    $('#launch').textContent = c.launch;
+    $('#lane').classList.remove('done', 'go');
+    $('#lane').innerHTML = sceneHtml(S.e.chKey);
+  }
+  pname.addEventListener('input', () => { pname.removeAttribute('aria-invalid'); $('#pnameErr').textContent = ''; });
+  async function countUp(el, to, ms = 1100) {
+    if (reduce) { el.textContent = fmt(to); return; }
+    const t0 = performance.now();
+    await new Promise(res => { const step = t => { const p = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - p, 3); el.textContent = fmt(Math.round(to * e)); p < 1 ? requestAnimationFrame(step) : res(); }; requestAnimationFrame(step); });
+  }
+  function compute(name) {
+    const c = CH[S.e.chKey], r = rng(seedFrom((S.e.idVal + '|' + c.label).toLowerCase()));
+    const g = c.gen(r, name), clicks = g.clicks;
+    const visitors = Math.round(clicks * (.8 + r() * .12)), sessions = Math.round(visitors * (1.04 + r() * .14)), pageviews = Math.round(sessions * (1.9 + r() * 1.5));
+    const conv = Math.max(3, Math.round(sessions * (.035 + r() * .04))), leads = Math.max(2, Math.min(conv, Math.round(conv * (.4 + r() * .3))));
+    const tp = PAGES[Math.floor(r() * PAGES.length)], share = Math.round(32 + r() * 20);
+    const sess = Array.from({ length: 6 }, (_, k) => { const p = k < 3 ? tp : PAGES[Math.floor(r() * PAGES.length)]; const ev = [EVENTS[0], ...EVENTS.slice(1).filter(() => r() > .55)]; if (k === 1 || k === 4) ev.push('form_submit'); return { page: p, ev }; });
+    const lead = LEADS.slice(0, Math.min(5, leads)).map(l => l.slice());
+    S.m = { ...g, visitors, sessions, pageviews, conv, leads, tp, share, sess, lead };
+  }
+  $('#launch').addEventListener('click', async () => {
+    if (S.launched) return;
+    const c = CH[S.e.chKey], name = pname.value.trim();
+    if (!name) { pname.setAttribute('aria-invalid', 'true'); $('#pnameErr').textContent = 'Give it a name.'; pname.focus(); return; }
+    if (c.nameIsId && name !== S.e.idVal) {
+      pname.setAttribute('aria-invalid', 'true');
+      $('#pnameErr').innerHTML = `This doesn't match the catalog entry, where the ${esc(c.idType)} is “${esc(S.e.idVal)}”. Rename it to match, or update the catalog to “${esc(name)}” and keep going. <button type="button" class="btn ghost" id="fixCat" style="padding:8px 12px;font-size:.85rem;margin-left:6px">Update the catalog</button>`;
+      $('#fixCat').addEventListener('click', () => { S.oldId = S.e.idVal; S.e.idVal = name; renderCatalog(); $('#pnameErr').textContent = ''; pname.removeAttribute('aria-invalid'); $('#launch').click(); });
+      return;
+    }
+    S.launched = true; S.name = name; pname.disabled = true;
+    compute(name);
+    const m = S.m;
+    $('#launch').disabled = true; $('#launch').textContent = 'Launching…';
+    const lane = $('#lane'), sc = SCENE[S.e.chKey]; lane.classList.add('go');
+    $('#laneTxt').innerHTML = `${sc.verb}… <span id="laneN">0</span>`;
+    say('Launching the campaign.');
+    await Promise.all([countUp($('#laneN'), m.steps[0][1], reduce ? 0 : 2300), sleep(2400)]);
+    lane.classList.remove('go'); lane.classList.add('done');
+    $('#laneTxt').textContent = `✓ ${fmt(m.steps[0][1])} ${sc.done}`;
+    $('.end.r', lane).classList.add('bump');
+    $('#launchRow').hidden = true;
+    $('#headline').textContent = m.headline;
+    const max = m.steps[0][1];
+    $('#funnel').innerHTML = m.steps.map(s => `<div class="frow"><span class="name">${s[0]}</span><div class="bar"><div data-w="${Math.max(2.5, s[1] / max * 100).toFixed(1)}"></div></div><span class="val" data-n="${s[1]}">0</span></div>`).join('');
+    $('#results').hidden = false;
+    await sleep(60);
+    $$('#funnel .bar > div').forEach(b => b.style.width = b.dataset.w + '%');
+    await Promise.all($$('#funnel .val').map(v => countUp(v, +v.dataset.n, 1200)));
+    $('#note2').hidden = false;
+    $('#note2').innerHTML = `<b>Behind the scenes</b>${esc(m.sub)} ${S.oldId ? `You updated the ${esc(S.e.idType)} in the catalog from <span class="mono">${esc(S.oldId)}</span> to <span class="mono">${esc(name)}</span>. The UTM value is tied to the effort, not the name, so nothing downstream is affected. ` : ''}The platform reports its numbers against its own ${esc(S.e.idType)}, <span class="mono">${esc(S.e.idVal)}</span>, and the catalog ties that to <span class="idchip">${esc(S.e.utm)}</span>. That tie is what everything downstream relies on.`;
+    $('#next2').hidden = false;
+    say(m.headline + ' ' + m.steps.map(s => `${s[0]} ${fmt(s[1])}`).join(', ') + '.');
+  });
+  $('#to3').addEventListener('click', () => { $('#to3').disabled = true; buildStage3(); reveal(3); });
+  pname.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); $('#launch').click(); } });
+
+  // ── stage 3 ──
+  async function buildStage3() {
+    const m = S.m;
+    carry('#carry3', ['cursor', 'Click'], ['globe', 'Web analytics']);
+    $('#kpis3').innerHTML = [['Visitors', m.visitors], ['Sessions', m.sessions], ['Pageviews', m.pageviews], ['Conversion events', m.conv]].map(k => `<div class="kpi"><div class="v" data-n="${k[1]}">0</div><div class="l">${k[0]}</div></div>`).join('');
+    $('#top3').innerHTML = `Top page from this effort: <b>${m.tp}</b> (${m.share}% of pageviews)`;
+    renderWeb(); selectSession(0);
+    await sleep(350);
+    await Promise.all($$('#kpis3 .v').map(v => countUp(v, +v.dataset.n, 1100)));
+    say(`${fmt(m.visitors)} visitors, ${fmt(m.sessions)} sessions, ${fmt(m.pageviews)} pageviews, ${fmt(m.conv)} conversion events. Top page ${m.tp}.`);
+  }
+  // Without a catalog, UTM campaign values are typed by hand, so one campaign shows up under several spellings.
+  function variants() {
+    const base = slug(S.name) || 'campaign', i = Math.max(1, base.search(/[a-z]{2}(?=_\d|$)/)), sw = base.length > 4 ? base.slice(0, i) + base[i + 1] + base[i] + base.slice(i + 2) : base + 'x';
+    return [base, base.replace(/(^|_)([a-z0-9])/g, (m, a, b) => a + b.toUpperCase()), base.replace(/_/g, '-'), sw, base.replace(/_/g, ''), S.name.trim()];
+  }
+  const vari = k => variants()[k % 6];
+  function renderWeb() {
+    const e = S.e, m = S.m;
+    $('#webBody').innerHTML = m.sess.map((s, k) => {
+      const camp = S.withCat ? e.utm : vari(k), ok = S.withCat || k === 0;
+      return `<tr class="pick rowin" style="--d:${(0.5 + k * 0.16).toFixed(2)}s" tabindex="0" data-k="${k}" aria-selected="false"><td class="mono">${s.page}</td><td class="mono">${e.src} / ${e.med}</td><td class="mono"><span class="idchip ${ok ? '' : 'bad'}">${esc(camp)}</span></td><td>${s.ev.map(v => `<span class="ev ${v === 'form_submit' ? 'key' : ''}">${v}</span>`).join('')}</td><td class="st ${ok ? 'ok' : 'no'}">${S.withCat ? '✓ Effort ' + e.id : (k === 0 ? '✓ Looks right' : '✗ Different spelling')}</td></tr>`;
+    }).join('');
+    const ban = $('#webBanner');
+    ban.hidden = false; ban.className = 'banner' + (S.withCat ? ' ok' : '');
+    ban.textContent = S.withCat ? 'All 6 sample sessions tie to the same effort, with no cleanup.' : 'These sessions all came from one campaign, but the values were typed by hand, so they don\'t match. Someone has to decide they are the same campaign and keep a cleanup list. Across an initiative it gets worse, since each campaign follows its own pattern.';
+  }
+  function selectSession(k) {
+    $$('#webBody tr').forEach(tr => tr.setAttribute('aria-selected', String(+tr.dataset.k === k)));
+    const camp = S.withCat ? S.e.utm : vari(k);
+    $('#lookup3').innerHTML = lookupHtml(camp, S.withCat);
+  }
+  function lookupHtml(camp, ok) {
+    const e = S.e, c = CH[e.chKey];
+    if (!ok) return `<p class="lbl">Without the catalog</p><p><span class="idchip bad">${esc(camp)}</span></p><p class="arrow bad">↓ not the same string as the others</p><p>A report that groups by utm_campaign counts this as a separate campaign. Someone has to decide that “${esc(camp)}” and “${esc(vari(0))}” are the same thing, and keep that mapping current.</p>`;
+    return `<p class="lbl">Catalog lookup</p><p><span class="idchip pulse">${esc(camp)}</span></p><p class="arrow">↓ matches Effort ${e.id}</p><dl class="kv"><dt>Channel</dt><dd>${esc(e.chLabel)} · ${esc(e.idType)} <span class="mono">${esc(e.idVal)}</span></dd><dt>Initiative</dt><dd>${esc(e.ini)}</dd>${c.nameIsId ? '' : `<dt>Name in platform</dt><dd>${esc(S.name)} <span class="mono" style="color:var(--muted)">(not used for matching)</span></dd>`}</dl>`;
+  }
+  $('#webBody').addEventListener('click', ev => { const tr = ev.target.closest('tr.pick'); if (tr) selectSession(+tr.dataset.k); });
+  $('#webBody').addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { const tr = ev.target.closest('tr.pick'); if (tr) { ev.preventDefault(); selectSession(+tr.dataset.k); } } });
+
+  // ── stage 4 ──
+  async function buildStage4() {
+    const m = S.m, rate = (m.leads / m.sessions * 100);
+    $('#kpis4').innerHTML = [['Leads', m.leads, 0], ['Of sessions', Math.round(rate * 10) / 10, 1], ['Conversion events', m.conv, 0]].map(k => `<div class="kpi"><div class="v" data-n="${k[1]}" data-d="${k[2]}">0</div><div class="l">${k[0]}</div></div>`).join('');
+    carry('#carry4', ['form', 'Form fill'], ['db', 'CRM']);
+    renderCrm();
+    await sleep(350);
+    for (const v of $$('#kpis4 .v')) { if (v.dataset.d === '1') v.textContent = v.dataset.n + '%'; else await countUp(v, +v.dataset.n, 900); }
+    say(`${fmt(m.leads)} leads came from this effort.`);
+  }
+  function renderCrm() {
+    const e = S.e, m = S.m;
+    $('#crmBody').innerHTML = m.lead.map((l, k) => {
+      const camp = S.withCat ? e.utm : vari(k + 1), ok = S.withCat;
+      return `<tr class="rowin" style="--d:${(1.4 + k * 0.5).toFixed(2)}s"><td>${esc(l[0])}${S.withCat ? '<span class="newbadge">New lead</span>' : ''}</td><td>${esc(l[1])}</td><td><span class="idchip ${ok ? '' : 'bad'}">${esc(camp)}</span></td><td class="st ${ok ? 'ok' : 'no'}">${ok ? '✓ ' + esc(S.name) + ' · ' + esc(e.ini) : '✗ Needs cleanup'}</td></tr>`;
+    }).join('');
+    const ban = $('#crmBanner'); ban.hidden = false; ban.className = 'banner' + (S.withCat ? ' ok' : '');
+    ban.textContent = S.withCat ? 'Every lead traces back to the campaign that earned it, through the catalog.' : 'Each lead carries whichever spelling its link had. To count them for this campaign, every variant has to be mapped by hand, and a typo nobody catches drops a lead from the count.';
+    const more = m.leads - m.lead.length;
+    $('#crmMore').textContent = (more > 0 ? `Showing ${m.lead.length} of ${fmt(m.leads)} leads. ` : '') + 'Names and companies are fictional.';
+  }
+  $('#to4').addEventListener('click', () => { $('#to4').disabled = true; buildStage4(); reveal(4); });
+
+  $$('.switch button').forEach(b => b.addEventListener('click', () => {
+    S.withCat = b.dataset.cat === 'on';
+    $$('.switch button').forEach(x => x.setAttribute('aria-pressed', String((x.dataset.cat === 'on') === S.withCat)));
+    if (S.m) { renderWeb(); selectSession(0); if (!$('#s4').hidden) renderCrm(); }
+    say(S.withCat ? 'Showing data with the catalog.' : 'Showing data without the catalog.');
+  }));
+
+  // ── stage 5: names vs catalog ──
+  function peerStats(id) { const r = rng(seedFrom('peer' + id)); const sessions = 140 + Math.floor(r() * 760); return { sessions, leads: Math.max(2, Math.round(sessions * (.02 + r() * .035))) }; }
+  function groupRows() {
+    const e = S.e;
+    const rows = INITIATIVES[e.iniIdx].rows.map(r => ({ ch: r.ch, idVal: r.idVal, name: r.name, id: r.id, ...peerStats(r.id) }));
+    rows.push({ ch: e.chKey, idVal: e.idVal, name: S.name, id: e.id, sessions: S.m.sessions, leads: S.m.leads, me: true });
+    return rows;
+  }
+  const NEIGHBOR = { E: 'R', P: 'O', F: 'G', I: 'U', D: 'S', S: 'D', T: 'R', C: 'V', A: 'S', W: 'E' };
+  function code() { return abbr(S.e.ini) + '_'; }
+  function typoCode() { const c = abbr(S.e.ini); return c.slice(0, 2) + (NEIGHBOR[c[2]] || 'X') + '_'; }
+  function buildStage5() {
+    const e = S.e;
+    $('#conv').innerHTML = `Our naming convention: every campaign name for “${esc(e.ini)}” starts with <code>${esc(code())}</code>`;
+    const samples = [[`${code()}${CH[e.chKey].kind === 'email' ? 'Email' : 'Campaign'}_Spring`, 'Follows the convention'], [`${typoCode()}${CH[e.chKey].kind === 'email' ? 'Email' : 'Campaign'}_Spring`, 'One-letter typo'], [CH[e.chKey].kind === 'email' ? 'Email 1' : 'Campaign 1', 'No convention at all']];
+    $('#chips').innerHTML = samples.map(s => `<button type="button" class="chip-btn" aria-pressed="false" data-v="${esc(s[0])}" title="${esc(s[1])}">${esc(s[0])}</button>`).join('');
+    $('#rname').value = S.name;
+    renderNames();
+  }
+  function renderNames() {
+    const e = S.e, typed = $('#rname').value.trim() || S.name, cd = code();
+    $$('#chips .chip-btn').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === typed)));
+    const rows = groupRows(); rows.find(r => r.me).name = typed;
+    const total = rows.reduce((t, r) => t + r.leads, 0), counted = rows.filter(r => r.name.startsWith(cd)).reduce((t, r) => t + r.leads, 0), missing = rows.filter(r => !r.name.startsWith(cd));
+    $('#byName').innerHTML = `
+      <div class="pane-h"><h3>Group by name</h3><p>Text-mine every campaign name for “${esc(cd)}”.</p></div>
+      <div style="overflow-x:auto"><table class="tight" aria-label="Grouping by name"><thead><tr><th>Campaign name</th><th>Counted?</th><th class="num-r">Leads</th></tr></thead><tbody>
+      ${rows.map(r => { const ok = r.name.startsWith(cd); return `<tr class="${ok ? (r.me ? 'me' : '') : 'miss'}"><td class="mono">${esc(r.name)}</td><td class="st ${ok ? 'ok' : 'no'}">${ok ? '✓ Yes' : '✗ No'}</td><td class="mono num-r">${fmt(r.leads)}</td></tr>`; }).join('')}
+      <tr class="tot"><td colspan="2">Counted</td><td class="mono num-r">${fmt(counted)} of ${fmt(total)}</td></tr></tbody></table></div>
+      <div class="banner ${missing.length ? '' : 'ok'}">${missing.length ? `${missing.length} campaign${missing.length > 1 ? 's are' : ' is'} missing from the group, and nothing flags it. Fixing the name only helps going forward. The data already collected keeps the old name, so the history needs an exception rule, like counting “${esc(typoCode())}” as “${esc(cd)}”.` : 'Everything matches, but only because nobody made a typo. The next one is a matter of time.'}</div>`;
+    $('#byCat').innerHTML = `
+      <div class="pane-h"><h3>Group by catalog</h3><p>Every effort is cataloged to “${esc(e.ini)}”.</p></div>
+      <div style="overflow-x:auto"><table class="tight" aria-label="Grouping by catalog"><thead><tr><th>Campaign name</th><th>In initiative?</th><th class="num-r">Leads</th></tr></thead><tbody>
+      ${rows.map(r => `<tr class="${r.me ? 'me' : ''}"><td class="mono">${esc(r.name)}</td><td class="st ok">✓ Yes</td><td class="mono num-r">${fmt(r.leads)}</td></tr>`).join('')}
+      <tr class="tot"><td colspan="2">Counted</td><td class="mono num-r">${fmt(total)} of ${fmt(total)}</td></tr></tbody></table></div>
+      <div class="banner ok">The name can be anything, even a typo. It was cataloged to the initiative once, so there's nothing to mine and nothing to patch.</div>`;
+    $('#note5').innerHTML = missing.length
+      ? `<b>The catalog doesn't need to match on name</b>Call it “${esc(typed)}” if you like, or fat-finger it. Catalog it to “${esc(e.ini)}” and it's counted. A team can still use a naming convention if it wants one. It just doesn't depend on it.`
+      : `<b>The catalog doesn't need to match on name</b>A naming convention can still be useful for humans. The difference is that nothing downstream depends on everyone getting it right. Try the typo.`;
+  }
+  $('#chips').addEventListener('click', ev => { const b = ev.target.closest('.chip-btn'); if (b) { $('#rname').value = b.dataset.v; renderNames(); } });
+  $('#rname').addEventListener('input', renderNames);
+  $('#to5').addEventListener('click', () => { $('#to5').disabled = true; buildStage5(); reveal(5); });
+
+  // ── stage 6 ──
+  $('#to6').addEventListener('click', () => {
+    const e = S.e, m = S.m, rows = groupRows().sort((a, b) => b.leads - a.leads);
+    $('#to6').disabled = true;
+    const tot = rows.reduce((t, r) => ({ s: t.s + r.sessions, l: t.l + r.leads }), { s: 0, l: 0 });
+    $('#rollup').innerHTML = `<thead><tr><th>Channel</th><th>Campaign</th><th>UTM campaign</th><th class="num-r">Sessions</th><th class="num-r">Leads</th></tr></thead><tbody>
+      ${rows.map((r, i) => `<tr class="rowin ${r.me ? 'me' : ''}" style="--d:${(i * 0.12).toFixed(2)}s"><td>${CH[r.ch].label}</td><td class="mono">${esc(r.me ? S.name : r.name)}</td><td class="mono">${r.me ? '<span class="idchip">' + esc(e.utm) + '</span>' : slug(e.ini) + '_' + r.id}</td><td class="mono num-r">${fmt(r.sessions)}</td><td class="mono num-r">${fmt(r.leads)}</td></tr>`).join('')}
+      <tr class="tot"><td colspan="3">${esc(e.ini)}, all channels</td><td class="mono num-r">${fmt(tot.s)}</td><td class="mono num-r">${fmt(tot.l)}</td></tr></tbody>`;
+    const same = rows.filter(r => r.ch === e.chKey), chTot = same.reduce((t, r) => t + r.leads, 0), maxL = Math.max(...same.map(r => r.leads)), label = CH[e.chKey].label;
+    $('#vs').innerHTML = `
+      <div class="card"><h3>Channel view</h3><p class="lbl" style="margin:0">Without effort IDs</p><div class="big">${fmt(chTot)}</div><p>leads from ${label}</p><p class="cap">Which ${CH[e.chKey].kind}? There's no way to tell.</p></div>
+      <div class="card"><h3>Effort view</h3><p class="lbl" style="margin:0">With the catalog</p>${same.map(r => `<div class="row ${r.me ? 'me' : ''}"><span class="mono">${esc(r.me ? S.name : r.name)}</span><div class="mini"><div style="width:0" data-w="${(r.leads / maxL * 100).toFixed(0)}"></div></div><span class="n">${fmt(r.leads)}</span></div>`).join('')}<p class="cap">The same leads, credited to the campaign that earned them. Now you know what to repeat, and what to stop.</p></div>`;
+    const top = m.steps[0];
+    $('#chain').innerHTML = [
+      ['Initiative', `<strong>${esc(e.ini)}</strong>`],
+      ['Campaign', `<strong>${esc(S.name)}</strong><br><span class="idchip" style="margin-top:6px;display:inline-block">${esc(e.utm)}</span>`],
+      [top[0], `<span class="big">${fmt(top[1])}</span>`],
+      ['Clicks', `<span class="big">${fmt(m.clicks)}</span>`],
+      ['Sessions', `<span class="big">${fmt(m.sessions)}</span>`],
+      ['Leads', `<span class="big">${fmt(m.leads)}</span>`],
+    ].map((l, i) => `<div class="link rowin" style="--d:${(0.4 + i * 0.18).toFixed(2)}s"><small>${l[0]}</small>${l[1]}</div>`).join('');
+    reveal(6);
+    setTimeout(() => $$('#vs .mini > div').forEach(b => b.style.width = b.dataset.w + '%'), reduce ? 0 : 700);
+    say('All the way through: one ID ties the initiative, the campaign, the clicks, the sessions, and the leads together.');
+  });
+
+  // ── reset ──
+  function reset() {
+    S.created = S.launched = false; S.oldId = null; S.withCat = true; S.e = S.m = null; S.name = ''; idDirty = false;
+    [ini, chan, idval, $('#create')].forEach(el => el.disabled = false);
+    $('#reset1').hidden = true; $('#railId').hidden = true;
+    ['2', '3', '4', '5', '6'].forEach(n => $('#s' + n).hidden = true);
+    $('#results').hidden = true; $('#note2').hidden = true; $('#next2').hidden = true; $('#launchRow').hidden = false; $('#launch').disabled = false;
+    ['#to3', '#to4', '#to5', '#to6'].forEach(s => $(s).disabled = false);
+    $$('.switch button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.cat === 'on')));
+    $('#note1').innerHTML = NOTE1;
+    setRail(1); syncPreview();
+    $('#s1').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    ini.focus({ preventScroll: true });
+  }
+  $('#reset1').addEventListener('click', reset);
+  $('#again').addEventListener('click', reset);
+
+  $('#note1').innerHTML = NOTE1;
+  syncPreview();
+})();
+</script>
+</body>
+</html>
